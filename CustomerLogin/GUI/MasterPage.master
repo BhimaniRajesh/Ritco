@@ -1,0 +1,118 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="GUI_MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Customer Login</title>
+    <link href="~/CustomerLogin/GUI/images/style.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    body { font-family: verdana, arial, helvetica, sans-serif;
+      font-size: 12px; }
+    h1 { font-size:16px }	
+    /*a:link { color:#FFFFFF }	
+    a:visited { color:#FFFFFF }	*/	
+    div#content { margin-left:0px; height:0px }
+    /* Style specs for layer that glides.
+       Generally, you don't set height, but since layer nearly empty in this example... */
+    #glideDiv { 
+      position:absolute; 
+      right:Auto; top:Auto; z-index:Auto;
+      width:175px; height:16px; padding:1px;
+      background-color:#FFFFFF/*#dee7f7*/
+  }
+</style>
+</head>
+<body leftmargin="0" topmargin="0">
+    <form id="form1" runat="server">
+    <div>
+    <asp:XmlDataSource ID="xmlDataSource" EnableCaching="false" CacheExpirationPolicy="Absolute"
+            EnableViewState="false" TransformFile="~/TransformXSLT.xsl" XPath="MenuItems/MenuItem"
+            runat="server" />
+     
+      <atlas:ScriptManager ID="ScriptManager" runat="server" EnablePartialRendering="true">
+        </atlas:ScriptManager>
+         <table style="width: 100%" cellpadding="1" cellspacing="1" border="0">
+            <tr>
+                <td width="55%" align="left" valign="top">
+                    &nbsp;<asp:Image Height="50" ID="imgLogo" runat="server" />
+                </td>
+                <td width="45%" align="right" valign="top" rowspan="2">
+                
+                <asp:LinkButton ID="Label1" Text="Home" CssClass="blackfnt" Font-Underline="true" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" PostBackUrl="~/CustomerLogin/GUI/WelCome.aspx" />
+                    <asp:Label ID="Label2" Text=" | " CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="true" />
+                    <asp:LinkButton ID="Label3"  Text="Logout" CssClass="blackfnt"  Font-Underline="true" Font-Size="X-Small" runat="server"
+                        Font-Bold="false"  PostBackUrl="~/CustomerLogin/GUI/LogOut.aspx" />
+                    
+                   
+                </td>
+            </tr>
+           <tr>
+                <td width="55%" align="left" valign="top">
+<%--                    <asp:Label ID="lblEmp" Text="User Id/Name/Branch: " CssClass="blackfnt" Font-Size="X-Small"
+                        runat="server" Font-Bold="true" />
+--%>                    <asp:Label ID="lblEmployee" CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" />
+                    <asp:Label ID="lbl1" Text=" | " CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="true" />
+                    <asp:Label ID="lblEmpNameVal" CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" />
+                   
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <!--Font-Names="Verdana" Font-Size="Small"-->
+                    <asp:Menu ID="Menu1" runat="server" Width="100px" Font-Names="Verdana" Font-Size="8pt"
+                        Style="text-align: center"
+                        BorderWidth="0" BorderStyle="None" BorderColor="#8ba0e5" BackColor="#FFFFFF"
+                        StaticMenuItemStyle-BackColor="#FFFFFF"
+                        StaticMenuItemStyle-Font-Size="8pt" StaticMenuItemStyle-Width="100px" StaticMenuItemStyle-Height="20"
+                        DynamicMenuItemStyle-Font-Size="8pt" DynamicMenuItemStyle-Width="100px" DynamicMenuItemStyle-Height="20"
+                        StaticMenuItemStyle-BorderWidth="1" StaticMenuItemStyle-BorderStyle="NotSet"
+                        StaticMenuItemStyle-BorderColor="#8ba0e5" StaticMenuItemStyle-ItemSpacing="0"
+                        StaticPopOutImageUrl="~/GUI/images/clear.gif" DynamicMenuItemStyle-BorderWidth="0"
+                        DynamicMenuItemStyle-BorderStyle="NotSet" DynamicMenuItemStyle-BorderColor="#8ba0e5"
+                        DynamicMenuItemStyle-BackColor="#F7F9FF" DataSourceID="xmlDataSource" DynamicHorizontalOffset="2"
+                        DynamicVerticalOffset="1" ForeColor="#000000" Orientation="Horizontal" StaticSubMenuIndent="0px">
+                        <DataBindings>
+                            <asp:MenuItemBinding DataMember="MenuItem" NavigateUrlField="NavigateUrl" TextField="Text"
+                                ToolTipField="ToolTip"/>
+                        </DataBindings>
+                        <StaticMenuItemStyle CssClass="alignCenter" Font-Names="Verdana" Font-Size="8pt" HorizontalPadding="15px"
+                            VerticalPadding="2px" Height="20px" BorderColor="#8BA0E5" BorderWidth="1px" ItemSpacing="0px"
+                            Width="100px" />
+                        <StaticSelectedStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="White" ForeColor="#8BA0E5" />
+                        <StaticHoverStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="White" ForeColor="#8BA0E5" />
+                        <DynamicHoverStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="#E5EBFF" ForeColor="#8BA0E5" />
+                        <DynamicMenuStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="#F7F9FF" ForeColor="Black" BorderColor="#8BA0E5" BorderWidth="1px" />
+                        <DynamicSelectedStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="White" />
+                        <DynamicMenuItemStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            HorizontalPadding="15px" VerticalPadding="2px" BackColor="#F7F9FF" BorderColor="#8BA0E5"
+                            BorderWidth="0px" />
+                    </asp:Menu>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" colspan="2" style="width: 992px">
+                    <asp:Label ID="lblBlank" runat="server" Text="" CssClass="blackfnt"></asp:Label>
+                   
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <asp:ContentPlaceHolder ID="MyCPH1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

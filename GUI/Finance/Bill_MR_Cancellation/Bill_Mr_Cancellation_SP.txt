@@ -1,0 +1,123 @@
+CREATE PROCEDURE USP_Bill_MR_Cancellation_Listing                  
+@Frmdt Varchar(20) ,                  
+@Todt Varchar(20),    
+@Type Varchar(10),                  
+@BillMrno Varchar(50),                  
+@BillMrType varchar(50)                 
+AS                  
+set nocount on      
+Declare @sql varchar(3000)                
+Declare @BillMrTypecls varchar(1000)                    
+Declare @datecls varchar(1000),@BillMrnocls varchar(500)                  
+Declare @Count Numeric     
+    
+if @BillMrType <> 'All'    
+Begin    
+	Set @BillMrTypecls=''    
+	if @Type='MR'                  
+	Begin    
+		Set @BillMrTypecls=' AND MRSTYPE =' + char(39) + @BillMrType + char(39)      
+	End    
+	if @Type='Bill'                  
+	Begin    
+		Set @BillMrTypecls=' AND PAYBAS =' + char(39) + @BillMrType + char(39)      
+	End    
+End    
+else    
+Begin    
+	Set @BillMrTypecls=''    
+End    
+if @BillMrno = ''    
+Begin    
+	Set @datecls = ''    
+	Set @BillMrnocls=''    
+	if @Type='MR'                  
+	Begin    
+		Set @datecls=' AND Convert(varchar,MRSDT,106) between Convert(datetime,'+ char(39) + @Frmdt + char(39) +',106) and Convert(datetime,'+ char(39) + @Todt + char(39) +',106)'     
+	End    
+	if @Type='Bill'                  
+	Begin    
+		Set @datecls=' AND Convert(varchar,BGNDT,106) between Convert(datetime,'+ char(39) + @Frmdt + char(39) +',106) and Convert(datetime,'+ char(39) + @Todt + char(39) +',106)'     
+	End    
+End    
+else    
+begin    
+	Set @BillMrnocls=''    
+	Set @datecls = ''    
+	if @Type='MR'                  
+	Begin    
+		Set @BillMrnocls=' AND MRSNO =' + char(39) + @BillMrno + char(39)      
+	end    
+	if @Type='Bill'                  
+	Begin    
+		Set @BillMrnocls=' AND BILLNO =' + char(39) + @BillMrno + char(39)      
+	end    
+end    
+if @Type = 'MR'                  
+Begin    
+	select @sql = 'SELECT MRSNO,CONVERT(VARCHAR,MRSDT,106) MRSDT1,CONVERT(VARCHAR,MRSDT,103) MRSDT2,MRSTYPE,MRTYPE=(select CodeDesc from webx_master_general where codetype=''Mrstype'' and codeid=MRSTYPE),CAST(MRSAMT AS NUMERIC(12,2)) MRSAMT,MRSBR + '':''+ (SELECT LOCNAME FROM WEBX_LOCATION WHERE LOCCODE=MRSBR) BRANCH,DOCKNO,DOCKDT,PTCD + '':'' + (SELECT CUSTNM FROM WEBX_CUSTHDR WHERE CUSTCD=PTCD) PARTY FROM WEBX_MR_HDR where mrs_closed=''N'' AND MR_CANCEL=''N'' AND FINCLOSEDT IS NULL' + @BillMrTypecls + @BillMrnocls + @datecls + ' order by MRSDT'    
+End    
+if @Type = 'Bill'                  
+Begin    
+	select @sql = 'SELECT BILLNO,PAYBAS,BILLTYPE=(select CodeDesc from webx_master_general where codetype=''billtyp'' and codeid=PAYBAS),CONVERT(VARCHAR,BGNDT,106) BGNDT1,CONVERT(VARCHAR,BGNDT,103) BGNDT2,CONVERT(VARCHAR,BDUEDT,106) BDUEDT,BBRCD + '':'' + (SELECT LOCNAME FROM WEBX_LOCATION WHERE LOCCODE=BBRCD) BRANCH,PTMSCD + '':'' + (SELECT CUSTNM FROM WEBX_CUSTHDR WHERE CUSTCD=PTMSCD) PARTY,CAST(BILLAMT AS NUMERIC(12,2)) BILLAMT,BILLSTATUS FROM WEBX_BILLMST WHERE (BILLSTATUS=''Bill Submitted'' OR BILLSTATUS=''Bill Generated'') AND CLOSEBILL=''N'' AND BILL_CANCEL=''N''' + @BillMrTypecls + @BillMrnocls + @datecls + ' order by BGNDT'    
+End    
+Exec (@sql) 
+
+
+go
+
+
+ALTER Proc USP_Bill_MR_Cancellation  
+@Type varchar(10),  
+@BillMrno varchar(100),  
+@BillMrType varchar(10),  
+@Canceldt varchar(20),  
+@CancelReason varchar(250),
+@finyear varchar(4),
+@entryBy varchar(50)  
+AS                  
+set nocount on    
+BEGIN   
+	if @Type='MR'  
+	Begin
+		if @BillMrType = '1'   
+		Begin
+			exec usp_PaidMRTransaction_Cancellation 1,@BillMrno,@finyear,@entryBy  
+			UPDATE webx_trans_docket_status SET MR='N' WHERE DOCKNO in(SELECT DOCKNO from WEBX_MR_HDR where MRSNO=@BillMrno)  
+		End   
+		if @BillMrType = '3'  
+		Begin
+			exec usp_TOPayMRTransaction_Cancellation 1,@BillMrno,@finyear,@entryBy  
+			UPDATE webx_trans_docket_status SET MR='N' WHERE DOCKNO in(SELECT DOCKNO from WEBX_MR_HDR where MRSNO=@BillMrno)  
+		End
+		if @BillMrType = '4'  
+		Begin
+			exec usp_OctroiMRTransaction_Cancellation 1,@BillMrno,@finyear,@entryBy
+			UPDATE webx_trans_docket_status SET OCTROIMR='N' WHERE DOCKNO in(SELECT DOCKNO from WEBX_MR_HDR where MRSNO=@BillMrno)  
+			UPDATE WEBX_OCT_DET SET MRSNO=NULL WHERE DOCKNO in(SELECT DOCKNO from WEBX_MR_HDR where MRSNO=@BillMrno)  
+		End  
+		UPDATE WEBX_MR_HDR SET CANCOMMENT=@CancelReason,MR_CANCEL='Y',BCANDT=CONVERT(DATETIME,@Canceldt,106) WHERE MRSNO=@BillMrno  
+	End  
+	if @Type='Bill'  
+	Begin
+		if @BillMrType = '2'  
+		Begin  
+			exec usp_BillTransaction_Cancellation 1,@BillMrno,@finyear
+			Update webx_trans_docket_status set BILLED='N' where dockno in (select dockno from webx_billdet where billno=@BillMrno)  
+		End
+		if @BillMrType = '4'  
+		Begin  
+			exec usp_MiscBillTransaction_Cancellation 1,@BillMrno,@finyear    
+		End
+		if @BillMrType = '6'  
+		Begin
+			exec usp_OctroiBIllTransaction_Cancellation 1,@BillMrno,@finyear
+			Update webx_trans_docket_status set octroibill='N' where dockno in (select dockno from webx_billdet where billno=@BillMrno)  
+			UPDATE WEBX_OCT_DET SET BILLNO=NULL WHERE dockno in (select dockno from webx_billdet where billno=@BillMrno)  
+		End
+		UPDATE WEBX_BILLMST SET BCANDT=CONVERT(DATETIME,@Canceldt,106),CANCOMMENT=@CancelReason,BILL_CANCEL='Y' WHERE BILLNO=@BillMrno   	
+	End  
+END
+
+
+go

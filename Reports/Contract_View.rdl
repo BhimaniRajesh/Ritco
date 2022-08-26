@@ -1,0 +1,2817 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+  <DataSources>
+    <DataSource Name="RPTDS">
+      <DataSourceReference>RPTDS</DataSourceReference>
+      <rd:DataSourceID>09e014c6-903f-4a87-9d49-03e428d15b43</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="ReportStyle">
+      <Fields>
+        <Field Name="BGCOLOR">
+          <DataField>BGCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERCOLOR">
+          <DataField>BORDERCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERSTYLE">
+          <DataField>BORDERSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERWIDTH">
+          <DataField>BORDERWIDTH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR">
+          <DataField>FNTCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE">
+          <DataField>FNTSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY">
+          <DataField>FNTFAMILY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE">
+          <DataField>FNTSIZE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight">
+          <DataField>FNTWeight</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR_HD">
+          <DataField>FNTCOLOR_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE_HD">
+          <DataField>FNTSTYLE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY_HD">
+          <DataField>FNTFAMILY_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE_HD">
+          <DataField>FNTSIZE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight_HD">
+          <DataField>FNTWeight_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BlackFnt">
+          <DataField>BlackFnt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandText>select * from webx_report_style</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="dsDetails">
+      <Fields>
+        <Field Name="custcode">
+          <DataField>custcode</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="custnm">
+          <DataField>custnm</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Contract_Effectdate">
+          <DataField>Contract_Effectdate</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="from_loccode">
+          <DataField>from_loccode</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="to_loccode">
+          <DataField>to_loccode</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="PROD">
+          <DataField>PROD</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="PKGS">
+          <DataField>PKGS</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="RateType">
+          <DataField>RateType</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="rate">
+          <DataField>rate</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="dktchg">
+          <DataField>dktchg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="fovchg">
+          <DataField>fovchg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="stax_yn">
+          <DataField>stax_yn</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_Dkt_Chg">
+          <DataField>Bkg_Dkt_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_Misc_Chg">
+          <DataField>Bkg_Misc_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_DoorDly_Chg">
+          <DataField>Bkg_DoorDly_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_Lab_Chg">
+          <DataField>Bkg_Lab_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_Enor_Chg">
+          <DataField>Bkg_Enor_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_Cart_Chg">
+          <DataField>Bkg_Cart_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_TNC_Chg">
+          <DataField>Bkg_TNC_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_Dkt_Chg">
+          <DataField>Del_Dkt_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_Misc_Chg">
+          <DataField>Del_Misc_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_DoorDly_Chg">
+          <DataField>Del_DoorDly_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_Lab_Chg">
+          <DataField>Del_Lab_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_Enor_Chg">
+          <DataField>Del_Enor_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_Cart_Chg">
+          <DataField>Del_Cart_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_TNC_Chg">
+          <DataField>Del_TNC_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_FOV_Chg">
+          <DataField>Bkg_FOV_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_FOV_Chg">
+          <DataField>Del_FOV_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_DEM_Chg">
+          <DataField>Bkg_DEM_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_SURC_Chg">
+          <DataField>Bkg_SURC_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Bkg_Hold_Chg">
+          <DataField>Bkg_Hold_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_DEM_Chg">
+          <DataField>Del_DEM_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_SURC_Chg">
+          <DataField>Del_SURC_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="Del_Hold_Chg">
+          <DataField>Del_Hold_Chg</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>USP_CustContract_View_Ver1</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@ConractDatetype">
+            <Value>=Parameters!ConractDatetype.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@FromDate">
+            <Value>=Parameters!FromDate.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ToDate">
+            <Value>=Parameters!ToDate.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ConStatus">
+            <Value>=Parameters!ConStatus.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@CustCode">
+            <Value>=Parameters!CustCode.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ContractId">
+            <Value>=Parameters!ContractId.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@Location">
+            <Value>=Parameters!Location.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ContractType">
+            <Value>=Parameters!ContractType.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <Body>
+    <ReportItems>
+      <Textbox Name="textbox86">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Contract View</Value>
+                <Style>
+                  <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                  <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                  <FontSize>20pt</FontSize>
+                  <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                  <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <Top>0.125in</Top>
+        <Height>0.36in</Height>
+        <Width>3.5in</Width>
+        <Style>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Tablix Name="Tablix1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>0.4975in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.69542in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.43208in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox28">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox28</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox28">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>BOOKING</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>19</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox35">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>DELIVERY</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>6</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.36958in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox7">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Sl No.</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox9">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>PARTY NAME</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox10">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>WITH EFFECT DATE</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox11">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>FROM</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox12">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>TO</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox13">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>PRODUCT</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox14">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>PACKING TYPE</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox15">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>RATE TYPE</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox16">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>FREIGHT RATE</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox17">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>DOCKET CHARGE</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox18">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>MISC/PRV Charge</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox19">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>FOV Charge</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox20">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>DEM Charge</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox21">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>SUR Charge</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox22">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>HOLDING Charge</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox23">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>LABOUR Charge</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox24">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>ENROUTE Charge</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox25">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>CARTAGE</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox26">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>TNC</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox27">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>S.TAX APPLICABLE</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox29">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>DLY MR</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox30">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>MSIC/PRV</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox31">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>DOOR DLY</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox32">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>DEM</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox33">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>SUR</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox34">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>LABOUR</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE_HD.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight_HD.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR_HD.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox1</rd:DefaultName>
+                      <ZIndex>225</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "ReportStyle")</BackgroundColor>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID2">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=RowNumber(Nothing)</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="custnm">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!custnm.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>custnm</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID4">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Contract_Effectdate.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID5">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!from_loccode.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID6">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!to_loccode.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID7">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!PROD.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID8">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!PKGS.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID9">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!RateType.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID10">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!rate.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID11">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_Dkt_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID12">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_Misc_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID13">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_FOV_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ID14">
+                      <ToggleImage>
+                        <InitialState>true</InitialState>
+                      </ToggleImage>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_DEM_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ID</rd:DefaultName>
+                      <ZIndex>112</ZIndex>
+                      <DataElementOutput>NoOutput</DataElementOutput>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Bkg_SURC_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_SURC_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Bkg_SURC_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Bkg_Hold_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_Hold_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Bkg_Hold_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Bkg_Lab_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_Lab_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Bkg_Lab_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Bkg_Enor_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_Enor_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Bkg_Enor_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Bkg_Cart_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_Cart_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Bkg_Cart_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Bkg_TNC_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bkg_TNC_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Bkg_TNC_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="stax_yn">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!stax_yn.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>stax_yn</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Del_Misc_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Del_Misc_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Del_Misc_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Del_DoorDly_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Del_DoorDly_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Del_DoorDly_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Del_DEM_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Del_DEM_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Del_DEM_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Del_SURC_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Del_SURC_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Del_SURC_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Del_Lab_Chg">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Del_Lab_Chg.Value</Value>
+                              <Style>
+                                <FontStyle>=First(Fields!FNTSTYLE.Value, "ReportStyle")</FontStyle>
+                                <FontFamily>=First(Fields!FNTFAMILY.Value, "ReportStyle")</FontFamily>
+                                <FontSize>=First(Fields!FNTSIZE.Value, "ReportStyle")</FontSize>
+                                <FontWeight>=First(Fields!FNTWeight.Value, "ReportStyle")</FontWeight>
+                                <Color>=First(Fields!FNTCOLOR.Value, "ReportStyle")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Del_Lab_Chg</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>=First(Fields!BORDERCOLOR.Value, "ReportStyle")</Color>
+                          <Style>=First(Fields!BORDERSTYLE.Value, "ReportStyle")</Style>
+                          <Width>=First(Fields!BORDERWIDTH.Value, "ReportStyle")</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Details" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>dsDetails</DataSetName>
+        <Top>0.65292in</Top>
+        <Height>0.86958in</Height>
+        <Width>27.625in</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <TextAlign>Center</TextAlign>
+        </Style>
+      </Tablix>
+    </ReportItems>
+    <Height>1.5225in</Height>
+    <Style />
+  </Body>
+  <ReportParameters>
+    <ReportParameter Name="ConractDatetype">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>EN</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>ConractDatetype</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="FromDate">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>01 Jun 2007</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>FromDate</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="ToDate">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>28 Feb 2011</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>ToDate</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="ConStatus">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>B</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>ConStatus</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CustCode">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value />
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CustCode</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="ContractId">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value />
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ContractId</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="Location">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value />
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Location</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="ContractType">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ContractType</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+  </ReportParameters>
+  <Width>27.625in</Width>
+  <Page>
+    <LeftMargin>1in</LeftMargin>
+    <RightMargin>1in</RightMargin>
+    <TopMargin>1in</TopMargin>
+    <BottomMargin>1in</BottomMargin>
+    <Style />
+  </Page>
+  <Language>en-US</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportID>cc414eb8-e8cc-4b4b-867e-1c192722a3ec</rd:ReportID>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+</Report>

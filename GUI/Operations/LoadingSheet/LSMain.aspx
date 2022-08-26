@@ -1,0 +1,2190 @@
+<%@ Page Language="C#" MasterPageFile="~/GUI/MasterPage.master" AutoEventWireup="true" CodeFile="LSMain.aspx.cs" Inherits="GUI_Operations_LoadingSheet_LSMain" EnableEventValidation="false" %>
+<%@ OutputCache Location="none" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MyCPH1" Runat="Server">
+    
+    <script language="javascript" type="text/javascript">
+        
+        function update_city(elemValue)
+        {
+            document.getElementById('ctl00_MyCPH1_txtCityFrom').value=elemValue;
+        }
+        
+        function update_city1(elemValue)
+        {
+            document.getElementById('ctl00_MyCPH1_txtCityTo').value=elemValue;
+        }
+        
+        function disableenter()
+        {
+        
+        }
+        
+        function ValidateDocketFromDate(objDocketFromDate, objFocusControl)
+        {
+            if(objDocketFromDate.value == "")
+            {
+                return false;
+            }
+            
+            if(ValidateDate(objDocketFromDate) == false)
+            {
+                return false;
+            }
+            
+            //Check for Docket From Date <= System Date
+            var mSystemDate = "<%=strSystemDate %>";
+            mSystemDate = mSystemDate.substring(3, 5) + "/" + mSystemDate.substring(0, 2) + "/" + mSystemDate.substring(6, 10)
+            
+            var mDocketFromDate = objDocketFromDate.value;
+            mDocketFromDate = mDocketFromDate.substring(3, 5) + "/" + mDocketFromDate.substring(0, 2) + "/" + mDocketFromDate.substring(6, 10)
+            
+            if(findDateDifference(mSystemDate, mDocketFromDate, "d") > 0)
+            {
+                alert(document.getElementById("ctl00_MyCPH1_HidDocket").value + " From Date cannot be Greater than Today's Date, " + "<%=strSystemDate %>" + "!");
+                objFocusControl.focus();
+                return false;
+            }
+            
+            //Check for Docket From Date <= Loading Sheet Date
+            var mLSDate = "";
+            if(document.getElementById("ctl00_MyCPH1_txtLSDate"))
+            {
+                mLSDate = document.getElementById("ctl00_MyCPH1_txtLSDate").value;
+                mLSDate = mLSDate.substring(3, 5) + "/" + mLSDate.substring(0, 2) + "/" + mLSDate.substring(6, 10)
+                
+                if(findDateDifference(mLSDate, mDocketFromDate, "d") > 0)
+                {
+                    alert(document.getElementById("ctl00_MyCPH1_HidDocket").value + " From Date cannot be Greater than " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date, " + document.getElementById("ctl00_MyCPH1_txtLSDate").value + "!");
+                    objFocusControl.focus();
+                    return false;
+                }
+            }
+            else
+            {
+                alert("Input Box for " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date is not available!");
+                return false;
+            }
+            
+            //Check for LS From Date >= LS To Date
+            if(document.getElementById("ctl00_MyCPH1_txtToDate"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_txtToDate").value != "")
+                {
+                    var mDateFrom = objDocketFromDate.value.substring(3, 5) + "/" + objDocketFromDate.value.substring(0, 2) + "/" + objDocketFromDate.value.substring(6, 10)
+                    var mDateTo = document.getElementById("ctl00_MyCPH1_txtToDate").value.substring(3, 5) + "/" + document.getElementById("ctl00_MyCPH1_txtToDate").value.substring(0, 2) + "/" + document.getElementById("ctl00_MyCPH1_txtToDate").value.substring(6, 10)
+                    
+                    //Check for Date From and Date To Date range
+                    if(findDateDifference(mDateFrom, mDateTo, "d") < 0)
+                    {
+                        alert("Enter 'Date From' earlier than 'Date To'");
+                        objFocusControl.focus();
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }
+        
+        function ValidateLSToDate(objDocketToDate, objFocusControl)
+        {
+            if(objDocketToDate.value == "")
+            {
+                return false;
+            }
+            
+            if(ValidateDate(objDocketToDate) == false)
+            {
+                return false;
+            }
+            
+            //Check for Docket From Date <= System Date
+            var mSystemDate = "<%=strSystemDate %>";
+            mSystemDate = mSystemDate.substring(3, 5) + "/" + mSystemDate.substring(0, 2) + "/" + mSystemDate.substring(6, 10)
+            
+            var mDocketToDate = objDocketToDate.value;
+            mDocketToDate = mDocketToDate.substring(3, 5) + "/" + mDocketToDate.substring(0, 2) + "/" + mDocketToDate.substring(6, 10)
+            
+            if(findDateDifference(mSystemDate, mDocketToDate, "d") > 0)
+            {
+                alert(document.getElementById("ctl00_MyCPH1_HidDocket").value + " To Date cannot be Greater than Today's Date, " + "<%=strSystemDate %>" + "!");
+                objFocusControl.focus();
+                return false;
+            }
+            
+            //Check for Docket To Date <= Loading Sheet Date
+            var mLSDate = "";
+            if(document.getElementById("ctl00_MyCPH1_txtLSDate"))
+            {
+                mLSDate = document.getElementById("ctl00_MyCPH1_txtLSDate").value;
+                mLSDate = mLSDate.substring(3, 5) + "/" + mLSDate.substring(0, 2) + "/" + mLSDate.substring(6, 10)
+                
+                if(findDateDifference(mLSDate, mDocketToDate, "d") > 0)
+                {
+                    alert(document.getElementById("ctl00_MyCPH1_HidDocket").value + " To Date cannot be Greater than " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date, " + document.getElementById("ctl00_MyCPH1_txtLSDate").value + "!");
+                    objFocusControl.focus();
+                    return false;
+                }
+            }
+            else
+            {
+                alert("Input Box for " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date is not available!");
+                return false;
+            }
+            
+            //Check for LS From Date >= LS To Date
+            if(document.getElementById("ctl00_MyCPH1_txtFromDate"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_txtFromDate").value != "")
+                {
+                    var mDateFrom = document.getElementById("ctl00_MyCPH1_txtFromDate").value.substring(3, 5) + "/" + document.getElementById("ctl00_MyCPH1_txtFromDate").value.substring(0, 2) + "/" + document.getElementById("ctl00_MyCPH1_txtFromDate").value.substring(6, 10)
+                    var mDateTo = objDocketToDate.value.substring(3, 5) + "/" + objDocketToDate.value.substring(0, 2) + "/" + objDocketToDate.value.substring(6, 10)
+                    
+                    //Check for Date From and Date To Date range
+                    if(findDateDifference(mDateFrom, mDateTo, "d") < 0)
+                    {
+                        alert("Enter 'Date From' earlier than 'Date To'");
+                        objFocusControl.focus();
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }
+    
+        function ValidateLSDate(objLSDate)
+        {
+            if(objLSDate.value == "")
+            {
+                return false;
+            }
+            
+            if(ValidateDate(objLSDate) == false)
+            {
+                return false;
+            }
+            
+            //Check for Loading Sheet Date <= System Date
+            var mSystemDate = "<%=strSystemDate %>";
+            mSystemDate = mSystemDate.substring(3, 5) + "/" + mSystemDate.substring(0, 2) + "/" + mSystemDate.substring(6, 10)
+            
+            var mLSDate = objLSDate.value;
+            mLSDate = mLSDate.substring(3, 5) + "/" + mLSDate.substring(0, 2) + "/" + mLSDate.substring(6, 10)
+            
+            if(findDateDifference(mSystemDate, mLSDate, "d") > 0)
+            {
+                alert(document.getElementById("ctl00_MyCPH1_HidLS").value + " Date cannot be Greater than Today's Date, " + "<%=strSystemDate %>" + "!");
+                objLSDate.focus();
+                return false;
+            }
+            
+            if(document.getElementById("ctl00_MyCPH1_txtFromDate"))
+            {
+                if(ValidateDocketFromDate(document.getElementById("ctl00_MyCPH1_txtFromDate"), objLSDate) == false)
+                {
+                    return false;               
+                }
+            }
+            
+            if(document.getElementById("ctl00_MyCPH1_txtToDate"))
+            {
+                if(ValidateLSToDate(document.getElementById("ctl00_MyCPH1_txtToDate"), objLSDate) == false)
+                {
+                    return false;               
+                }
+            }
+        }
+    
+        function setFocusInFromDate()
+        {
+            if(document.getElementById("ctl00_MyCPH1_txtFromDate"))
+            {
+                document.getElementById("ctl00_MyCPH1_txtFromDate").focus();
+            }
+        }
+        
+        function ClearDocketList()
+        {
+            if(document.getElementById("ctl00_MyCPH1_trDocketList"))
+            {
+                document.getElementById("ctl00_MyCPH1_trDocketList").style.display = "none";
+            }
+        }
+        
+        function ManageAllDockets(objCheckAll, strMode)
+        {
+            var mTotalRecords = 0;
+            var mDerivedControl = "";
+            
+            if(strMode == "1")
+            {
+                if(document.getElementById("ctl00_MyCPH1_HidTotalRecords") && document.getElementById("ctl00_MyCPH1_HidSelectedDocketNos") && document.getElementById("ctl00_MyCPH1_HidSelectedDocketIDs"))
+                {
+                    mTotalRecords = document.getElementById("ctl00_MyCPH1_HidTotalRecords").value;
+                    
+                    for(var mLoopCounter = 0; mLoopCounter < mTotalRecords; mLoopCounter++)
+                    {
+                        mDerivedControlName = "ctl00_MyCPH1_rptDocketList_ctl" + (mLoopCounter > 9 ? "" : "0") + mLoopCounter + "_chkSelDocket";
+                        
+                        if(document.getElementById(mDerivedControlName))
+                        {
+                            document.getElementById(mDerivedControlName).checked = objCheckAll.checked;
+                        }
+                    }
+                    
+                    if(objCheckAll.checked == true)
+                    {
+                        document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value = document.getElementById("ctl00_MyCPH1_HidSelectedDocketNos").value;
+                        //document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value = document.getElementById("ctl00_MyCPH1_HidSelectedDocketIDs").value;
+                    }
+                    else
+                    {
+                        document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value = "";
+                    }
+                }
+                else
+                {
+                    alert("Hidden control not found for either Total No. of Records or Total No. of " + document.getElementById("ctl00_MyCPH1_HidDocket").value + "s!");
+                    return false;
+                }
+            }
+        }
+        
+        function SelectDocket(objDocket)
+        {
+            var strDocketMode = objDocket.DocketMode;
+            var strDocketNo = objDocket.value;
+            var strDocketID = objDocket.DocketID;
+            
+            var mArrSelectedDockets;
+            var mSelectedDockets = "";
+            
+            if(objDocket.checked == true)
+            {
+                if (strDocketMode == "Q")
+                {
+                    alert(document.getElementById("ctl00_MyCPH1_HidDocket").value + " Operationaly Incomplete!");
+                }
+            }
+            
+            if(objDocket.checked == false)
+            {
+                if(document.getElementById("ctl00_MyCPH1_chkAll"))
+                {
+                    if(document.getElementById("ctl00_MyCPH1_chkAll").checked == true)
+                    {
+                        document.getElementById("ctl00_MyCPH1_chkAll").checked = false;
+                    }
+                }
+                
+                if(document.getElementById("ctl00_MyCPH1_HidSelectedDockets"))
+                {
+                    mArrSelectedDockets = document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value.split(",");
+                    
+                    for(var mLoopCounter = 0; mLoopCounter < mArrSelectedDockets.length; mLoopCounter++)
+                    {
+                        if(mArrSelectedDockets[mLoopCounter] != strDocketNo)
+                        {
+                            mSelectedDockets = (mSelectedDockets == "" ? mArrSelectedDockets[mLoopCounter] : mSelectedDockets + "," + mArrSelectedDockets[mLoopCounter]);
+                        }
+                    }
+                    
+                    document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value = mSelectedDockets;
+                }
+            }
+            else
+            {
+                //document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value = (document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value == "" ? strDocketID : document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value + "," + strDocketID);
+                document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value = (document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value == "" ? strDocketNo : document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value + "," + strDocketNo);
+                
+                var mTotalRecords = 0;
+                var mDerivedControl = "";
+                var mFlag = 0;
+                
+                if(document.getElementById("ctl00_MyCPH1_HidTotalRecords"))
+                {
+                    mTotalRecords = document.getElementById("ctl00_MyCPH1_HidTotalRecords").value;
+                    
+                    for(var mLoopCounter = 0; mLoopCounter < mTotalRecords; mLoopCounter++)
+                    {
+                        mDerivedControlName = "ctl00_MyCPH1_rptDocketList_ctl" + (mLoopCounter > 9 ? "" : "0") + mLoopCounter + "_chkSelDocket";
+                        
+                        if(document.getElementById(mDerivedControlName))
+                        {
+                            if(document.getElementById(mDerivedControlName).checked == false)
+                            {
+                                mFlag = 1;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if(document.getElementById("ctl00_MyCPH1_chkAll"))
+                    {
+                        document.getElementById("ctl00_MyCPH1_chkAll").checked = (mFlag == 0 ? true : false);
+                    }   
+                }
+                else
+                {
+                    alert("Hidden control not found for either Total No. of Records or Total No. of " + document.getElementById("ctl00_MyCPH1_HidDocket").value + "s!");
+                    return false;
+                }
+            }
+        }        
+        
+        function OpenInWindow(windURL, h, w, l, t)
+        {
+		    var winOpts = "scrollbars=yes,resizable=yes,width="+w+",height="+h+"";
+		    
+		    window.open(windURL, "", winOpts);
+	    }
+	    
+	    function checkTotalPackagesWeight(objTotalPackagesWeight)
+	    {
+	        objTotalPackagesWeight.value = trimAll(objTotalPackagesWeight.value);
+	        var mOrgValue = objTotalPackagesWeight.OrgValue;
+	        var mAlertMessageKeyword = objTotalPackagesWeight.AlertMessageKeyword;
+	        
+	        if(objTotalPackagesWeight.value != '')
+	        {
+			    if(!isNaN(objTotalPackagesWeight.value))
+		        {
+			        if(parseInt(objTotalPackagesWeight.value) <= 0)
+			        {
+				        alert('Entered ' + mAlertMessageKeyword + ' cannot be Less than Or Equal to ZERO :(');
+				        objTotalPackagesWeight.value = mOrgValue;
+				        objTotalPackagesWeight.focus();
+			        }
+		
+			        if(parseInt(objTotalPackagesWeight.value) > mOrgValue)
+			        {
+				        alert('Entered ' + mAlertMessageKeyword + ' greater than Actual Pkgs!');
+				        objTotalPackagesWeight.value = mOrgValue;
+				        objTotalPackagesWeight.focus();
+		        	}
+			    }
+			    else
+			    {
+				    alert('Invalid ' + mAlertMessageKeyword + '!');
+				    objTotalPackagesWeight.value = mOrgValue;
+				    objTotalPackagesWeight.focus();
+			    }
+		    }
+		    else
+		    {
+			    alert(mAlertMessageKeyword + ' must be Entered!');
+			    objTotalPackagesWeight.value = mOrgValue;
+			    objTotalPackagesWeight.focus();
+		    }
+	    }
+    	    
+    </script>
+    
+    <script language="javascript" type="text/javascript">
+            
+        // JScript File
+
+        var months = new Array("","January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December");
+
+        var dtCh= "/";
+        var minYear=1900;
+        var maxYear=2100;
+
+        function isInteger(s)
+        {
+            for (var i = 0; i < s.length; i++)
+            {   
+                // Check that current character is number.
+                var c = s.charAt(i);
+                if (((c < "0") || (c > "9"))) return false;
+            }
+            // All characters are numbers.
+            return true;
+        }
+
+        function stripCharsInBag(s, bag)
+        {
+            var returnString = "";
+            // Search through string's characters one by one.
+            // If character is not in bag, append to returnString.
+            for (var i = 0; i < s.length; i++)
+            {   
+                var c = s.charAt(i);
+                if (bag.indexOf(c) == -1) returnString += c;
+            }
+            
+            return returnString;
+        }
+
+        function daysInFebruary (year)
+        {
+	        // February has 29 days in any year evenly divisible by four,
+            // EXCEPT for centurial years which are not also divisible by 400.
+            return (((year % 4 == 0) && ( (!(year % 100 == 0)) || (year % 400 == 0))) ? 29 : 28 );
+        }
+
+        function DaysArray(n)
+        {
+            for (var i = 1; i <= n; i++)
+            {
+		        this[i] = 31
+		        if (i==4 || i==6 || i==9 || i==11) {this[i] = 30}
+		        if (i==2) {this[i] = 29}
+            }
+            
+            return this
+        }
+
+        function isDate1(dtStr)
+        {
+	        var daysInMonth = DaysArray(12)
+	        var pos1 = dtStr.indexOf(dtCh)
+	        var pos2 = dtStr.indexOf(dtCh,pos1+1)
+	        var strDay = dtStr.substring(0,pos1)
+	        var strMonth = dtStr.substring(pos1+1,pos2)
+	        var strYear = dtStr.substring(pos2+1)
+        	
+	        strYr = strYear
+        	
+	        if (strDay.charAt(0)=="0" && strDay.length>1) strDay=strDay.substring(1)
+	        if (strMonth.charAt(0)=="0" && strMonth.length>1) strMonth=strMonth.substring(1)
+        	
+	        for (var i = 1; i <= 3; i++)
+	        {
+		        if (strYr.charAt(0)=="0" && strYr.length>1) strYr=strYr.substring(1)
+	        }
+        	
+	        month = parseInt(strMonth)
+	        day = parseInt(strDay)
+	        year = parseInt(strYr)
+        	
+	        if (pos1==-1 || pos2==-1)
+	        {
+		        alert("The date format should be : dd/mm/yyyy")
+		        return false
+	        }
+        	
+	        if (strDay.length<1 || day<1 || day>31 || (month==2 && day>daysInFebruary(year)) || day > daysInMonth[month])
+	        {
+		        alert("Please enter a valid day")
+		        return false
+	        }
+        	
+	        if (strMonth.length<1 || month<1 || month>12)
+	        {
+		        alert("Please enter a valid month")
+		        return false
+	        }
+        	
+	        if (strYear.length != 4 || year==0 || year<minYear || year>maxYear)
+	        {
+		        alert("Please enter a valid 4 digit year between "+minYear+" and "+maxYear)
+		        return false
+	        }
+        	
+	        if (dtStr.indexOf(dtCh,pos2+1)!=-1 || isInteger(stripCharsInBag(dtStr, dtCh))==false)
+	        {
+		        alert("Please enter a valid date")
+		        return false
+	        }
+        	
+            return true
+        }
+
+        function ValidateDate(obj)
+        {  
+            if (obj.value!="")
+            {
+	            var dockdt=obj.value
+        	
+		        if(dockdt.length<10)
+		        {
+		            alert("Please enter the date in dd/mm/yyyy format")
+		            obj.focus();
+		            return false;
+		        }
+        	
+	            if (isDate1(obj.value)==false)
+	            {
+		            obj.focus()
+		            return false
+	            }
+        	    
+                return true
+            }  
+        }
+         
+        function MyDateDiff( start, end, interval, rounding )
+        {
+            var iOut = 0;
+            var bufferA = Date.parse( start ) ;
+            var bufferB = Date.parse( end ) ;
+            	
+            // check that the start parameter is a valid Date. 
+            if ( isNaN (bufferA) || isNaN (bufferB) )
+            {
+                alert( startMsg ) ;
+                return null ;
+            }
+        	
+            // check that an interval parameter was not numeric. 
+            if ( interval.charAt == 'undefined' )
+            {
+                // the user specified an incorrect interval, handle the error. 
+                alert( intervalMsg ) ;
+                return null ;
+            }
+            
+            var number = bufferB-bufferA ;
+            
+            // what kind of add to do? 
+            switch (interval.charAt(0))
+            {
+                case 'd': case 'D': 
+                    iOut = parseInt(number / 86400000) ;
+                    if(rounding) iOut += parseInt((number % 86400000)/43200001) ;
+                    break ;
+                case 'h': case 'H':
+                    iOut = parseInt(number / 3600000 ) ;
+                    if(rounding) iOut += parseInt((number % 3600000)/1800001) ;
+                    break ;
+                case 'm': case 'M':
+                    iOut = parseInt(number / 60000 ) ;
+                    if(rounding) iOut += parseInt((number % 60000)/30001) ;
+                    break ;
+                case 's': case 'S':
+                    iOut = parseInt(number / 1000 ) ;
+                    if(rounding) iOut += parseInt((number % 1000)/501) ;
+                    break ;
+                default:
+                // If we get to here then the interval parameter
+                // didn't meet the d,h,m,s criteria.  Handle
+                // the error. 		
+                alert(intervalMsg) ;
+                return null ;
+            }
+            
+            return iOut ;
+        }
+
+        function trimAll(strValue) 
+        {
+            //Trimming left most white space characters
+            while (strValue.substring(0,1) == ' ')
+            {
+                strValue = strValue.substring(1, strValue.length);
+            }
+            //Trimming right most white space characters
+            while (strValue.substring(strValue.length-1, strValue.length) == ' ')
+            {
+                strValue = strValue.substring(0, strValue.length-1);
+            }
+            
+            return strValue;
+        }
+
+        function IsNumeric(sText)
+        {
+           var ValidChars = "0123456789.";
+           var IsNumber=true;
+           var Char;
+
+           for (i = 0; i < sText.length && IsNumber == true; i++) 
+           { 
+              Char = sText.charAt(i); 
+              
+              if (ValidChars.indexOf(Char) == -1) 
+              {
+                IsNumber = false;
+              }
+           }
+           
+           return IsNumber;
+        }
+
+        function Nagative_Chk_wDecimal(obj)
+        {
+	        var temp = trimAll(obj.value) 
+        	
+	        if (temp == "")	
+	        {
+		        /*alert("Value can not be blank")
+		        obj.focus();
+		        return false;*/
+		        return true;
+	        }
+        	
+	        if(isNaN(temp))
+	        {
+		        alert("Value should be Numeric")
+		        obj.focus();
+		        return false;
+	        } 				
+        		  
+	        if(parseFloat(temp) < 0)
+	        {
+		        alert("Value should be greater than zero")
+		        obj.focus();
+		        return false;
+	        }
+        	
+	        obj.value=roundit(temp) 
+        	
+	        return true;					   
+        }
+        	
+        function Nagative_Chk_woDecimal(obj)
+        {
+	        var temp = obj.value 
+        						
+	        if (temp == "")	
+	        {
+		        alert("Value can not be blank")
+		        obj.focus();
+		        return false;
+	        }
+        	
+	        if(isNaN(temp))
+	        {
+		        alert("Value should be Numeric")
+		        obj.focus();
+		        return false;
+	        } 					  
+        	
+	        if(parseFloat(temp)<0)
+	        {
+		        alert("Value should be greater than zero")
+		        obj.focus();
+		        return false;
+	        }
+        	
+	        if(temp.indexOf(".") > 0)
+	        {
+		        alert("Value should not contain decimal point")
+		        obj.focus();
+		        return false;
+	        } 
+        	
+	        obj.value=Math.round(temp)
+        	 	
+	        return true;					 				   
+        }
+
+        function rounditn(Num, decplaces)
+        {
+	        Places = decplaces
+        	
+            if (Places > 0) 
+	        {
+	            if ((Num.toString().length - Num.toString().lastIndexOf('.')) > (Places+1)) 
+		        {
+			        if (Num.toString().lastIndexOf('.') < 0) 
+			        {
+				        return Num.toString() +'.00';
+			        }
+        			
+			        var Rounder = Math.pow(10, Places);
+        			
+			        return Math.round(Num * Rounder) / Rounder;
+		        }
+		        else 
+		        {
+			        if (Num.toString().lastIndexOf('.') < 0) 
+			        {
+				        return Num.toString() +'.00';
+			        }
+			        else
+			        {  
+				        if (Num.toString().lastIndexOf('.')+1==Num.toString().length-1)
+					        return Num.toString() +'0';	
+				        else
+					        return Num.toString();				   
+    		        }
+		        }
+	        }
+	        else
+	        {
+	            return Math.round(Num);
+            }
+        }
+
+        function roundit(Num)
+        {
+	        Places = 2
+        	
+	        if (Places > 0)
+	        {
+		        if ((Num.toString().length - Num.toString().lastIndexOf('.')) > (Places+1)) 
+		        {
+			        if (Num.toString().lastIndexOf('.') < 0) 
+			        {
+				        return Num.toString() + '.00';
+			        }
+        			
+			        var Rounder = Math.pow(10, Places);
+        			
+			        return Math.round(Num * Rounder) / Rounder;
+		        }
+		        else 
+		        {
+			        if (Num.toString().lastIndexOf('.') < 0) 
+			        {
+				        return Num.toString() +'.00';
+			        }
+			        else
+			        {  
+				        if (Num.toString().lastIndexOf('.')+1==Num.toString().length-1)
+				        {
+					        return Num.toString() +'0';
+				        }
+				        else
+				        {
+					        return Num.toString();
+				        }
+			        }
+		        }
+	        }
+	        else
+	        {
+	            return Math.round(Num);
+	        }
+        }
+        
+    </script>
+        
+    <script language="javascript" type="text/javascript">
+            
+        // ===================================================================
+        // Author: Matt Kruse <matt@mattkruse.com>
+        // WWW: http://www.mattkruse.com/
+        //
+        // NOTICE: You may use this code for any purpose, commercial or
+        // private, without any further permission from the author. You may
+        // remove this notice from your final code if you wish, however it is
+        // appreciated by the author if at least my web site address is kept.
+        //
+        // You may *NOT* re-distribute this code in any way except through its
+        // use. That means, you can include it in your product, or your web
+        // site, or any other form where the code is actually being used. You
+        // may not put the plain javascript up on your site for download or
+        // include it in your javascript libraries for download. 
+        // If you wish to share this code with others, please just point them
+        // to the URL instead.
+        // Please DO NOT link directly to my .js files from your site. Copy
+        // the files to your server and use them there. Thank you.
+        // ===================================================================
+
+        /* SOURCE FILE: AnchorPosition.js */
+        function getAnchorPosition(anchorname){var useWindow=false;var coordinates=new Object();var x=0,y=0;var use_gebi=false, use_css=false, use_layers=false;if(document.getElementById){use_gebi=true;}else if(document.all){use_css=true;}else if(document.layers){use_layers=true;}if(use_gebi && document.all){x=AnchorPosition_getPageOffsetLeft(document.all[anchorname]);y=AnchorPosition_getPageOffsetTop(document.all[anchorname]);}else if(use_gebi){var o=document.getElementById(anchorname);x=AnchorPosition_getPageOffsetLeft(o);y=AnchorPosition_getPageOffsetTop(o);}else if(use_css){x=AnchorPosition_getPageOffsetLeft(document.all[anchorname]);y=AnchorPosition_getPageOffsetTop(document.all[anchorname]);}else if(use_layers){var found=0;for(var i=0;i<document.anchors.length;i++){if(document.anchors[i].name==anchorname){found=1;break;}}if(found==0){coordinates.x=0;coordinates.y=0;return coordinates;}x=document.anchors[i].x;y=document.anchors[i].y;}else{coordinates.x=0;coordinates.y=0;return coordinates;}coordinates.x=x;coordinates.y=y;return coordinates;}
+        function getAnchorWindowPosition(anchorname){var coordinates=getAnchorPosition(anchorname);var x=0;var y=0;if(document.getElementById){if(isNaN(window.screenX)){x=coordinates.x-document.body.scrollLeft+window.screenLeft;y=coordinates.y-document.body.scrollTop+window.screenTop;}else{x=coordinates.x+window.screenX+(window.outerWidth-window.innerWidth)-window.pageXOffset;y=coordinates.y+window.screenY+(window.outerHeight-24-window.innerHeight)-window.pageYOffset;}}else if(document.all){x=coordinates.x-document.body.scrollLeft+window.screenLeft;y=coordinates.y-document.body.scrollTop+window.screenTop;}else if(document.layers){x=coordinates.x+window.screenX+(window.outerWidth-window.innerWidth)-window.pageXOffset;y=coordinates.y+window.screenY+(window.outerHeight-24-window.innerHeight)-window.pageYOffset;}coordinates.x=x;coordinates.y=y;return coordinates;}
+        function AnchorPosition_getPageOffsetLeft(el){var ol=el.offsetLeft;while((el=el.offsetParent) != null){ol += el.offsetLeft;}return ol;}
+        function AnchorPosition_getWindowOffsetLeft(el){return AnchorPosition_getPageOffsetLeft(el)-document.body.scrollLeft;}
+        function AnchorPosition_getPageOffsetTop(el){var ot=el.offsetTop;while((el=el.offsetParent) != null){ot += el.offsetTop;}return ot;}
+        function AnchorPosition_getWindowOffsetTop(el){return AnchorPosition_getPageOffsetTop(el)-document.body.scrollTop;}
+
+        /* SOURCE FILE: date.js */
+        var MONTH_NAMES=new Array('January','February','March','April','May','June','July','August','September','October','November','December','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');var DAY_NAMES=new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sun','Mon','Tue','Wed','Thu','Fri','Sat');
+        function LZ(x){return(x<0||x>9?"":"0")+x}
+        function isDate(val,format){var date=getDateFromFormat(val,format);if(date==0){return false;}return true;}
+        function compareDates(date1,dateformat1,date2,dateformat2){var d1=getDateFromFormat(date1,dateformat1);var d2=getDateFromFormat(date2,dateformat2);if(d1==0 || d2==0){return -1;}else if(d1 > d2){return 1;}return 0;}
+        function formatDate(date,format){format=format+"";var result="";var i_format=0;var c="";var token="";var y=date.getYear()+"";var M=date.getMonth()+1;var d=date.getDate();var E=date.getDay();var H=date.getHours();var m=date.getMinutes();var s=date.getSeconds();var yyyy,yy,MMM,MM,dd,hh,h,mm,ss,ampm,HH,H,KK,K,kk,k;var value=new Object();if(y.length < 4){y=""+(y-0+1900);}value["y"]=""+y;value["yyyy"]=y;value["yy"]=y.substring(2,4);value["M"]=M;value["MM"]=LZ(M);value["MMM"]=MONTH_NAMES[M-1];value["NNN"]=MONTH_NAMES[M+11];value["d"]=d;value["dd"]=LZ(d);value["E"]=DAY_NAMES[E+7];value["EE"]=DAY_NAMES[E];value["H"]=H;value["HH"]=LZ(H);if(H==0){value["h"]=12;}else if(H>12){value["h"]=H-12;}else{value["h"]=H;}value["hh"]=LZ(value["h"]);if(H>11){value["K"]=H-12;}else{value["K"]=H;}value["k"]=H+1;value["KK"]=LZ(value["K"]);value["kk"]=LZ(value["k"]);if(H > 11){value["a"]="PM";}else{value["a"]="AM";}value["m"]=m;value["mm"]=LZ(m);value["s"]=s;value["ss"]=LZ(s);while(i_format < format.length){c=format.charAt(i_format);token="";while((format.charAt(i_format)==c) &&(i_format < format.length)){token += format.charAt(i_format++);}if(value[token] != null){result=result + value[token];}else{result=result + token;}}return result;}
+        function _isInteger(val){var digits="1234567890";for(var i=0;i < val.length;i++){if(digits.indexOf(val.charAt(i))==-1){return false;}}return true;}
+        function _getInt(str,i,minlength,maxlength){for(var x=maxlength;x>=minlength;x--){var token=str.substring(i,i+x);if(token.length < minlength){return null;}if(_isInteger(token)){return token;}}return null;}
+        function getDateFromFormat(val,format){val=val+"";format=format+"";var i_val=0;var i_format=0;var c="";var token="";var token2="";var x,y;var now=new Date();var year=now.getYear();var month=now.getMonth()+1;var date=1;var hh=now.getHours();var mm=now.getMinutes();var ss=now.getSeconds();var ampm="";while(i_format < format.length){c=format.charAt(i_format);token="";while((format.charAt(i_format)==c) &&(i_format < format.length)){token += format.charAt(i_format++);}if(token=="yyyy" || token=="yy" || token=="y"){if(token=="yyyy"){x=4;y=4;}if(token=="yy"){x=2;y=2;}if(token=="y"){x=2;y=4;}year=_getInt(val,i_val,x,y);if(year==null){return 0;}i_val += year.length;if(year.length==2){if(year > 70){year=1900+(year-0);}else{year=2000+(year-0);}}}else if(token=="MMM"||token=="NNN"){month=0;for(var i=0;i<MONTH_NAMES.length;i++){var month_name=MONTH_NAMES[i];if(val.substring(i_val,i_val+month_name.length).toLowerCase()==month_name.toLowerCase()){if(token=="MMM"||(token=="NNN"&&i>11)){month=i+1;if(month>12){month -= 12;}i_val += month_name.length;break;}}}if((month < 1)||(month>12)){return 0;}}else if(token=="EE"||token=="E"){for(var i=0;i<DAY_NAMES.length;i++){var day_name=DAY_NAMES[i];if(val.substring(i_val,i_val+day_name.length).toLowerCase()==day_name.toLowerCase()){i_val += day_name.length;break;}}}else if(token=="MM"||token=="M"){month=_getInt(val,i_val,token.length,2);if(month==null||(month<1)||(month>12)){return 0;}i_val+=month.length;}else if(token=="dd"||token=="d"){date=_getInt(val,i_val,token.length,2);if(date==null||(date<1)||(date>31)){return 0;}i_val+=date.length;}else if(token=="hh"||token=="h"){hh=_getInt(val,i_val,token.length,2);if(hh==null||(hh<1)||(hh>12)){return 0;}i_val+=hh.length;}else if(token=="HH"||token=="H"){hh=_getInt(val,i_val,token.length,2);if(hh==null||(hh<0)||(hh>23)){return 0;}i_val+=hh.length;}else if(token=="KK"||token=="K"){hh=_getInt(val,i_val,token.length,2);if(hh==null||(hh<0)||(hh>11)){return 0;}i_val+=hh.length;}else if(token=="kk"||token=="k"){hh=_getInt(val,i_val,token.length,2);if(hh==null||(hh<1)||(hh>24)){return 0;}i_val+=hh.length;hh--;}else if(token=="mm"||token=="m"){mm=_getInt(val,i_val,token.length,2);if(mm==null||(mm<0)||(mm>59)){return 0;}i_val+=mm.length;}else if(token=="ss"||token=="s"){ss=_getInt(val,i_val,token.length,2);if(ss==null||(ss<0)||(ss>59)){return 0;}i_val+=ss.length;}else if(token=="a"){if(val.substring(i_val,i_val+2).toLowerCase()=="am"){ampm="AM";}else if(val.substring(i_val,i_val+2).toLowerCase()=="pm"){ampm="PM";}else{return 0;}i_val+=2;}else{if(val.substring(i_val,i_val+token.length)!=token){return 0;}else{i_val+=token.length;}}}if(i_val != val.length){return 0;}if(month==2){if( ((year%4==0)&&(year%100 != 0) ) ||(year%400==0) ){if(date > 29){return 0;}}else{if(date > 28){return 0;}}}if((month==4)||(month==6)||(month==9)||(month==11)){if(date > 30){return 0;}}if(hh<12 && ampm=="PM"){hh=hh-0+12;}else if(hh>11 && ampm=="AM"){hh-=12;}var newdate=new Date(year,month-1,date,hh,mm,ss);return newdate.getTime();}
+        function parseDate(val){var preferEuro=(arguments.length==2)?arguments[1]:false;generalFormats=new Array('y-M-d','MMM d, y','MMM d,y','y-MMM-d','d-MMM-y','MMM d');monthFirst=new Array('M/d/y','M-d-y','M.d.y','MMM-d','M/d','M-d');dateFirst =new Array('d/M/y','d-M-y','d.M.y','d-MMM','d/M','d-M');var checkList=new Array('generalFormats',preferEuro?'dateFirst':'monthFirst',preferEuro?'monthFirst':'dateFirst');var d=null;for(var i=0;i<checkList.length;i++){var l=window[checkList[i]];for(var j=0;j<l.length;j++){d=getDateFromFormat(val,l[j]);if(d!=0){return new Date(d);}}}return null;}
+
+        /* SOURCE FILE: PopupWindow.js */
+        function PopupWindow_getXYPosition(anchorname){var coordinates;if(this.type == "WINDOW"){coordinates = getAnchorWindowPosition(anchorname);}else{coordinates = getAnchorPosition(anchorname);}this.x = coordinates.x;this.y = coordinates.y;}
+        function PopupWindow_setSize(width,height){this.width = width;this.height = height;}
+        function PopupWindow_populate(contents){this.contents = contents;this.populated = false;}
+        function PopupWindow_setUrl(url){this.url = url;}
+        function PopupWindow_setWindowProperties(props){this.windowProperties = props;}
+        function PopupWindow_refresh(){if(this.divName != null){if(this.use_gebi){document.getElementById(this.divName).innerHTML = this.contents;}else if(this.use_css){document.all[this.divName].innerHTML = this.contents;}else if(this.use_layers){var d = document.layers[this.divName];d.document.open();d.document.writeln(this.contents);d.document.close();}}else{if(this.popupWindow != null && !this.popupWindow.closed){if(this.url!=""){this.popupWindow.location.href=this.url;}else{this.popupWindow.document.open();this.popupWindow.document.writeln(this.contents);this.popupWindow.document.close();}this.popupWindow.focus();}}}
+        function PopupWindow_showPopup(anchorname){this.getXYPosition(anchorname);this.x += this.offsetX;this.y += this.offsetY;if(!this.populated &&(this.contents != "")){this.populated = true;this.refresh();}if(this.divName != null){if(this.use_gebi){document.getElementById(this.divName).style.left = this.x + "px";document.getElementById(this.divName).style.top = this.y + "px";document.getElementById(this.divName).style.visibility = "visible";}else if(this.use_css){document.all[this.divName].style.left = this.x;document.all[this.divName].style.top = this.y;document.all[this.divName].style.visibility = "visible";}else if(this.use_layers){document.layers[this.divName].left = this.x;document.layers[this.divName].top = this.y;document.layers[this.divName].visibility = "visible";}}else{if(this.popupWindow == null || this.popupWindow.closed){if(this.x<0){this.x=0;}if(this.y<0){this.y=0;}if(screen && screen.availHeight){if((this.y + this.height) > screen.availHeight){this.y = screen.availHeight - this.height;}}if(screen && screen.availWidth){if((this.x + this.width) > screen.availWidth){this.x = screen.availWidth - this.width;}}var avoidAboutBlank = window.opera ||( document.layers && !navigator.mimeTypes['*']) || navigator.vendor == 'KDE' ||( document.childNodes && !document.all && !navigator.taintEnabled);this.popupWindow = window.open(avoidAboutBlank?"":"about:blank","window_"+anchorname,this.windowProperties+",width="+this.width+",height="+this.height+",screenX="+this.x+",left="+this.x+",screenY="+this.y+",top="+this.y+"");}this.refresh();}}
+        function PopupWindow_hidePopup(){if(this.divName != null){if(this.use_gebi){document.getElementById(this.divName).style.visibility = "hidden";}else if(this.use_css){document.all[this.divName].style.visibility = "hidden";}else if(this.use_layers){document.layers[this.divName].visibility = "hidden";}}else{if(this.popupWindow && !this.popupWindow.closed){this.popupWindow.close();this.popupWindow = null;}}}
+        function PopupWindow_isClicked(e){if(this.divName != null){if(this.use_layers){var clickX = e.pageX;var clickY = e.pageY;var t = document.layers[this.divName];if((clickX > t.left) &&(clickX < t.left+t.clip.width) &&(clickY > t.top) &&(clickY < t.top+t.clip.height)){return true;}else{return false;}}else if(document.all){var t = window.event.srcElement;while(t.parentElement != null){if(t.id==this.divName){return true;}t = t.parentElement;}return false;}else if(this.use_gebi && e){var t = e.originalTarget;while(t.parentNode != null){if(t.id==this.divName){return true;}t = t.parentNode;}return false;}return false;}return false;}
+        function PopupWindow_hideIfNotClicked(e){if(this.autoHideEnabled && !this.isClicked(e)){this.hidePopup();}}
+        function PopupWindow_autoHide(){this.autoHideEnabled = true;}
+        function PopupWindow_hidePopupWindows(e){for(var i=0;i<popupWindowObjects.length;i++){if(popupWindowObjects[i] != null){var p = popupWindowObjects[i];p.hideIfNotClicked(e);}}}
+        function PopupWindow_attachListener(){if(document.layers){document.captureEvents(Event.MOUSEUP);}window.popupWindowOldEventListener = document.onmouseup;if(window.popupWindowOldEventListener != null){document.onmouseup = new Function("window.popupWindowOldEventListener();PopupWindow_hidePopupWindows();");}else{document.onmouseup = PopupWindow_hidePopupWindows;}}
+        function PopupWindow(){if(!window.popupWindowIndex){window.popupWindowIndex = 0;}if(!window.popupWindowObjects){window.popupWindowObjects = new Array();}if(!window.listenerAttached){window.listenerAttached = true;PopupWindow_attachListener();}this.index = popupWindowIndex++;popupWindowObjects[this.index] = this;this.divName = null;this.popupWindow = null;this.width=0;this.height=0;this.populated = false;this.visible = false;this.autoHideEnabled = false;this.contents = "";this.url="";this.windowProperties="toolbar=no,location=no,status=no,menubar=no,scrollbars=auto,resizable,alwaysRaised,dependent,titlebar=no";if(arguments.length>0){this.type="DIV";this.divName = arguments[0];}else{this.type="WINDOW";}this.use_gebi = false;this.use_css = false;this.use_layers = false;if(document.getElementById){this.use_gebi = true;}else if(document.all){this.use_css = true;}else if(document.layers){this.use_layers = true;}else{this.type = "WINDOW";}this.offsetX = 0;this.offsetY = 0;this.getXYPosition = PopupWindow_getXYPosition;this.populate = PopupWindow_populate;this.setUrl = PopupWindow_setUrl;this.setWindowProperties = PopupWindow_setWindowProperties;this.refresh = PopupWindow_refresh;this.showPopup = PopupWindow_showPopup;this.hidePopup = PopupWindow_hidePopup;this.setSize = PopupWindow_setSize;this.isClicked = PopupWindow_isClicked;this.autoHide = PopupWindow_autoHide;this.hideIfNotClicked = PopupWindow_hideIfNotClicked;}
+
+        /* SOURCE FILE: CalendarPopup.js */
+
+        function CalendarPopup(){var c;if(arguments.length>0){c = new PopupWindow(arguments[0]);}else{c = new PopupWindow();c.setSize(150,175);}c.offsetX = -90;c.offsetY = 25;c.autoHide();c.monthNames = new Array("January","February","March","April","May","June","July","August","September","October","November","December");c.monthAbbreviations = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");c.dayHeaders = new Array("S","M","T","W","T","F","S");c.returnFunction = "CP_tmpReturnFunction";c.returnMonthFunction = "CP_tmpReturnMonthFunction";c.returnQuarterFunction = "CP_tmpReturnQuarterFunction";c.returnYearFunction = "CP_tmpReturnYearFunction";c.weekStartDay = 0;c.isShowYearNavigation = false;c.displayType = "date";c.disabledWeekDays = new Object();c.disabledDatesExpression = "";c.yearSelectStartOffset = 35;c.currentDate = null;c.todayText="Today";c.cssPrefix="";c.isShowNavigationDropdowns=false;c.isShowYearNavigationInput=false;window.CP_calendarObject = null;window.CP_targetInput = null;window.CP_dateFormat = "MM/dd/yyyy";c.copyMonthNamesToWindow = CP_copyMonthNamesToWindow;c.setReturnFunction = CP_setReturnFunction;c.setReturnMonthFunction = CP_setReturnMonthFunction;c.setReturnQuarterFunction = CP_setReturnQuarterFunction;c.setReturnYearFunction = CP_setReturnYearFunction;c.setMonthNames = CP_setMonthNames;c.setMonthAbbreviations = CP_setMonthAbbreviations;c.setDayHeaders = CP_setDayHeaders;c.setWeekStartDay = CP_setWeekStartDay;c.setDisplayType = CP_setDisplayType;c.setDisabledWeekDays = CP_setDisabledWeekDays;c.addDisabledDates = CP_addDisabledDates;c.setYearSelectStartOffset = CP_setYearSelectStartOffset;c.setTodayText = CP_setTodayText;c.showYearNavigation = CP_showYearNavigation;c.showCalendar = CP_showCalendar;c.hideCalendar = CP_hideCalendar;c.getStyles = getCalendarStyles;c.refreshCalendar = CP_refreshCalendar;c.getCalendar = CP_getCalendar;c.select = CP_select;c.setCssPrefix = CP_setCssPrefix;c.showNavigationDropdowns = CP_showNavigationDropdowns;c.showYearNavigationInput = CP_showYearNavigationInput;c.copyMonthNamesToWindow();return c;}
+        function CP_copyMonthNamesToWindow(){if(typeof(window.MONTH_NAMES)!="undefined" && window.MONTH_NAMES!=null){window.MONTH_NAMES = new Array();for(var i=0;i<this.monthNames.length;i++){window.MONTH_NAMES[window.MONTH_NAMES.length] = this.monthNames[i];}for(var i=0;i<this.monthAbbreviations.length;i++){window.MONTH_NAMES[window.MONTH_NAMES.length] = this.monthAbbreviations[i];}}}
+        function CP_tmpReturnFunction(y,m,d){if(window.CP_targetInput!=null){var dt = new Date(y,m-1,d,0,0,0);if(window.CP_calendarObject!=null){window.CP_calendarObject.copyMonthNamesToWindow();}window.CP_targetInput.value = formatDate(dt,window.CP_dateFormat);}else{alert('Use setReturnFunction() to define which function will get the clicked results!');}}
+        function CP_tmpReturnMonthFunction(y,m){alert('Use setReturnMonthFunction() to define which function will get the clicked results!\nYou clicked: year='+y+' , month='+m);}
+        function CP_tmpReturnQuarterFunction(y,q){alert('Use setReturnQuarterFunction() to define which function will get the clicked results!\nYou clicked: year='+y+' , quarter='+q);}
+        function CP_tmpReturnYearFunction(y){alert('Use setReturnYearFunction() to define which function will get the clicked results!\nYou clicked: year='+y);}
+        function CP_setReturnFunction(name){this.returnFunction = name;}
+        function CP_setReturnMonthFunction(name){this.returnMonthFunction = name;}
+        function CP_setReturnQuarterFunction(name){this.returnQuarterFunction = name;}
+        function CP_setReturnYearFunction(name){this.returnYearFunction = name;}
+        function CP_setMonthNames(){for(var i=0;i<arguments.length;i++){this.monthNames[i] = arguments[i];}this.copyMonthNamesToWindow();}
+        function CP_setMonthAbbreviations(){for(var i=0;i<arguments.length;i++){this.monthAbbreviations[i] = arguments[i];}this.copyMonthNamesToWindow();}
+        function CP_setDayHeaders(){for(var i=0;i<arguments.length;i++){this.dayHeaders[i] = arguments[i];}}
+        function CP_setWeekStartDay(day){this.weekStartDay = day;}
+        function CP_showYearNavigation(){this.isShowYearNavigation =(arguments.length>0)?arguments[0]:true;}
+        function CP_setDisplayType(type){if(type!="date"&&type!="week-end"&&type!="month"&&type!="quarter"&&type!="year"){alert("Invalid display type! Must be one of: date,week-end,month,quarter,year");return false;}this.displayType=type;}
+        function CP_setYearSelectStartOffset(num){this.yearSelectStartOffset=num;}
+        function CP_setDisabledWeekDays(){this.disabledWeekDays = new Object();for(var i=0;i<arguments.length;i++){this.disabledWeekDays[arguments[i]] = true;}}
+        function CP_addDisabledDates(start, end){if(arguments.length==1){end=start;}if(start==null && end==null){return;}if(this.disabledDatesExpression!=""){this.disabledDatesExpression+= "||";}if(start!=null){start = parseDate(start);start=""+start.getFullYear()+LZ(start.getMonth()+1)+LZ(start.getDate());}if(end!=null){end=parseDate(end);end=""+end.getFullYear()+LZ(end.getMonth()+1)+LZ(end.getDate());}if(start==null){this.disabledDatesExpression+="(ds<="+end+")";}else if(end  ==null){this.disabledDatesExpression+="(ds>="+start+")";}else{this.disabledDatesExpression+="(ds>="+start+"&&ds<="+end+")";}}
+        function CP_setTodayText(text){this.todayText = text;}
+        function CP_setCssPrefix(val){this.cssPrefix = val;}
+        function CP_showNavigationDropdowns(){this.isShowNavigationDropdowns =(arguments.length>0)?arguments[0]:true;}
+        function CP_showYearNavigationInput(){this.isShowYearNavigationInput =(arguments.length>0)?arguments[0]:true;}
+        function CP_hideCalendar(){if(arguments.length > 0){window.popupWindowObjects[arguments[0]].hidePopup();}else{this.hidePopup();}}
+        function CP_refreshCalendar(index){var calObject = window.popupWindowObjects[index];if(arguments.length>1){calObject.populate(calObject.getCalendar(arguments[1],arguments[2],arguments[3],arguments[4],arguments[5]));}else{calObject.populate(calObject.getCalendar());}calObject.refresh();}
+        function CP_showCalendar(anchorname){if(arguments.length>1){if(arguments[1]==null||arguments[1]==""){this.currentDate=new Date();}else{this.currentDate=new Date(parseDate(arguments[1]));}}this.populate(this.getCalendar());this.showPopup(anchorname);}
+        function CP_select(inputobj, linkname, format){var selectedDate=(arguments.length>3)?arguments[3]:null;if(!window.getDateFromFormat){alert("calendar.select: To use this method you must also include 'date.js' for date formatting");return;}if(this.displayType!="date"&&this.displayType!="week-end"){alert("calendar.select: This function can only be used with displayType 'date' or 'week-end'");return;}if(inputobj.type!="text" && inputobj.type!="hidden" && inputobj.type!="textarea"){alert("calendar.select: Input object passed is not a valid form input object");window.CP_targetInput=null;return;}if(inputobj.disabled){return;}window.CP_targetInput = inputobj;window.CP_calendarObject = this;this.currentDate=null;var time=0;if(selectedDate!=null){time = getDateFromFormat(selectedDate,format)}else if(inputobj.value!=""){time = getDateFromFormat(inputobj.value,format);}if(selectedDate!=null || inputobj.value!=""){if(time==0){this.currentDate=null;}else{this.currentDate=new Date(time);}}window.CP_dateFormat = format;this.showCalendar(linkname);}
+        function getCalendarStyles(){var result = "";var p = "";if(this!=null && typeof(this.cssPrefix)!="undefined" && this.cssPrefix!=null && this.cssPrefix!=""){p=this.cssPrefix;}result += "<STYLE>\n";result += "."+p+"cpYearNavigation,."+p+"cpMonthNavigation{background-color:#C0C0C0;text-align:center;vertical-align:center;text-decoration:none;color:#000000;font-weight:bold;}\n";result += "."+p+"cpDayColumnHeader, ."+p+"cpYearNavigation,."+p+"cpMonthNavigation,."+p+"cpCurrentMonthDate,."+p+"cpCurrentMonthDateDisabled,."+p+"cpOtherMonthDate,."+p+"cpOtherMonthDateDisabled,."+p+"cpCurrentDate,."+p+"cpCurrentDateDisabled,."+p+"cpTodayText,."+p+"cpTodayTextDisabled,."+p+"cpText{font-family:arial;font-size:8pt;}\n";result += "TD."+p+"cpDayColumnHeader{text-align:right;border:solid thin #C0C0C0;border-width:0px 0px 1px 0px;}\n";result += "."+p+"cpCurrentMonthDate, ."+p+"cpOtherMonthDate, ."+p+"cpCurrentDate{text-align:right;text-decoration:none;}\n";result += "."+p+"cpCurrentMonthDateDisabled, ."+p+"cpOtherMonthDateDisabled, ."+p+"cpCurrentDateDisabled{color:#D0D0D0;text-align:right;text-decoration:line-through;}\n";result += "."+p+"cpCurrentMonthDate, .cpCurrentDate{color:#000000;}\n";result += "."+p+"cpOtherMonthDate{color:#808080;}\n";result += "TD."+p+"cpCurrentDate{color:white;background-color: #C0C0C0;border-width:1px;border:solid thin #800000;}\n";result += "TD."+p+"cpCurrentDateDisabled{border-width:1px;border:solid thin #FFAAAA;}\n";result += "TD."+p+"cpTodayText, TD."+p+"cpTodayTextDisabled{border:solid thin #C0C0C0;border-width:1px 0px 0px 0px;}\n";result += "A."+p+"cpTodayText, SPAN."+p+"cpTodayTextDisabled{height:20px;}\n";result += "A."+p+"cpTodayText{color:black;}\n";result += "."+p+"cpTodayTextDisabled{color:#D0D0D0;}\n";result += "."+p+"cpBorder{border:solid thin #808080;}\n";result += "</STYLE>\n";return result;}
+        function CP_getCalendar(){var now = new Date();if(this.type == "WINDOW"){var windowref = "window.opener.";}else{var windowref = "";}var result = "";if(this.type == "WINDOW"){result += "<HTML><HEAD><TITLE>Calendar</TITLE>"+this.getStyles()+"</HEAD><BODY MARGINWIDTH=0 MARGINHEIGHT=0 TOPMARGIN=0 RIGHTMARGIN=0 LEFTMARGIN=0>\n";result += '<CENTER><TABLE WIDTH=100% BORDER=0 BORDERWIDTH=0 CELLSPACING=0 CELLPADDING=0>\n';}else{result += '<TABLE CLASS="'+this.cssPrefix+'cpBorder" WIDTH=144 BORDER=1 BORDERWIDTH=1 CELLSPACING=0 CELLPADDING=1>\n';result += '<TR><TD ALIGN=CENTER>\n';result += '<CENTER>\n';}if(this.displayType=="date" || this.displayType=="week-end"){if(this.currentDate==null){this.currentDate = now;}if(arguments.length > 0){var month = arguments[0];}else{var month = this.currentDate.getMonth()+1;}if(arguments.length > 1 && arguments[1]>0 && arguments[1]-0==arguments[1]){var year = arguments[1];}else{var year = this.currentDate.getFullYear();}var daysinmonth= new Array(0,31,28,31,30,31,30,31,31,30,31,30,31);if( ((year%4 == 0)&&(year%100 != 0) ) ||(year%400 == 0) ){daysinmonth[2] = 29;}var current_month = new Date(year,month-1,1);var display_year = year;var display_month = month;var display_date = 1;var weekday= current_month.getDay();var offset = 0;offset =(weekday >= this.weekStartDay) ? weekday-this.weekStartDay : 7-this.weekStartDay+weekday ;if(offset > 0){display_month--;if(display_month < 1){display_month = 12;display_year--;}display_date = daysinmonth[display_month]-offset+1;}var next_month = month+1;var next_month_year = year;if(next_month > 12){next_month=1;next_month_year++;}var last_month = month-1;var last_month_year = year;if(last_month < 1){last_month=12;last_month_year--;}var date_class;if(this.type!="WINDOW"){result += "<TABLE WIDTH=144 BORDER=0 BORDERWIDTH=0 CELLSPACING=0 CELLPADDING=0>";}result += '<TR>\n';var refresh = windowref+'CP_refreshCalendar';var refreshLink = 'javascript:' + refresh;if(this.isShowNavigationDropdowns){result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation" WIDTH="78" COLSPAN="3"><select CLASS="'+this.cssPrefix+'cpMonthNavigation" name="cpMonth" onChange="'+refresh+'('+this.index+',this.options[this.selectedIndex].value-0,'+(year-0)+');">';for( var monthCounter=1;monthCounter<=12;monthCounter++){var selected =(monthCounter==month) ? 'SELECTED' : '';result += '<option value="'+monthCounter+'" '+selected+'>'+this.monthNames[monthCounter-1]+'</option>';}result += '</select></TD>';result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation" WIDTH="10">&nbsp;</TD>';result += '<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="56" COLSPAN="3"><select CLASS="'+this.cssPrefix+'cpYearNavigation" name="cpYear" onChange="'+refresh+'('+this.index+','+month+',this.options[this.selectedIndex].value-0);">';for( var yearCounter=year-this.yearSelectStartOffset;yearCounter<=year+this.yearSelectStartOffset;yearCounter++){var selected =(yearCounter==year) ? 'SELECTED' : '';result += '<option value="'+yearCounter+'" '+selected+'>'+yearCounter+'</option>';}result += '</select></TD>';}else{if(this.isShowYearNavigation){result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation" WIDTH="10"><A CLASS="'+this.cssPrefix+'cpMonthNavigation" HREF="'+refreshLink+'('+this.index+','+last_month+','+last_month_year+');">&lt;</A></TD>';result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation" WIDTH="58"><SPAN CLASS="'+this.cssPrefix+'cpMonthNavigation">'+this.monthNames[month-1]+'</SPAN></TD>';result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation" WIDTH="10"><A CLASS="'+this.cssPrefix+'cpMonthNavigation" HREF="'+refreshLink+'('+this.index+','+next_month+','+next_month_year+');">&gt;</A></TD>';result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation" WIDTH="10">&nbsp;</TD>';result += '<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="10"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="'+refreshLink+'('+this.index+','+month+','+(year-1)+');">&lt;</A></TD>';if(this.isShowYearNavigationInput){result += '<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="36"><INPUT NAME="cpYear" CLASS="'+this.cssPrefix+'cpYearNavigation" SIZE="4" MAXLENGTH="4" VALUE="'+year+'" onBlur="'+refresh+'('+this.index+','+month+',this.value-0);"></TD>';}else{result += '<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="36"><SPAN CLASS="'+this.cssPrefix+'cpYearNavigation">'+year+'</SPAN></TD>';}result += '<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="10"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="'+refreshLink+'('+this.index+','+month+','+(year+1)+');">&gt;</A></TD>';}else{result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation" WIDTH="22"><A CLASS="'+this.cssPrefix+'cpMonthNavigation" HREF="'+refreshLink+'('+this.index+','+last_month+','+last_month_year+');">&lt;&lt;</A></TD>\n';result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation" WIDTH="100"><SPAN CLASS="'+this.cssPrefix+'cpMonthNavigation">'+this.monthNames[month-1]+' '+year+'</SPAN></TD>\n';result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation" WIDTH="22"><A CLASS="'+this.cssPrefix+'cpMonthNavigation" HREF="'+refreshLink+'('+this.index+','+next_month+','+next_month_year+');">&gt;&gt;</A></TD>\n';}}result += '</TR></TABLE>\n';result += '<TABLE WIDTH=120 BORDER=0 CELLSPACING=0 CELLPADDING=1 ALIGN=CENTER>\n';result += '<TR>\n';for(var j=0;j<7;j++){result += '<TD CLASS="'+this.cssPrefix+'cpDayColumnHeader" WIDTH="14%"><SPAN CLASS="'+this.cssPrefix+'cpDayColumnHeader">'+this.dayHeaders[(this.weekStartDay+j)%7]+'</TD>\n';}result += '</TR>\n';for(var row=1;row<=6;row++){result += '<TR>\n';for(var col=1;col<=7;col++){var disabled=false;if(this.disabledDatesExpression!=""){var ds=""+display_year+LZ(display_month)+LZ(display_date);eval("disabled=("+this.disabledDatesExpression+")");}var dateClass = "";if((display_month == this.currentDate.getMonth()+1) &&(display_date==this.currentDate.getDate()) &&(display_year==this.currentDate.getFullYear())){dateClass = "cpCurrentDate";}else if(display_month == month){dateClass = "cpCurrentMonthDate";}else{dateClass = "cpOtherMonthDate";}if(disabled || this.disabledWeekDays[col-1]){result += '	<TD CLASS="'+this.cssPrefix+dateClass+'"><SPAN CLASS="'+this.cssPrefix+dateClass+'Disabled">'+display_date+'</SPAN></TD>\n';}else{var selected_date = display_date;var selected_month = display_month;var selected_year = display_year;if(this.displayType=="week-end"){var d = new Date(selected_year,selected_month-1,selected_date,0,0,0,0);d.setDate(d.getDate() +(7-col));selected_year = d.getYear();if(selected_year < 1000){selected_year += 1900;}selected_month = d.getMonth()+1;selected_date = d.getDate();}result += '	<TD CLASS="'+this.cssPrefix+dateClass+'"><A HREF="javascript:'+windowref+this.returnFunction+'('+selected_year+','+selected_month+','+selected_date+');'+windowref+'CP_hideCalendar(\''+this.index+'\');" CLASS="'+this.cssPrefix+dateClass+'">'+display_date+'</A></TD>\n';}display_date++;if(display_date > daysinmonth[display_month]){display_date=1;display_month++;}if(display_month > 12){display_month=1;display_year++;}}result += '</TR>';}var current_weekday = now.getDay() - this.weekStartDay;if(current_weekday < 0){current_weekday += 7;}result += '<TR>\n';result += '	<TD COLSPAN=7 ALIGN=CENTER CLASS="'+this.cssPrefix+'cpTodayText">\n';if(this.disabledDatesExpression!=""){var ds=""+now.getFullYear()+LZ(now.getMonth()+1)+LZ(now.getDate());eval("disabled=("+this.disabledDatesExpression+")");}if(disabled || this.disabledWeekDays[current_weekday+1]){result += '		<SPAN CLASS="'+this.cssPrefix+'cpTodayTextDisabled">'+this.todayText+'</SPAN>\n';}else{result += '		<A CLASS="'+this.cssPrefix+'cpTodayText" HREF="javascript:'+windowref+this.returnFunction+'(\''+now.getFullYear()+'\',\''+(now.getMonth()+1)+'\',\''+now.getDate()+'\');'+windowref+'CP_hideCalendar(\''+this.index+'\');">'+this.todayText+'</A>\n';}result += '		<BR>\n';result += '	</TD></TR></TABLE></CENTER></TD></TR></TABLE>\n';}if(this.displayType=="month" || this.displayType=="quarter" || this.displayType=="year"){if(arguments.length > 0){var year = arguments[0];}else{if(this.displayType=="year"){var year = now.getFullYear()-this.yearSelectStartOffset;}else{var year = now.getFullYear();}}if(this.displayType!="year" && this.isShowYearNavigation){result += "<TABLE WIDTH=144 BORDER=0 BORDERWIDTH=0 CELLSPACING=0 CELLPADDING=0>";result += '<TR>\n';result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="22"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="javascript:'+windowref+'CP_refreshCalendar('+this.index+','+(year-1)+');">&lt;&lt;</A></TD>\n';result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="100">'+year+'</TD>\n';result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="22"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="javascript:'+windowref+'CP_refreshCalendar('+this.index+','+(year+1)+');">&gt;&gt;</A></TD>\n';result += '</TR></TABLE>\n';}}if(this.displayType=="month"){result += '<TABLE WIDTH=120 BORDER=0 CELLSPACING=1 CELLPADDING=0 ALIGN=CENTER>\n';for(var i=0;i<4;i++){result += '<TR>';for(var j=0;j<3;j++){var monthindex =((i*3)+j);result += '<TD WIDTH=33% ALIGN=CENTER><A CLASS="'+this.cssPrefix+'cpText" HREF="javascript:'+windowref+this.returnMonthFunction+'('+year+','+(monthindex+1)+');'+windowref+'CP_hideCalendar(\''+this.index+'\');" CLASS="'+date_class+'">'+this.monthAbbreviations[monthindex]+'</A></TD>';}result += '</TR>';}result += '</TABLE></CENTER></TD></TR></TABLE>\n';}if(this.displayType=="quarter"){result += '<BR><TABLE WIDTH=120 BORDER=1 CELLSPACING=0 CELLPADDING=0 ALIGN=CENTER>\n';for(var i=0;i<2;i++){result += '<TR>';for(var j=0;j<2;j++){var quarter =((i*2)+j+1);result += '<TD WIDTH=50% ALIGN=CENTER><BR><A CLASS="'+this.cssPrefix+'cpText" HREF="javascript:'+windowref+this.returnQuarterFunction+'('+year+','+quarter+');'+windowref+'CP_hideCalendar(\''+this.index+'\');" CLASS="'+date_class+'">Q'+quarter+'</A><BR><BR></TD>';}result += '</TR>';}result += '</TABLE></CENTER></TD></TR></TABLE>\n';}if(this.displayType=="year"){var yearColumnSize = 4;result += "<TABLE WIDTH=144 BORDER=0 BORDERWIDTH=0 CELLSPACING=0 CELLPADDING=0>";result += '<TR>\n';result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="50%"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="javascript:'+windowref+'CP_refreshCalendar('+this.index+','+(year-(yearColumnSize*2))+');">&lt;&lt;</A></TD>\n';result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="50%"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="javascript:'+windowref+'CP_refreshCalendar('+this.index+','+(year+(yearColumnSize*2))+');">&gt;&gt;</A></TD>\n';result += '</TR></TABLE>\n';result += '<TABLE WIDTH=120 BORDER=0 CELLSPACING=1 CELLPADDING=0 ALIGN=CENTER>\n';for(var i=0;i<yearColumnSize;i++){for(var j=0;j<2;j++){var currentyear = year+(j*yearColumnSize)+i;result += '<TD WIDTH=50% ALIGN=CENTER><A CLASS="'+this.cssPrefix+'cpText" HREF="javascript:'+windowref+this.returnYearFunction+'('+currentyear+');'+windowref+'CP_hideCalendar(\''+this.index+'\');" CLASS="'+date_class+'">'+currentyear+'</A></TD>';}result += '</TR>';}result += '</TABLE></CENTER></TD></TR></TABLE>\n';}if(this.type == "WINDOW"){result += "</BODY></HTML>\n";}return result;}
+        
+    </script>
+
+    <script language="vbscript" type="text/vbscript">
+        
+        function findDateDifference(dtFrom, dtTo, interval)
+            
+            findDateDifference = DateDiff(interval, dtFrom, dtTo)
+            
+        end function
+        
+        function GetConfirmation(LSDate, DocketCalledAs, FromDate, ToDate, SystemDate)
+            
+            If MsgBox("You have entered " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date as " & LSDate & "." & vbCrLf & "You have chosen to search " & DocketCalledAs & "(s) in the Last Week (Including Today)." & vbCrLf & "In order to search " & DocketCalledAs & "(s) in the Last Week, you need to enter " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date as Today's Date, " & SystemDate & "." & vbCrLf & "If you would like to Continue with " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date as " & LSDate & ", " & DocketCalledAs & "(s) will be searched from " & DocketCalledAs & " Date between " & FromDate & " and " & LSDate & "." & vbCrLf & vbCrLf & "Would you like to search " & DocketCalledAs & "(s) between " & FromDate & " and " & LSDate & "?", vbYesNo, "Confirmation") = vbYes Then
+                GetConfirmation = True
+            Else
+                GetConfirmation = False
+            End If
+            
+        end function
+        
+        function GetConfirmationForDateRange(LSDate, DocketCalledAs, FromDate, ToDate, SystemDate)
+            
+            If MsgBox("You have entered " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date as " & LSDate & "." & vbCrLf & "You have chosen to search " & DocketCalledAs & "(s) between Date Range." & vbCrLf & "In order to search " & DocketCalledAs & "(s) between Date Range, EITHER you need to enter " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date as " & ToDate & " OR change the " & DocketCalledAs & " End Date to " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date." & vbCrLf & "If you would like to Continue with " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date as " & LSDate & ", " & DocketCalledAs & "(s) will be searched from " & DocketCalledAs & " Date between " & FromDate & " and " & LSDate & "." & vbCrLf & vbCrLf & "Would you like to search " & DocketCalledAs & "(s) between " & FromDate & " and " & LSDate & "?", vbYesNo, "Confirmation") = vbYes Then
+                GetConfirmationForDateRange = True
+            Else
+                GetConfirmationForDateRange = False
+            End If
+            
+        end function
+        
+    </script>
+    
+    <script language="javascript" type="text/javascript">
+        
+        var cal = new CalendarPopup("divDate");
+        
+        cal.setCssPrefix("TEST");
+        cal.showNavigationDropdowns();
+        
+        function OpenCityToPopup(strPopupURL)
+        {
+            var strWinFeature = "height=375,width=350,scrollbars=yes,left=300,top=125"
+            
+            if(document.getElementById("ctl00_MyCPH1_txtNextStop"))
+            {
+                /*if(document.getElementById("ctl00_MyCPH1_txtNextStop").value == "")
+                {
+                    alert("Enter/Select Next Stop before selecting City To!");
+                    document.getElementById("ctl00_MyCPH1_txtNextStop").focus();
+                    return false;
+                }*/
+            }
+            else
+            {
+                alert("Input box not available for Next Stop!");
+                return false;
+            }
+            
+            BranchPopup(strPopupURL); 
+        }
+        
+        function BranchPopup(strPopupURL)
+        {
+            var strWinFeature = "height=375,width=350,scrollbars=yes,left=300,top=125"
+            
+            winNew = window.open(strPopupURL, "_blank", strWinFeature)
+        }
+        
+        function ValidateData()
+        {   
+            ClearDocketList();
+        
+            if(document.getElementById("ctl00_MyCPH1_txtLSDate"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_txtLSDate").value == "")
+                {
+                    alert("Enter " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date!");
+                    document.getElementById("ctl00_MyCPH1_txtLSDate").focus();
+                    return false;
+                }
+            }
+            
+            //Check for Manual LS No.
+            if(document.getElementById("ctl00_MyCPH1_txtManualLSNo"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_txtManualLSNo").value != "")
+                {
+                    if(document.getElementById("ctl00_MyCPH1_lblManualLSNo"))
+                    {
+                        if(document.getElementById("ctl00_MyCPH1_lblManualLSNo").style.display == '')
+                        {
+                            alert("Invalid 'Manual LS No.'");
+                            document.getElementById("ctl00_MyCPH1_txtManualLSNo").focus();
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    if(document.getElementById("ctl00_MyCPH1_HidManNoManYN"))
+                    {
+                        if(document.getElementById("ctl00_MyCPH1_HidManNoManYN").value == "Y")
+                        {
+                            alert("Enter Manual LS No.!");
+                            document.getElementById("ctl00_MyCPH1_txtManualLSNo").focus();
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            if(document.getElementById("ctl00_MyCPH1_txtDestCd"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_txtDestCd").value != "")
+                {
+                    if(document.getElementById("ctl00_MyCPH1_lblErrorDestCd"))
+                    {
+                        if(document.getElementById("ctl00_MyCPH1_lblErrorDestCd").style.display == '')
+                        {
+                            alert("Invalid 'Destination Location'");
+                            document.getElementById("ctl00_MyCPH1_txtDestCd").focus();
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            if(document.getElementById("ctl00_MyCPH1_txtCityFrom"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_txtCityFrom").value != "")
+                {
+                    if(document.getElementById("ctl00_MyCPH1_lblErrorCityFrom"))
+                    {
+                        if(document.getElementById("ctl00_MyCPH1_lblErrorCityFrom").style.display == '')
+                        {
+                            alert("Invalid 'From City'");
+                            document.getElementById("ctl00_MyCPH1_txtCityFrom").focus();
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            if(document.getElementById("ctl00_MyCPH1_txtCityTo"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_txtCityTo").value != "")
+                {
+                    if(document.getElementById("ctl00_MyCPH1_lblErrorCityTo"))
+                    {
+                        if(document.getElementById("ctl00_MyCPH1_lblErrorCityTo").style.display == '')
+                        {
+                            alert("Invalid 'To City'");
+                            document.getElementById("ctl00_MyCPH1_txtCityTo").focus();
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            if(document.getElementById("ctl00_MyCPH1_txtNextStop"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_txtNextStop").value != "")
+                {
+                    if(document.getElementById("ctl00_MyCPH1_lblErrorNextStop"))
+                    {
+                        if(document.getElementById("ctl00_MyCPH1_lblErrorNextStop").style.display == '')
+                        {
+                            alert("Invalid 'Next Stop'");
+                            document.getElementById("ctl00_MyCPH1_txtNextStop").focus();
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    alert("Enter 'Next Stop'");
+                    document.getElementById("ctl00_MyCPH1_txtNextStop").focus();
+                    return false;
+                }
+            }
+
+            if(document.getElementById("ctl00_MyCPH1_radRange"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_radRange").checked == true)
+                {
+                    var mDateFrom, mDateTo
+                
+                    //Check for Date From
+                    if(document.getElementById("ctl00_MyCPH1_txtFromDate"))
+                    {
+                        if(document.getElementById("ctl00_MyCPH1_txtFromDate").value == "")
+                        {
+                            alert("Enter 'Date From' in 'DD/MM/YYYY' format");
+                            document.getElementById("ctl00_MyCPH1_txtFromDate").focus();
+                            return false;
+                        }
+                    }
+                    
+                    var mDateFrom = document.getElementById("ctl00_MyCPH1_txtFromDate").value.substring(3, 5) + "/" + document.getElementById("ctl00_MyCPH1_txtFromDate").value.substring(0, 2) + "/" + document.getElementById("ctl00_MyCPH1_txtFromDate").value.substring(6, 10)
+                    
+                    //Check for Date To
+                    if(document.getElementById("ctl00_MyCPH1_txtToDate"))
+                    {
+                        if(document.getElementById("ctl00_MyCPH1_txtToDate").value == "")
+                        {
+                            alert("Enter 'To Date' in 'DD/MM/YYYY' format");
+                            document.getElementById("ctl00_MyCPH1_txtToDate").focus();
+                            return false;
+                        }
+                    }
+                    
+                    var mDateTo = document.getElementById("ctl00_MyCPH1_txtToDate").value.substring(3, 5) + "/" + document.getElementById("ctl00_MyCPH1_txtToDate").value.substring(0, 2) + "/" + document.getElementById("ctl00_MyCPH1_txtToDate").value.substring(6, 10)
+                    
+                    //Check for Date From and Date To Date range
+                    if(findDateDifference(mDateFrom, mDateTo, "d") < 0)
+                    {
+                        alert("Enter 'Date From' earlier than 'Date To'");
+                        document.getElementById("ctl00_MyCPH1_txtFromDate").focus();
+                        return false;
+                    }
+                    
+                    //Check for Docket From Date & Docket To Date with Loading Sheet Date
+                    var mLSDate = "";
+                    
+                    if(document.getElementById("ctl00_MyCPH1_txtLSDate"))
+                    {
+                        mLSDate = document.getElementById("ctl00_MyCPH1_txtLSDate").value;
+                        mLSDate = mLSDate.substring(3, 5) + "/" + mLSDate.substring(0, 2) + "/" + mLSDate.substring(6, 10)
+                        
+                        if(!(mDateFrom == mDateTo && mDateFrom == mLSDate))
+                        {
+                            if(findDateDifference(mDateFrom, mLSDate, "d") < 0)
+                            {
+                                alert("You have entered " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date as " + document.getElementById("ctl00_MyCPH1_txtLSDate").value + ", and you have chosen to search " + document.getElementById("ctl00_MyCPH1_HidDocket").value + "(s) between Date Range. You will have to EITHER set " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date >= " + document.getElementById("ctl00_MyCPH1_txtFromDate").value + " OR change the " + document.getElementById("ctl00_MyCPH1_HidDocket").value + " From Date!");
+                                document.getElementById("ctl00_MyCPH1_txtLSDate").focus();
+                                return false;
+                            }
+                            
+                            if(document.getElementById("ctl00_MyCPH1_txtLSDate").value != document.getElementById("ctl00_MyCPH1_txtToDate").value)
+                            {
+                                if(findDateDifference(mDateTo, mLSDate, "d") < 0)
+                                {
+                                    if(GetConfirmationForDateRange(document.getElementById("ctl00_MyCPH1_txtLSDate").value, document.getElementById("ctl00_MyCPH1_HidDocket").value, document.getElementById("ctl00_MyCPH1_txtFromDate").value, document.getElementById("ctl00_MyCPH1_txtToDate").value, "<%=strSystemDate %>") == false)
+                                    {
+                                        document.getElementById("ctl00_MyCPH1_txtLSDate").focus();
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        alert("Input Box for " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date is not available!");
+                        return false;
+                    }
+                }
+            }
+            
+            if(document.getElementById("ctl00_MyCPH1_radToday"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_radToday").checked == true)
+                {
+                    //Check for Loading Sheet Date = System Date for Seaching Today's Dockets
+                    var mSystemDate = "<%=strSystemDate %>";
+                    var mLSDate = "";
+                    if(document.getElementById("ctl00_MyCPH1_txtLSDate"))
+                    {
+                        mLSDate = document.getElementById("ctl00_MyCPH1_txtLSDate").value;
+                        if(mSystemDate != mLSDate)
+                        {
+                            alert("You have entered " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date as " + mLSDate + ", and you have chosen to search Today's " + document.getElementById("ctl00_MyCPH1_HidDocket").value + "(s). You will have to set " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date to Today's Date, " + mSystemDate + "!");
+                            document.getElementById("ctl00_MyCPH1_txtLSDate").focus();
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        alert("Input Box for " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date is not available!");
+                        return false;
+                    }
+                }
+            }
+            
+            if(document.getElementById("ctl00_MyCPH1_radLastWeek"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_radLastWeek").checked == true)
+                {
+                    //Check for Docket From Date <= Loading Sheet Date
+                    var mLastWeekFromDate = "<%=strLastWeekFromDate %>";
+                    mLastWeekFromDate = mLastWeekFromDate.substring(3, 5) + "/" + mLastWeekFromDate.substring(0, 2) + "/" + mLastWeekFromDate.substring(6, 10)
+                    var mLastWeekToDate = "<%=strLastWeekToDate %>";
+                    mLastWeekToDate = mLastWeekToDate.substring(3, 5) + "/" + mLastWeekToDate.substring(0, 2) + "/" + mLastWeekToDate.substring(6, 10)
+                    var mLSDate = "";
+                    
+                    if(document.getElementById("ctl00_MyCPH1_txtLSDate"))
+                    {
+                        mLSDate = document.getElementById("ctl00_MyCPH1_txtLSDate").value;
+                        mLSDate = mLSDate.substring(3, 5) + "/" + mLSDate.substring(0, 2) + "/" + mLSDate.substring(6, 10)
+                        
+                        if(findDateDifference(mLastWeekFromDate, mLSDate, "d") <= 0)
+                        {
+                            alert("You have entered " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date as " + document.getElementById("ctl00_MyCPH1_txtLSDate").value + ", and you have chosen to search Last Week's " + document.getElementById("ctl00_MyCPH1_HidDocket").value + "(s). You will have to set " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date > " + "<%=strLastWeekFromDate %>" + "!");
+                            document.getElementById("ctl00_MyCPH1_txtLSDate").focus();
+                            return false;
+                        }
+                        
+                        if(document.getElementById("ctl00_MyCPH1_txtLSDate").value != "<%=strSystemDate %>")
+                        {
+                            if(GetConfirmation(document.getElementById("ctl00_MyCPH1_txtLSDate").value, document.getElementById("ctl00_MyCPH1_HidDocket").value, "<%=strLastWeekFromDate %>", "<%=strLastWeekToDate %>", "<%=strSystemDate %>") == false)
+                            {
+                                document.getElementById("ctl00_MyCPH1_txtLSDate").focus();
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        alert("Input Box for " + document.getElementById("ctl00_MyCPH1_HidLS").value + " Date is not available!");
+                        return false;
+                    }
+                }
+            }
+            
+            if(document.getElementById("ctl00_MyCPH1_txtPrepBy"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_txtPrepBy").value != "")
+                {
+                    if(document.getElementById("ctl00_MyCPH1_lblErrorPrepBy"))
+                    {
+                        if(document.getElementById("ctl00_MyCPH1_lblErrorPrepBy").style.display == '')
+                        {
+                            alert("Invalid 'Prepared By'");
+                            document.getElementById("ctl00_MyCPH1_txtPrepBy").focus();
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            return true;
+        }
+        
+        function CheckDocketSelection()
+        {
+            if(document.getElementById("ctl00_MyCPH1_HidSelectedDockets"))
+            {
+                if(document.getElementById("ctl00_MyCPH1_HidSelectedDockets").value == "")
+                {
+                    alert("Select atleast one docket to prepare " + document.getElementById("ctl00_MyCPH1_HidLS").value + "!");
+                    return false;
+                }
+            }
+            else
+            {
+                alert("Hidden element for " + document.getElementById("ctl00_MyCPH1_HidDocket").value + " list is not available!");
+                return false;
+            }
+            
+            return true;
+        }
+        
+    </script>
+    
+    <div>
+        
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+		    
+		    <tr>
+			    <td>
+				    <label class="blackfnt" id="lblHeader" runat="server">
+				        <%--<b>
+				            Prepare New Loading Sheet				            
+				        </b>--%>
+				    </label>
+				    <hr align="center" size="1" color="#8ba0e5">    
+			    </td>
+		    </tr>
+		    
+		    <tr> 
+			    <td>
+				    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+				        
+				        
+					    <%--<tr>
+						    <td style="height: 30">
+							    <a href="#">
+							        <label class="blklnkund">
+							            <b>
+							                <%--<%=session("Level_Type")%>--%><%-- Module
+							            </b>
+							        </label>
+							    </a>
+							    
+							    <b>
+							        &gt;
+							    </b>
+							    
+							    <a href="#">
+							        <label class="blklnkund">
+							            <b>
+							                Operations
+							            </b>
+							        </label>
+							    </a>
+							    
+							    <b>
+							        &gt;
+							    </b>
+							    
+								<asp:LinkButton ID="lnkBookOper" CssClass="bluefnt" runat="server" Text="Booking Operations" PostBackUrl="../../../GUI/Operations/LSMFOptions.aspx" Visible="false" />
+								<b> &gt; </b>
+								<asp:LinkButton ID="lnkLSMF" CssClass="bluefnt" runat="server" Text="Loading Sheet & Manifest" PostBackUrl="../../../GUI/Operations/LSMFOptions.aspx" Visible="false" />
+								<b> &gt; </b>
+							
+							    <label class="bluefnt">
+							        <b>
+							            Prepare New Loading Sheet
+							        </b>
+							    </label>
+						    </td>
+					    </tr>--%>
+				        
+				        <%--<tr> 
+						    <td align="right">
+							    <a href="javascript:window.history.go(-1)" title="back">
+							        <img src="../../../GUI/images/back.gif" border="0" />
+							    </a>
+						    </td>
+					    </tr>--%>
+					    
+                        <tr>
+						    <td>
+							    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+								    <tr>
+									    <td style="width: 50%" valign="top">
+										    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+										        <tr> 
+											        <td valign="top">
+												        <%--<br />--%>
+												        
+										                <center>
+											                <table border="0" class="boxbg" cellspacing="1" cellpadding="1" width="100%">
+                                                                <tr class="bgbluegrey"> 
+                                                                    <td align="center" colspan="8" style="height: 20px;">
+                                                                        <label class="blackfnt" id="lblSelCrtForLS" runat="server">
+                                                                            <%--<b>
+                                                                                Select Criteria For Preparing Loading Sheet
+                                                                            </b>--%>
+                                                                        </label>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <tr style="background-color: White"> 
+                                                                    <td align="left">
+                                                                        <label class="blackfnt" id="lblLSNo1" runat="server">
+                                                                            <%--Loading Sheet No.:--%>
+                                                                        </label>
+                                                                    </td>
+                                                                    
+                                                                    <td style="width: 15%" align="left">
+                                                                        <label class="blackfnt" style="color: #FF0000">
+                                                                            &lt;System Generated&gt;
+                                                                        </label> 
+                                                                    </td>
+                                                                    
+                                                                    <td align="left" style="width: 14%" nowrap>
+                                                                        <label class="blackfnt" id="lblLSDate" runat="server">
+                                                                            <%--Loading Sheet Date:--%>
+                                                                        </label> 
+                                                                    </td>
+                                                                    
+                                                                    <td colspan="5" align="left" nowrap>
+                                                                        <input type="text" id="txtLSDate" maxlength="10" size="10" runat="server" 
+				                                                            class="input" onblur="ValidateLSDate(this)" />
+				                                                        <label class="blackfnt" style="vertical-align:text-top">
+                                                                            &nbsp;(dd/mm/yyyy)
+                                                                        </label>
+                                                                        <label class="bluefnt" style="vertical-align:text-top" id="lblHintForLSDate" runat="server">
+                                                                            <%--&nbsp;Hint: Only <%=Session["DocketCalledAs"].ToString() %>s booked upto this date can be selected--%>
+                                                                        </label>
+                                                                        <input type="hidden" id="HidSystemDate" runat="server" />
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <tr style="background-color: White"> 
+                                                                    <td align="left" nowrap>
+                                                                        <label class="blackfnt" id="lblManLSNo" runat="server">
+                                                                            <%--Manual Loading Sheet No.:--%>
+                                                                        </label>
+                                                                    </td>
+                                                                     
+                                                                    <td style="width: 15%" align="left" colspan="7">
+                                                                        <asp:UpdatePanel ID="upManualLSNo" runat="server">
+                                                                            <ContentTemplate>
+<%--                                                                                <asp:Label ID="lblTemp" runat="server" Text="SQL" EnableViewState="true"></asp:Label>
+--%>                                                                                <asp:TextBox ID="txtManualLSNo" MaxLength="15" Width="120px" CssClass="input" runat="server" 
+                                                                                    OnTextChanged="txtManualLSNo_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                                                                <label class="blackfnt" id="lblManualLSNo" runat="server" style="color: Red;" visible="false">
+                                                                                    <%--&nbsp;Duplicate Manual Loading Sheet No.!!!--%>
+                                                                                </label>
+                                                                                <label class="bluefnt" style="vertical-align:text-top" id="lblHelpForManLSNo" runat="server">
+                                                                                    <%--&nbsp;Hint: Enter NA if Manual Loading Sheet No. is not available.--%>
+                                                                                </label>
+                                                                            </ContentTemplate>
+                                                                            <Triggers>
+                                                                                <asp:AsyncPostBackTrigger ControlID="txtManualLSNo" EventName="TextChanged" />
+                                                                            </Triggers> 
+                                                                        </asp:UpdatePanel>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <tr style="background-color: White"> 
+                                                                    <td align="left" style="width: 17%">
+                                                                        <label class="blackfnt">
+                                                                            Transition Mode:
+                                                                        </label>
+                                                                    </td>
+                                                                    
+                                                                    <td align="left" colspan="7">
+                                                                        <select id="ddlRouteMode" runat="server" class="input" onchange="ClearDocketList();">
+                                                                            <%--<option value="-1" selected="selected">All</option>
+                                                                            <option value="1">Air</option>
+                                                                            <option value="2">Road</option>
+                                                                            <option value="3">Train</option>
+                                                                            <option value="4">Express</option>--%>
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
+  
+                                                                <tr style="background-color: White"> 
+                                                                    <td align="left" style="width: 17%">
+                                                                        <label class="blackfnt">
+                                                                            Destination:
+                                                                        </label>
+                                                                    </td>
+                                                                    
+                                                                    <td align="left" colspan="7" nowrap>
+                                                                        <%--<input type="text" id="txtDestCd" size="25" runat="server"  
+                                                                            onblur="this.value=this.value.toUpperCase(); ClearDocketList();" class="input" />--%>
+                                                                        <asp:UpdatePanel ID="upDestination" runat="server">
+                                                                            <ContentTemplate>
+                                                                                <asp:TextBox ID="txtDestCd" runat="server" 
+                                                                                    OnTextChanged="txtDestCd_TextChanged" CssClass="input" 
+                                                                                    width="100px" MaxLength="50" AutoPostBack="true">
+                                                                                </asp:TextBox>        
+                                                                                <label class="blackfnt">
+                                                                                    (
+                                                                                    <i>
+                                                                                        Seperated by Comma if multiple. e.g DELB,HYDA,PNQA
+                                                                                    </i>
+                                                                                    )
+                                                                                </label>
+                                                                                <label class="blackfnt" id="lblErrorDestCd" runat="server" style="color: Red;" visible="false">
+                                                                                    &nbsp;Invalid Destination Location!!!
+                                                                                </label>    
+                                                                            </ContentTemplate>
+                                                                            <Triggers>
+                                                                                <asp:AsyncPostBackTrigger ControlID="txtDestCd" EventName="TextChanged" />
+                                                                            </Triggers>
+                                                                        </asp:UpdatePanel>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <tr style="background-color: white">
+                                                                    <td align="center" colspan="8">
+                                                                        <label class="blackfnt">
+                                                                            <b>
+                                                                                OR
+                                                                            </b>
+                                                                        </label>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <tr style="background-color: white">
+                                                                    <td align="left" style="width: 17%">
+                                                                        <label class="blackfnt">
+                                                                            Region:
+                                                                        </label>
+                                                                    </td>
+                                                                    
+                                                                    <td align="left" colspan="7" valign="top">
+                                                                        <%--<asp:DropDownList ID="ddlRegion" runat="server" CssClass="blackfnt">
+                                                                        </asp:DropDownList>--%>
+                                                                        <asp:ListBox SelectionMode="multiple" ID="lstRegion" CssClass="blackfnt" runat="server"></asp:ListBox>
+                                                                        <label class="bluefnt" style="vertical-align:text-top">
+                                                                            &nbsp;Hint: Press CTRL Key to select more than 1 locations
+                                                                        </label>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <tr style="background-color: White"> 
+                                                                    <td align="left" style="width: 17%">
+                                                                        <label class="blackfnt">
+                                                                            Next Stop:
+                                                                        </label>
+                                                                    </td>
+                                                                    
+                                                                    <td align="left" colspan="7" nowrap>
+                                                                        <asp:UpdatePanel ID="upNextStop" runat="server">
+                                                                            <ContentTemplate>
+                                                                                <asp:TextBox ID="txtNextStop" runat="server" 
+                                                                                    OnTextChanged="txtNextStop_TextChanged" CssClass="input" 
+                                                                                    width="40px" MaxLength="10" AutoPostBack="true">
+                                                                                </asp:TextBox>
+                                                                                
+                                                                                <input type="button" value="..." runat="server" id="btnNextStop" 
+                                                                                    onclick="return BranchPopup('GetNextStep.aspx?1')" />
+                                                                                
+                                                                                <label class="blackfnt" id="lblErrorNextStop" runat="server" style="color: Red;" visible="false">
+                                                                                    &nbsp;Invalid Next Location!!!
+                                                                                </label>
+                                                                                <label class="blackfnt" id="lblHintForNextStop" runat="server">
+                                                                                    <%--(
+                                                                                    <i>
+                                                                                        LS will be prepared for this Next Location
+                                                                                    </i>
+                                                                                    )--%>
+                                                                                </label>
+                                                                            </ContentTemplate>
+                                                                            <Triggers>
+                                                                                <asp:AsyncPostBackTrigger ControlID="txtNextStop" EventName="TextChanged" />
+                                                                            </Triggers>
+                                                                        </asp:UpdatePanel>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <tr style="background-color: white">
+                                                                    <td align="left" style="width: 17%">
+                                                                        <label class="blackfnt">
+                                                                            From:
+                                                                        </label>
+                                                                    </td>
+                                                                    
+                                                                    <td align="left" valign="top" style="width: 20%">
+                                                                         <asp:UpdatePanel ID="upCityFrom" runat="server">
+                                                                            <ContentTemplate>
+                                                                                <asp:TextBox ID="txtCityFrom" runat="server" 
+                                                                                    OnTextChanged="txtCityFrom_TextChanged" CssClass="input" 
+                                                                                    width="40px" MaxLength="12" AutoPostBack="true">
+                                                                                </asp:TextBox>
+                                                                                
+                                                                                <input type="button" value="..." runat="server" id="btnCityFrom" 
+                                                                                    onclick="return BranchPopup('../../../GUI/Operations/GetFromCity.aspx')" />
+                                                                                
+                                                                                <label class="blackfnt" id="lblErrorCityFrom" runat="server" style="color: Red;" visible="false">
+                                                                                    &nbsp;Invalid From City!!!
+                                                                                </label>
+                                                                            </ContentTemplate>
+                                                                            <Triggers>
+                                                                                <asp:AsyncPostBackTrigger ControlID="txtCityFrom" EventName="TextChanged" />
+                                                                            </Triggers>
+                                                                        </asp:UpdatePanel>   
+                                                                    </td>
+                                                                    
+                                                                    <td align="left" style="width: 17%">
+                                                                        <label class="blackfnt">
+                                                                            To:
+                                                                        </label>
+                                                                    </td>
+                                                                    
+                                                                    <td align="left" valign="top" style="width: 20%" colspan="5">
+                                                                         <asp:UpdatePanel ID="upCityTo" runat="server">
+                                                                            <ContentTemplate>
+                                                                                <asp:TextBox ID="txtCityTo" runat="server" 
+                                                                                    OnTextChanged="txtCityTo_TextChanged" CssClass="input" 
+                                                                                    width="40px" MaxLength="12" AutoPostBack="true">
+                                                                                </asp:TextBox>
+                                                                                
+                                                                                <input type="button" value="..." runat="server" id="btnCityTo" 
+                                                                                    onclick="return OpenCityToPopup('../../../GUI/Operations/GetToCity.aspx')" />
+                                                                                
+                                                                                <label class="blackfnt" id="lblErrorCityTo" runat="server" style="color: Red;" visible="false">
+                                                                                    &nbsp;Invalid To City!!!
+                                                                                </label>
+                                                                            </ContentTemplate>
+                                                                            <Triggers>
+                                                                                <asp:AsyncPostBackTrigger ControlID="txtCityTo" EventName="TextChanged" />
+                                                                            </Triggers>
+                                                                        </asp:UpdatePanel>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <tr style="background-color: White"> 
+                                                                    <td align="left" style="width: 17%">
+                                                                        <label class="blackfnt" id="lblDockets" runat="server">
+                                                                            <%--Docket(s):--%>
+                                                                        </label>
+                                                                    </td>
+                                                                    
+                                                                    <td align="left" colspan="7">
+                                                                        <input type="text" id="txtDockets" size="50" class="input" runat="server" 
+                                                                            onchange="ClearDocketList()" />
+                                                                        <label class="blackfnt">
+                                                                            (
+                                                                            <i>
+                                                                                Seperated by Comma if multiple. e.g 1122334,3344556,1564446
+                                                                            </i>
+                                                                            )
+                                                                        </label> 
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            
+                                                            <br />
+                                                            
+	                                                        <table border="0" cellpadding="1" width="100%" cellspacing="1" class="boxbg">
+	                                                            <tr style="background-color: White">
+	                                                                <td  align="center" colspan="2">
+	                                                                    <label class="blackfnt" runat="server" id="lblSelDcoketCriteria">
+	                                                                        <%--<b>
+	                                                                            Select <%=Session["DocketCalledAs"].ToString()%> Criteria
+	                                                                        </b>--%>
+	                                                                    </label>
+	                                                                </td>
+	                                                            </tr>
+	                                                            
+	                                                            <tr style="background-color: White">
+                                                                    <td valign="top" align="left">
+                                                                        <label class="blackfnt" runat="server" id="lblSelDcoketDate">
+                                                                            <%--Select <%=Session["DocketCalledAs"].ToString()%> Date:--%>
+                                                                        </label>
+                                                                    </td>
+		                                                            
+                                                                    <td valign="top" align="left">
+	                                                                    <table>
+	                                                                        <tr>
+		                                                                        <td align="left">
+		                                                                            <input type="radio" id="radRange" value="Date" runat="server" 
+		                                                                                onclick="setFocusInFromDate()" />
+		                                                                        </td>
+				                                                                
+	                                                                            <td align="left" valign="top">
+	                                                                                <label class="blackfnt"  style="vertical-align:text-top">
+	                                                                                    From:
+	                                                                                </label>
+			                                                                        
+				                                                                    <input type="text" id="txtFromDate" maxlength="10" size="10" runat="server" 
+				                                                                        class="input" onblur="ValidateDocketFromDate(this, this)" />
+			                                                                        <a href="#"
+			                                                                            onclick="cal.select(ctl00_MyCPH1_txtFromDate,'anchor1','dd/MM/yyyy'); return false;" 
+			                                                                            id="anchor1">
+			                                                                            <img src="./../../images/calendar.jpg" border="0" />
+			                                                                        </a>
+			                                                                        <label class="blackfnt" style="vertical-align:text-top">
+			                                                                            &nbsp;(dd/mm/yyyy)
+			                                                                        </label>   
+                                                                                </td>
+		                                                                        
+                                                                                <td align="left" valign="top">
+                                                                                    <label class="blackfnt"  style="vertical-align:text-top">
+                                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To:
+                                                                                    </label>
+                                                                                    <input type="text" id="txtToDate" maxlength="10" size="10" class="input" runat="server" 
+                                                                                        onblur="ValidateLSToDate(this, this)" />
+		                                                                                <a href="#"
+		                                                                                    onclick="cal.select(ctl00_MyCPH1_txtToDate,'anchor2','dd/MM/yyyy'); return false;"
+		                                                                                    id="anchor2">
+		                                                                                    <img src="./../../images/calendar.jpg" border="0" />
+		                                                                                </a>
+		                                                                            <label class="blackfnt"  style="vertical-align:text-top">
+			                                                                            &nbsp;(dd/mm/yyyy)
+			                                                                        </label>
+	                                                                            </td>
+                                                                            </tr>
+		                                                                    
+                                                                            <tr>
+	                                                                            <td>
+	                                                                                <input type="radio" id="radToday" value="Today" runat="server" />
+	                                                                            </td>
+		                                                                        
+                                                                                <td colspan="2">
+                                                                                    <label class="blackfnt" id="lblToday" runat="server">
+                                                                                    </label>
+                                                                                </td>
+                                                                            </tr>
+		                                                                    
+                                                                            <tr>
+	                                                                            <td>
+	                                                                                <input type="radio" id="radLastWeek" value="Week" runat="server" />
+	                                                                            </td>
+			                                                                    
+                                                                                <td>
+                                                                                    <label class="blackfnt">
+                                                                                        Last 7 Days
+                                                                                    </label>
+                                                                                </td>
+		                                                                        
+                                                                                <td>
+                                                                                    &nbsp;
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+	                                                                            <td>
+	                                                                                <input type="radio" id="radTillDate" value="TillDate" disabled="disabled" runat="server" />
+	                                                                            </td>
+                                                                                <td>
+                                                                                    <label class="blackfnt">
+                                                                                        Till Date
+                                                                                    </label>
+                                                                                </td>
+		                                                                        
+                                                                                <td>
+                                                                                    &nbsp;
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                
+	                                                            <tr style="background-color: White">
+                                                                    <td style="width: 17%" align="left" nowrap>
+                                                                        <label class="blackfnt">
+                                                                            Prepared By:&nbsp;
+                                                                        </label>
+                                                                    </td>
+                                                                    
+                                                                    <td align="left">
+                                                                        <asp:UpdatePanel ID="upPrepBy" runat="server">
+                                                                            <ContentTemplate>
+                                                                                <asp:TextBox ID="txtPrepBy" runat="server" Width="100px" MaxLength="10" AutoPostBack="true" 
+                                                                                    OnTextChanged="txtPrepBy_TextChanged" ></asp:TextBox>
+                                                                                <label class="blackfnt" id="lblErrorPrepBy" runat="server" style="color: Red;" visible="false">
+                                                                                    &nbsp;Invalid Prepared By!!!
+                                                                                </label>
+                                                                                <label class="blackfnt" id="lblPrepByName" runat="server">
+                                                                                </label>       
+                                                                            </ContentTemplate>
+                                                                            <Triggers>
+                                                                                <asp:AsyncPostBackTrigger ControlID="txtPrepBy" EventName="TextChanged" />
+                                                                            </Triggers>
+                                                                        </asp:UpdatePanel>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <tr style="background-color: White">
+                                                                    <td align="right" colspan="2">
+                                                                        <asp:Button ID="btnSubmit" Text="Submit" runat="server"  OnClientClick="return ValidateData()" 
+                                                                            OnClick="btnSubmit_Click" />
+                                                                        <label class="blackfnt">
+                                                                            &nbsp;&nbsp;
+                                                                        </label>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                                
+                                                            <br />
+                                                            
+                                                            <asp:UpdateProgress ID="ProgressIndicator" runat="server">
+                                                                <ProgressTemplate>
+                                                                    <div id="progressArea">
+                                                                        <asp:Label ID="lblLS" runat="server" Text="Please wait..." CssClass="blackfnt" Font-Bold="true"></asp:Label>
+                                                                        <asp:Image ID="LoadingImage" runat="server" ImageUrl="~/GUI/images/indicator.gif" />
+                                                                    </div>
+                                                                </ProgressTemplate>
+                                                            </asp:UpdateProgress>
+                                                            
+                                                            <asp:UpdatePanel ID="upRepeater" runat="server">
+                                                                <ContentTemplate>
+                                                                    <table border="0" cellspacing="0" cellpadding="1" width="100%" class="boxbg">
+                                                                        <tr style="background-color: White" id="trDocketList" runat="server" visible="false">
+                                                                            <td style="width: 100%">
+	                                                                            <table cellspacing="1" cellpadding="1" border="0" width="100%" class="boxbg">
+	                                                                                <tr style="background-color: White;height: 20px;" id="trLSCaption" visible="false" runat="server">
+	                                                                                    <td align="left" id="tdColSpanForLSCaption" runat="server">
+	                                                                                        <label class="blackfnt">
+	                                                                                            <b>
+	                                                                                                <%=strLSCaption %>
+	                                                                                            </b>
+	                                                                                        </label>
+	                                                                                    </td>
+	                                                                                </tr>
+	                                                                                
+	                                                                                <tr style="background-color: White">
+	                                                                                    <td colspan="8" align="left">
+                                                                                            <label class="blackfnt" id="lblInstrunction" runat="server">
+                                                                                            </label>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    
+        	                                                                        <tr style="background-color: White" id="trLSCaptionWithLink" visible="false" runat="server">
+	                                                                                    <td colspan="8" align="left">
+	                                                                                        <label class="blackfnt" runat="server" id="lblLSNo">
+	                                                                                            <%--<b>
+	                                                                                                Loading Sheet No.&nbsp;
+	                                                                                            </b>--%>
+	                                                                                        </label>
+	                                                                                        
+                                                                                            <asp:LinkButton ID="lnkbtnDocketsinLSForMF" runat="server" OnClick="lnkbtnDocketsinLSForMF_Click" CssClass="blackfnt" Font-Bold="true" Font-Underline="true">
+                                                                                            </asp:LinkButton>
+	                                                                                        
+	                                                                                        <label class="blackfnt">
+	                                                                                            <b>
+	                                                                                                &nbsp;prepared.
+	                                                                                            </b>
+	                                                                                        </label>
+	                                                                                    </td>
+	                                                                                </tr>
+        	                                                                        
+	                                                                                <tr class="bgbluegrey" id="trTableHeadersForLS" runat="server" visible="false">
+	                                                                                    <td style="background-color: White; height: 40px;">
+	                                                                                        <input type="checkbox" id="chkAll" runat="server" onclick="ManageAllDockets(this, '1')" />
+	                                                                                    </td>
+        	                                                                            
+	                                                                                    <td align="center" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Sr. No.
+						                                                                    </label>
+					                                                                    </td>
+        					                                                            
+					                                                                    <td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt" runat="server" id="lblDcoketNo1">
+						                                                                        <%--<%=Session["DocketCalledAs"].ToString()%> No.--%>
+						                                                                    </label>
+					                                                                    </td>	
+        					                                                            
+					                                                                    <td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Booking - Estimated 
+						                                                                        <br />
+						                                                                        Dely. Date
+						                                                                    </label>	
+					                                                                    </td>	
+        					                                                            
+					                                                                    <td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Booking - Dely.
+						                                                                        <br />
+						                                                                        Location
+						                                                                    </label>
+					                                                                    </td>	
+        					                                                            
+					                                                                    <%--<td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Consignor Name
+						                                                                    </label>	
+					                                                                    </td>--%>
+        					                                                            
+					                                                                    <%--<td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Delivery Location
+						                                                                    </label>	
+					                                                                    </td>--%>	
+					                                                                    
+					                                                                    <td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        From - To
+						                                                                    </label>	
+					                                                                    </td>
+					                                                                    
+					                                                                    <td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Mode
+						                                                                    </label>	
+					                                                                    </td>
+        					                                                            
+					                                                                    <td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Arrival Date At
+						                                                                        <br />
+						                                                                        Current Location
+						                                                                    </label>
+					                                                                    </td>
+        					                                                            
+					                                                                    <%--<td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Delivery Date
+						                                                                    </label>	
+					                                                                    </td>--%>	
+        					                                                            
+        					                                                            <%--<td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Packages L/B
+						                                                                    </label>	
+					                                                                    </td>	
+        					                                                            
+					                                                                    <td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Weight L/B
+						                                                                    </label>	
+					                                                                    </td>--%>
+	                                                                                </tr>
+	                                                                                
+	                                                                                <tr id="trNoRecsForDocketList" runat="server" style="background-color: White" visible="false">
+                                                                                        <td align="left" colspan="8">
+                                                                                            <label id="lblNoDocketsForRoute" class="blackfnt" runat="server" style="color: Red">
+                                                                                                <%--No <%=Session["DocketCalledAs"].ToString()%>s Found for the given Route--%>
+                                                                                            </label>
+                                                                                        </td>
+                                                                                    </tr>
+        	                                                                        
+	                                                                                <asp:Repeater ID="rptDocketList" runat="server" Visible="false">
+                                                                                        <ItemTemplate>
+                                                                                            <tr style="background-color: White">
+                                                                                                <td align="center" style="width: 10px;">
+                                                                                                    <input id="chkSelDocket" type="checkbox" runat="server" value='<%#DataBinder.Eval(Container.DataItem, "DocketNo")%>' 
+                                                                                                        DocketMode='<%#DataBinder.Eval(Container.DataItem, "DocketMode")%>' 
+                                                                                                        DocketID='<%#DataBinder.Eval(Container.DataItem, "DocketID")%>' 
+                                                                                                        onclick="SelectDocket(this)" />
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="center">
+                                                                                                    <label class="blackfnt" style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "SrNo")%>
+                                                                                                        &nbsp;
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt" style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DocketNo")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DocketDate")%> - 
+                                                                                                        <br />
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DelyDate")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "OrgCode")%> - <%#DataBinder.Eval(Container.DataItem, "DelyLoc")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <%--<td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">                                                                                                        
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "ConsName")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DelyLoc")%>
+                                                                                                    </label>
+                                                                                                </td>--%>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "FromTo")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "TrnMode")%>
+                                                                                                        &nbsp;
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "ArrivalDate")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <%--<td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DelyDate")%>
+                                                                                                    </label>
+                                                                                                </td>--%>
+                                                                                                
+                                                                                                <%--<td align="right">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "PackagesLB")%>
+                                                                                                        &nbsp;
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="right">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "WeightLB")%>
+                                                                                                        &nbsp;
+                                                                                                    </label>
+                                                                                                </td>--%>
+                                                                                            </tr>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:Repeater>
+                                                                                    
+                                                                                    <tr class="bgbluegrey" id="trTableHeadersForLSView" runat="server" visible="false">
+	                                                                                    <td align="left">
+						                                                                    <label class="blackfnt">
+						                                                                        Sr. No.
+						                                                                    </label>
+					                                                                    </td>
+        					                                                            
+					                                                                    <td align="left">
+						                                                                    <label class="blackfnt" runat="server" id="lblDcoketNo">
+						                                                                        <%--<%=Session["DocketCalledAs"].ToString()%> No.--%>
+						                                                                    </label>
+					                                                                    </td>	
+        					                                                            
+					                                                                    <td align="left">
+						                                                                    <label class="blackfnt">
+						                                                                        Booking - Estimated 
+						                                                                        <br />
+						                                                                        Dely. Date
+						                                                                    </label>	
+					                                                                    </td>	
+        					                                                            
+					                                                                    <td align="left">
+						                                                                    <label class="blackfnt">
+						                                                                        Booking - Dely.
+						                                                                        <br />
+						                                                                        Location
+						                                                                    </label>
+					                                                                    </td>	
+        					                                                            
+					                                                                    <%--<td align="left">
+						                                                                    <label class="blackfnt">
+						                                                                        Consignor Name
+						                                                                    </label>	
+					                                                                    </td>
+        					                                                            
+					                                                                    <td align="left">
+						                                                                    <label class="blackfnt">
+						                                                                        Delivery Location
+						                                                                    </label>	
+					                                                                    </td>	--%>
+					                                                                    
+					                                                                    <td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        From - To
+						                                                                    </label>	
+					                                                                    </td>
+					                                                                    
+					                                                                    <td align="left" style="height: 40px">
+						                                                                    <label class="blackfnt">
+						                                                                        Mode
+						                                                                    </label>	
+					                                                                    </td>
+        					                                                            
+					                                                                    <td align="left">
+						                                                                    <label class="blackfnt">
+						                                                                        Arrival Date At
+						                                                                        <br />
+						                                                                        Current Location
+						                                                                    </label>	
+					                                                                    </td>	
+        					                                                            
+					                                                                    <%--<td align="left">
+						                                                                    <label class="blackfnt">
+						                                                                        Delivery Date
+						                                                                    </label>	
+					                                                                    </td>	
+        					                                                            
+					                                                                    <td align="left">
+						                                                                    <label class="blackfnt">
+						                                                                        Packages L/B
+						                                                                    </label>	
+					                                                                    </td>	
+        					                                                            
+					                                                                    <td align="left" colspan="2">
+						                                                                    <label class="blackfnt">
+						                                                                        Weight L/B
+						                                                                    </label>
+					                                                                    </td>--%>
+	                                                                                </tr>
+                                                                                    
+                                                                                    <asp:Repeater ID="rptDocketListForView" runat="server" Visible="false">
+                                                                                        <ItemTemplate>
+                                                                                            <tr style="background-color: White">
+                                                                                                <td align="right">
+                                                                                                    <label class="blackfnt" style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "SrNo")%>
+                                                                                                        &nbsp;
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt" style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DocketNo")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DocketDate")%>
+                                                                                                        <br />
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DelyDate")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "OrgCode")%>
+                                                                                                        <br />
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DelyLoc")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <%--<td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">                                                                                                        
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "ConsName")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DelyLoc")%>
+                                                                                                    </label>
+                                                                                                </td>--%>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "FromTo")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "TrnMode")%>
+                                                                                                        &nbsp;
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "ArrivalDate")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <%--<td align="left">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "DelyDate")%>
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="right">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "PackagesLB")%>
+                                                                                                        &nbsp;
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                
+                                                                                                <td align="right" colspan="2">
+                                                                                                    <label class="blackfnt"  style="color: <%#DataBinder.Eval(Container.DataItem, "RowColor")%>">
+                                                                                                        <%#DataBinder.Eval(Container.DataItem, "WeightLB")%>
+                                                                                                        &nbsp;
+                                                                                                    </label>
+                                                                                                </td>--%>
+                                                                                            </tr>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:Repeater>
+                                                                                    
+                                                                                    <tr style="background-color: White" runat="server" id="trPrepareLoadingSheet" visible="false">
+                                                                                        <td colspan="8" align="center">
+                                                                                            <asp:Button ID="btnPrepareLS" runat="server" OnClientClick="return CheckDocketSelection()" 
+                                                                                                OnClick="btnPrepareLS_Click" />
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    
+                                                                                    <tr style="background-color: White" runat="server" id="trPrepareLSErrorMsg" visible="false">
+                                                                                        <td colspan="8" align="left">    
+                                                                                            <label runat="server" class="blackfnt" style="color: Red;" id="lblPrepareLSErrorMsg">
+                                                                                            </label>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                
+                                                                                    <%--<tr style="background-color: White" runat="server" id="trNextStep" visible="false">
+                                                                                        <td colspan="11" align="left">
+                                                                                            <label class="blackfnt">
+                                                                                                <b>
+                                                                                                    Your Next Step:
+                                                                                                </b>
+                                                                                            </label>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    
+                                                                                    <tr style="background-color: White" runat="server" id="trPrepareMoreLS" visible="false">
+                                                                                        <td colspan="11" align="left">
+                                                                                            <label class="blackfnt">
+                                                                                                <a href="./LSMain.aspx">
+                                                                                                    <u>
+                                                                                                        Click here to prepare more Loading Sheets
+                                                                                                    </u>
+                                                                                                </a>
+                                                                                            </label>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    
+                                                                                    <tr style="background-color: White" runat="server" id="trViewPrintLS" visible="false">
+                                                                                        <td colspan="11" align="left">
+                                                                                            <label class="blackfnt">
+                                                                                                <a href="Javascript:OpenInWindow('../TCS/PrintTCS/ViewAndPrintLoadingSheet.aspx?<%=strNextLoadingSheetNo%>',400,600,10,10)">
+                                                                                                    <u>
+                                                                                                        View & Print Loading Sheet
+                                                                                                    </u>
+                                                                                                </a>
+                                                                                            </label>
+                                                                                        </td>
+                                                                                    </tr>--%>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                    
+                                                                    <input type="hidden" id="HidTotalRecords" runat="server" />
+                                                                    <input type="hidden" id="HidSelectedDocketNos" runat="server" />
+                                                                    <input type="hidden" id="HidSelectedDockets" runat="server" />
+                                                                    <input type="hidden" id="HidSelectedDocketIDs" runat="server" />
+                                                                    <input type="hidden" id="HidManNoManYN" runat="server" />
+                                                                    <input type="hidden" id="HidDocket" runat="server" />
+                                                                    <input type="hidden" id="HidLS" runat="server" />
+                                                                    
+                                                                </ContentTemplate>
+                                                                <Triggers>
+                                                                    <asp:AsyncPostBackTrigger ControlID="btnSubmit" EventName="Click" /><asp:AsyncPostBackTrigger ControlID="btnPrepareLS" EventName="Click" /><asp:AsyncPostBackTrigger ControlID="lnkbtnDocketsinLSForMF" EventName="Click" /></Triggers>
+                                                            </asp:UpdatePanel>
+										                </center>
+
+										        <tr>
+											        <td>
+											            &nbsp;
+											        </td>
+										        </tr>
+										
+										        <tr>
+											        <td>
+											            &nbsp;
+											        </td>
+										        </tr>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+    </div>
+    
+    <div id="divDate" style="position:absolute;visibility:hidden;background-color:white;z-index:99;">
+    </div>
+</asp:Content>
+

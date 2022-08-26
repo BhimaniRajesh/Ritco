@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ArrayOfContractKeys xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContractKeys>
+    <DockDt>0001-01-01T00:00:00</DockDt>
+    <Status />
+    <Description />
+    <ContractID />
+    <FoundContract />
+    <FlagProceed />
+    <Depth />
+    <PayBase />
+    <BasedOn1 />
+    <BaseCode1 />
+    <BasedOn2 />
+    <BaseCode2 />
+    <FromCity />
+    <ToCity />
+    <OrgnLoc />
+    <DelLoc />
+    <ServiceType />
+    <FTLType />
+    <TransMode />
+    <FreightCharge>0</FreightCharge>
+    <FreightRate>0</FreightRate>
+    <TRDays>0</TRDays>
+    <RateType />
+    <FlagProrata>N</FlagProrata>
+    <ChargedWeight>0</ChargedWeight>
+    <NoOfPkgs>0</NoOfPkgs>
+    <FOVCharge>0</FOVCharge>
+    <MinFreightType />
+    <MinFreightBase />
+    <MinFreightBaseRate>0</MinFreightBaseRate>
+    <MinFreightRate>0</MinFreightRate>
+    <FreightRateLowerLimit>0</FreightRateLowerLimit>
+    <FreightRateUpperLimit>0</FreightRateUpperLimit>
+    <MinSubTotal>0</MinSubTotal>
+    <SubTotalLowerLimit>0</SubTotalLowerLimit>
+    <SubTotalUpperLimit>0</SubTotalUpperLimit>
+    <FlagFreight />
+    <FlagSutotal />
+    <DiscountType />
+    <DiscountAmount>0</DiscountAmount>
+    <DiscountRate>0</DiscountRate>
+  </ContractKeys>
+</ArrayOfContractKeys>

@@ -1,0 +1,7 @@
+entryby,Employee,voucher_status,voucherno,brcd,location,totdebit,totcredit,transdate,transtype,autoentry
+10213,RAJESH KUMAR,,VRNDA-0603593,NDA,NDA : Noida Branch,3173.00,0.00,14 Jun 2007,Bank Receipt,Y
+10182,SURESH KUMAR V M,Closed,VRMAAS-0622004,MAAS,MAAS : Chennai Branch,2365.00,0.00,14 Jun 2007,Bank Receipt,N
+10130,SARDA PRASAD LENKA,,VRIDR-0619201,IDR,IDR : Indore branch,5000.00,0.00,21 Jun 2007,Cash Receipt,Y
+10130,SARDA PRASAD LENKA,,VRIDR-0619203,IDR,IDR : Indore branch,10000.00,0.00,21 Jun 2007,Cash Receipt,Y
+10118,ISMAIL ZABIULLA,,VRBMS-0606089,BMS,BMS : Bommasandra Branch,47354.00,0.00,16 Jun 2007,Bank Receipt,Y
+10130,SARDA PRASAD LENKA,,VRIDR-0619202,IDR,IDR : Indore branch,10000.00,0.00,21 Jun 2007,Cash Receipt,Y

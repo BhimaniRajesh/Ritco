@@ -1,0 +1,1114 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Data.SqlClient;
+using ApplicationManager;
+
+public partial class GUI_Finance_Vendor_BA_payment_VendorBillEntry_DieselExpense_DieselExpenseNew : System.Web.UI.Page
+{
+    public string ErrMsg = "";
+    SqlConnection con;
+    SqlCommand cmd;
+    SqlDataReader dr;
+    DataTable dt = new DataTable("table1");
+    MyFunctions fn = new MyFunctions();
+    DateFunction DAccess = new DateFunction();
+    public string Financial_Year = "", fin_year = "", opertitle = "MANUAL DEBIT VOUCHER", Defaultdate = "";
+
+    public static string mRepair = "";
+    public static string mExpenseType = "";
+
+    public DieselDataSet _dataSet = new DieselDataSet();
+    int _lastEditedPage;
+    DieselDataSet.HSD_OIL_EXPRow datarow_HSDOIL;
+    string temp = "";
+    string temp1 = "";
+    Double current_km = 0;
+    Double first_km = 0;
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        mRepair = Request.QueryString["Repair"];
+        if (mRepair == "" || mRepair == null)
+        {
+            mExpenseType = "Fixed";
+        }
+        else
+        {
+            mExpenseType = "Variable";
+        }
+
+
+        con = new SqlConnection(Session["SqlProvider"].ToString().Trim());
+        con.Open();
+
+        Financial_Year = Session["FinYear"].ToString().Substring(2, 2);
+        fin_year = Session["FinYear"].ToString();
+        double fin_year_next = Convert.ToDouble(Financial_Year) + 1;
+        fin_year = Financial_Year + "_" + fin_year_next.ToString().PadLeft(2, '0');
+        Defaultdate = Request.QueryString["Defaultdate"];
+        if (Defaultdate == "")
+        {
+            Defaultdate = "today";
+        }
+        if (!IsPostBack)
+        {
+            
+            Session["TErrMsg"] = null;
+            //Session["TErrMsg1"] = null;
+            for (int i = 0; i < 5; i++)
+            {
+                dt.Rows.Add();
+            }
+            //System.DateTime righnow = System.DateTime.Today;
+
+            //grvcontrols.DataSource = dt;
+            //grvcontrols.DataBind();
+
+            string sql = "select acccode,accdesc from webx_acctinfo where accdesc like '%tds%'";
+            SqlCommand cmd1 = new SqlCommand(sql, con);
+            SqlDataReader dr;
+            dr = cmd1.ExecuteReader();
+            while (dr.Read())
+            {
+                Tdssection.Items.Add(new ListItem(dr.GetValue(1).ToString(), dr.GetValue(0).ToString()));
+            }
+            dr.Close();
+            Tdssection.CssClass = "blackfnt";
+
+            Show_Pbov_list_Display();
+
+            popVendor();
+            System.DateTime righnow = System.DateTime.Today;
+            string strrightnow = righnow.ToString("dd/MM/yyyy");
+            txtBillEntryDate.Text = strrightnow;
+            txtBillDt.Text = strrightnow;
+            // popAcocuntGroup();
+            txtNetAmt.Attributes.Add("OnFocus", "javascript:document.getElementById('" + txtAddRowOilExp.ClientID.ToString() + "').focus();");
+            txtAmtAppl.Attributes.Add("OnFocus", "javascript:document.getElementById('" + ddlDiscount.ClientID.ToString() + "').focus();");
+            txtDueDate.Attributes.Add("OnFocus", "javascript:document.getElementById('" + txtRefNo.ClientID.ToString() + "').focus();");
+            txtBillAmt.Attributes.Add("OnFocus", "javascript:document.getElementById('" + txtBillDt.ClientID.ToString() + "').focus();");
+
+            txtAmtApplL.Attributes.Add("OnFocus", "javascript:document.getElementById('" + ddlDiscount.ClientID.ToString() + "').focus();");
+            txtServiceTax.Attributes.Add("OnFocus", "javascript:document.getElementById('" + ddlDiscount.ClientID.ToString() + "').focus();");
+            txtEduCess.Attributes.Add("OnFocus", "javascript:document.getElementById('" + ddlDiscount.ClientID.ToString() + "').focus();");
+            txtHEduCess.Attributes.Add("OnFocus", "javascript:document.getElementById('" + ddlDiscount.ClientID.ToString() + "').focus();");
+
+            txtTDSAmt.Attributes.Add("OnFocus", "javascript:document.getElementById('" + ddlDiscount.ClientID.ToString() + "').focus();");
+            txtNetPayableAmt.Attributes.Add("OnFocus", "javascript:document.getElementById('" + ddlDiscount.ClientID.ToString() + "').focus();");
+
+            hfTodayDate.Value = righnow.ToString("dd/MM/yyyy");
+            TripSheet objTs = new TripSheet(Session["SqlProvider"].ToString());
+            objTs.CheckTripRule();
+            if (objTs.Fuel_Bill_Entry_TSWise == "N")
+            {
+                dgHSD_OIL_EXP.Columns[1].Visible = false;
+            }
+        }
+        else
+        {
+            ReverseBind();
+        }
+        txtServiceTax.Attributes.Add("onblur", "GetTot()");
+        txtEduCess.Attributes.Add("onblur", "GetTot()");
+        txtHEduCess.Attributes.Add("onblur", "GetTot()");
+        txtTDSRate.Attributes.Add("onblur", "GetTot()");
+        //  txtSrvTaxNo.Attributes.Add("onchange", "CheckTax()");
+        //  txtPanNo.Attributes.Add("onblur", "CheckPan(this)");  
+        string script;
+        script = @"<SCRIPT language='javascript'> PageLoad();" + "</SCRIPT>";
+        this.RegisterStartupScript("MyAlert", script);
+        ddlDiscount.Attributes.Add("onChange", "return CalculatePerc(" + ddlDiscount.ClientID.ToString() + "," + txtPercAmt.ClientID.ToString() + "," + txtFinalAmt.ClientID.ToString() + "," + txtNetPayableAmt.ClientID.ToString() + ");");
+        txtPercAmt.Attributes.Add("OnBlur", "javascript:CalculatePerc(" + ddlDiscount.ClientID.ToString() + "," + txtPercAmt.ClientID.ToString() + "," + txtFinalAmt.ClientID.ToString() + "," + txtNetPayableAmt.ClientID.ToString() + ");");
+        txtFinalAmt.Attributes.Add("OnBlur", "javascript:CalculatePerc(" + ddlDiscount.ClientID.ToString() + "," + txtPercAmt.ClientID.ToString() + "," + txtFinalAmt.ClientID.ToString() + "," + txtNetPayableAmt.ClientID.ToString() + ");");
+        txtBillNumber.Attributes.Add("OnBlur", "javascript:CheckBillNumber(" + txtBillNumber.ClientID.ToString() + ","+ cboVendor.ClientID.ToString() +");");
+    }
+
+
+    protected void dgHSD_OIL_EXP_ItemDataBound(object sender, DataGridItemEventArgs e)
+    {
+        TripSheet objTs = new TripSheet(Session["SqlProvider"].ToString());
+        objTs.CheckTripRule();
+
+        if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
+        {
+            DropDownList ddlFuelType = ((DropDownList)e.Item.FindControl("ddlFuelType"));
+            TextBox txtOilPlace = (TextBox)e.Item.FindControl("txtOilPlace");
+            TextBox txtLKMRead = (TextBox)e.Item.FindControl("txtLKMRead");
+
+            TextBox txtKM_Reading = (TextBox)e.Item.FindControl("txtKM_Reading");
+            TextBox txtBillno = (TextBox)e.Item.FindControl("txtBillno");
+            TextBox txtBilldt = (TextBox)e.Item.FindControl("txtBilldt");
+            TextBox txtDiesel_Ltr = (TextBox)e.Item.FindControl("txtDiesel_Ltr");
+            TextBox txtDieselRate_Ltr = (TextBox)e.Item.FindControl("txtDieselRate_Ltr");
+
+            TextBox txtAmt = (TextBox)e.Item.FindControl("txtAmt");
+            TextBox txtExeAmt = (TextBox)e.Item.FindControl("txtExeAmt");
+            TextBox txtRemarks = (TextBox)e.Item.FindControl("txtRemarks");
+
+            TextBox txtTripsheetNo = (TextBox)e.Item.FindControl("txtTripsheetNo");
+            TextBox txtVehicleno = (TextBox)e.Item.FindControl("txtVehicleno");
+
+            HiddenField hfVslipNo = (HiddenField)e.Item.FindControl("hfVslipNo");
+            HiddenField hfManualVslipNo = (HiddenField)e.Item.FindControl("hfManualVslipNo");
+
+            BindFuelType(ddlFuelType);
+
+            datarow_HSDOIL = ((DieselDataSet.HSD_OIL_EXPRow)((DataRowView)e.Item.DataItem).Row);
+
+            txtOilPlace.Text = datarow_HSDOIL.OilPlace;
+            ddlFuelType.SelectedItem.Text = datarow_HSDOIL.FuelType;
+            txtLKMRead.Text = datarow_HSDOIL.Last_Km_Read;
+
+            txtKM_Reading.Text = datarow_HSDOIL.KM_Reading;
+            txtBillno.Text = datarow_HSDOIL.Billno;
+            txtBilldt.Text = datarow_HSDOIL.Billdt;
+            txtDiesel_Ltr.Text = datarow_HSDOIL.Diesel_Ltr;
+            txtDieselRate_Ltr.Text = datarow_HSDOIL.Diesel_Rate;
+
+            txtAmt.Text = datarow_HSDOIL.Amt;
+            txtExeAmt.Text = datarow_HSDOIL.Exe_Amt;
+            txtRemarks.Text = datarow_HSDOIL.Remarks;
+
+            txtTripsheetNo.Text = datarow_HSDOIL.TripsheetNo;
+            txtVehicleno.Text = datarow_HSDOIL.VehicleNo;
+
+            txtTripsheetNo.Attributes.Add("onBlur", "javascript:CheckTSNumber(" + e.Item.ItemIndex + ",this," + txtVehicleno.ClientID.ToString().Trim() + "," + txtLKMRead.ClientID.Trim() + "," + lblError1.ClientID.Trim() + ");");
+            txtKM_Reading.Attributes.Add("onBlur", "javascript:CheckKmReading(" + txtLKMRead.ClientID.Trim() + "," + txtKM_Reading.ClientID.Trim() + "," + lblError1.ClientID.Trim() + ");");
+
+            if (objTs.Fuel_Bill_Entry_TSWise == "N")
+            {
+                txtVehicleno.BorderStyle = BorderStyle.Groove;
+                txtVehicleno.CssClass = "input";
+                txtVehicleno.Attributes.Add("onBlur", "javascript:CheckVehNumber(" + e.Item.ItemIndex + "," + txtVehicleno.ClientID.ToString().Trim() + "," + txtLKMRead.ClientID.Trim() + "," + hfVslipNo.ClientID.Trim() + "," + hfManualVslipNo.ClientID.Trim() + "," + lblError1.ClientID.Trim() + ");");
+            }
+            else
+            {
+                txtVehicleno.CssClass = "";
+                txtVehicleno.BorderStyle = BorderStyle.None; 
+                txtVehicleno.Attributes.Add("onFocus", "this.blur();");  
+            }
+        }
+    }
+    private void popVendor()
+    {
+        SqlConnection conn = new SqlConnection(Session["SqlProvider"].ToString().Trim());
+        conn.Open();
+
+        //string sql = "select codeid as Type_Code,codedesc as Type_name from webx_master_general where codetype='VENDTY' and codeid not in ('02','03','04','05','08','09','10')";
+        string sql = "select codeid as Type_Code,codedesc as Type_name from webx_master_general where codetype='VENDTY' and CodeId='12' ";
+        SqlCommand sqlcmd = new SqlCommand(sql, conn);
+        SqlDataReader dr;
+        dr = sqlcmd.ExecuteReader();
+        cboVendorType.Items.Clear();
+        //cboVendorType.Items.Add(new ListItem("Select", ""));
+        while (dr.Read())
+        {
+            cboVendorType.Items.Add(new ListItem(dr["Type_name"].ToString(), dr["Type_Code"].ToString()));
+        }
+        dr.Close();
+        cboVendorType.CssClass = "blackfnt";
+
+        VendorList();
+
+    }
+
+    protected void txtAmtApplL_TextChanged(object sender, EventArgs e)
+    {
+
+    }
+    public void Show_Pbov_list_Display()
+    {
+
+    }
+    public void Show_Pbov_list(object sender, EventArgs e)
+    {
+
+        Show_Pbov_list_Display();
+
+    }
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+
+        System.Globalization.DateTimeFormatInfo dtfi = new System.Globalization.DateTimeFormatInfo();
+        dtfi.ShortDatePattern = "dd/MM/yyyy";
+        dtfi.DateSeparator = "/";
+        dtfi.ShortTimePattern = "hh:mm tt";
+
+        //lblError1.Text = "";
+        string sql1 = "";
+        string VslipDt1 = "";
+        DateTime mTSDt = new DateTime();
+        DieselDataSet.HSD_OIL_EXPRow datarow_OilExp;
+        SqlConnection conn = new SqlConnection(Session["SqlProvider"].ToString().Trim());
+        conn.Open();
+
+
+        DateTime SysBilldt = DateTime.Now;
+
+        foreach (DataGridItem gridrow in dgHSD_OIL_EXP.Items)
+        {
+            datarow_OilExp = _dataSet.HSD_OIL_EXP[gridrow.ItemIndex];
+            if (gridrow.ItemIndex != -1)
+            {
+                TextBox mTripsheetNo = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtTripsheetNo");
+                DateTime mBilldt = new DateTime();
+                TextBox mybilldate = (TextBox)gridrow.FindControl("txtBilldt");
+                if(mybilldate.Text!="")
+                {
+                mBilldt = Convert.ToDateTime(((TextBox)gridrow.FindControl("txtBilldt")).Text, dtfi);
+                }
+                sql1 = "Select VslipDt,convert(varchar,VslipDt,103) as VslipDt1 from WEBX_FLEET_VEHICLE_ISSUE I where  Manual_TripSheetNo='" + mTripsheetNo.Text.ToString() + "'";
+                SqlCommand Sqlcmd = new SqlCommand(sql1, conn);
+                SqlDataReader rdr = Sqlcmd.ExecuteReader();
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        mTSDt = Convert.ToDateTime(rdr["VslipDt"].ToString());
+                        VslipDt1 = rdr["VslipDt1"].ToString();
+                    }
+                }
+                rdr.Dispose();
+                rdr.Close();
+                if (mBilldt.ToString("dd/MM/yyyy") != mTSDt.ToString("dd/MM/yyyy"))
+				{
+                	if (mBilldt < mTSDt)
+                	{
+                    	lblError1.Visible = true;
+                    	lblError1.Text = "Bill date should not less than tripsheet date  ( " + VslipDt1 + " ) for tripsheet no. " + mTripsheetNo.Text.ToString() + " !!!";
+                	}
+				}
+				if(mBilldt.ToString("dd/MM/yyyy") != SysBilldt.ToString("dd/MM/yyyy"))
+				{	
+                	if (mBilldt > SysBilldt)
+                	{
+                    	lblError1.Visible = true;
+                    	lblError1.Text = "Bill date should not greater than system date for tripsheet no. " + mTripsheetNo.Text.ToString() + " !!!";
+                	}
+				}
+
+                _dataSet.HSD_OIL_EXP[gridrow.DataSetIndex].ItemArray = datarow_OilExp.ItemArray;
+
+            }
+        }
+        conn.Close();
+
+        //Response.Write("submitted....");
+        //Response.End();
+        if (lblError1.Text == "")
+        {
+            string sql = "sp_get_next_be_code", BILLNO = "", Branch = SessionUtilities.CurrentBranchCode.ToString();
+            SqlCommand sqlcmd1 = new SqlCommand(sql, con);
+            sqlcmd1.CommandType = CommandType.StoredProcedure;
+            sqlcmd1.Parameters.Add("@loccode", SqlDbType.VarChar).Value = SessionUtilities.CurrentBranchCode.ToString();
+            SqlDataReader r1 = sqlcmd1.ExecuteReader();
+            if (r1.Read())
+            {
+                BILLNO = r1["NewCode"].ToString();
+            }
+            r1.Close();
+
+            string Vbrcd = SessionUtilities.CurrentBranchCode.ToString();
+            string voucherNo = "null";// fn.NextVoucherno(Vbrcd, Financial_Year);
+
+            string PBOV_typ = "V";
+            string BILLDT = txtBillEntryDate.Text;
+
+
+
+
+            string VENDORCODE = cboVendor.SelectedValue.ToString(), VENDORNAME = "";
+            if (VENDORCODE != "")
+            {
+                VENDORNAME = fn.GetVendor(VENDORCODE);
+                string[] venname;
+                venname = VENDORNAME.Split(':');
+                VENDORNAME = venname[1];
+            }
+
+
+            string VENDORBILLDT = txtBillDt.Text;
+            string VENDORBILLNO = txtBillNumber.Text;
+            double PCAMT = Convert.ToDouble(txtBillAmt.Text);
+            double ADVAMT = 0, OTHAMT = 0;
+            double SVCTAX = Convert.ToDouble(txtServiceTax.Text);
+            string DUEDT = txtDueDate.Text;
+            string ENTRYBY = SessionUtilities.CurrentEmployeeID.ToString();
+            string REMARK = txtRemarks.Text;
+            string PAYDT = txtBillEntryDate.Text;
+            double OTHERDED = 0;
+            double TDSRATE = Convert.ToDouble(txtTDSRate.Text);
+            double TDS = Convert.ToDouble(txtTDSAmt.Text);
+            double SVCTAXDED = 0;
+            double OTHERCHRG = 0;
+            string tdsacccode = Tdssection.SelectedValue.ToString(), tdsaccdesc = Tdssection.SelectedItem.ToString();
+            string tdsfor = cboCorporate.SelectedValue.ToString();
+            string cessamt = txtEduCess.Text;
+            string tdsgrpcode = Tdssection.SelectedValue.ToString();
+            string tdsgrpdesc = Tdssection.SelectedItem.ToString();
+            mExpenseType = "Fuel";
+            string betype = mExpenseType + " Expense";
+            string REFNO = txtRefNo.Text;
+            double servicetaxrate = 12;// Convert.ToDouble(txtServiceTax_rate.Text);
+            double othertax = 2;// Convert.ToDouble(txtEduCessRate.Text);
+            double ACTothertax = Convert.ToDouble(txtEduCess.Text);
+            double DEDUCTION_CHRG = 0;// Convert.ToDouble(txtOtherDedudction.Text);
+            double discount = 0;// Convert.ToDouble(txtDiscRecvd.Text);
+            double NETAMT = Convert.ToDouble(txtNetPayableAmt.Text);
+
+
+
+            //Response.End();
+            double acct_credit = 0, acct_debit = 0;
+            string acct_acccode = "", acct_Oppaccount = "", acct_oppacccode = "";
+            string Narration = "When Expense Entry Done ,Bill is generated : " + BILLNO;
+            string opertitle = "Expense Bill Entry ";
+            string TransNo = "1";
+            string transdt = "";
+            string[] exp_accdoe = crediit_account.Text.ToString().Split(':');
+            string expenseacccode = exp_accdoe[0].Trim().ToString(), expenseaccdesc = exp_accdoe[1].ToString();
+            //DateTime BillDate = Convert.ToDateTime(BILLDT);
+            BILLDT = fn.Mydate1(BILLDT);
+            //DateTime Vendor_BillDate = Convert.ToDateTime(VENDORBILLDT);
+            VENDORBILLDT = fn.Mydate1(VENDORBILLDT);
+
+            //DateTime paymentDt = Convert.ToDateTime(PAYDT);
+            PAYDT = "null";// fn.Mydate1(PAYDT);
+
+            // DateTime duedate = Convert.ToDateTime(DUEDT);
+            DUEDT = fn.Mydate1(DUEDT);
+
+            SqlTransaction trn;
+            trn = con.BeginTransaction();
+
+            string strDiscountType = "";
+            double disPercVal = 0;
+            if (ddlDiscount.SelectedValue == "0")
+            {
+                discount = 0;
+            }
+            else if (ddlDiscount.SelectedValue == "1")
+            {
+                strDiscountType = "Flat";
+                discount = Convert.ToDouble(txtFinalAmt.Text);
+            }
+            else if (ddlDiscount.SelectedValue == "2")
+            {
+                strDiscountType = "Percentage";
+                disPercVal = Convert.ToDouble(txtPercAmt.Text);
+                discount = Convert.ToDouble(txtFinalAmt.Text);
+            }
+
+            try  //  try FOR ALL
+            {
+                string sqlInsert = "USP_INS_WEBX_VENDORBILL_HDR";
+                SqlCommand sqlcmd_Insert = new SqlCommand(sqlInsert, con, trn);
+                sqlcmd_Insert.CommandType = CommandType.StoredProcedure;
+                sqlcmd_Insert.Parameters.Add("@BILLNO", SqlDbType.VarChar, 25).Value = BILLNO.Trim();
+                sqlcmd_Insert.Parameters.Add("@BILLSF", SqlDbType.VarChar, 1).Value = ".";
+                sqlcmd_Insert.Parameters.Add("@BRCD", SqlDbType.VarChar, 50).Value = SessionUtilities.CurrentBranchCode.ToString();
+                sqlcmd_Insert.Parameters.Add("@BILLDT", SqlDbType.VarChar, 15).Value = txtBillEntryDate.Text; //BILLDT;
+                sqlcmd_Insert.Parameters.Add("@VENDORCODE", SqlDbType.VarChar, 50).Value = VENDORCODE.Trim();
+
+                sqlcmd_Insert.Parameters.Add("@VENDORNAME", SqlDbType.VarChar, 100).Value = VENDORNAME.Trim();
+                sqlcmd_Insert.Parameters.Add("@VENDORBILLDT", SqlDbType.VarChar, 15).Value = txtBillDt.Text.Trim(); //VENDORBILLDT.Trim();
+                sqlcmd_Insert.Parameters.Add("@VENDORBILLNO", SqlDbType.VarChar, 100).Value = VENDORBILLNO.Trim();
+                sqlcmd_Insert.Parameters.Add("@PCAMT", SqlDbType.Float).Value = PCAMT;
+                sqlcmd_Insert.Parameters.Add("@ADVAMT", SqlDbType.Float).Value = ADVAMT;
+
+                sqlcmd_Insert.Parameters.Add("@OTHAMT", SqlDbType.Float).Value = OTHAMT;
+                sqlcmd_Insert.Parameters.Add("@SVCTAX", SqlDbType.Float).Value = SVCTAX;
+                sqlcmd_Insert.Parameters.Add("@DUEDT", SqlDbType.VarChar, 15).Value = txtDueDate.Text.Trim();//DUEDT; // (DUEDT != "" || DUEDT != null) ? Convert.ToDateTime(DUEDT) : null;
+                sqlcmd_Insert.Parameters.Add("@ENTRYBY", SqlDbType.VarChar, 50).Value = ENTRYBY.Trim();
+                //sqlcmd_Insert.Parameters.Add("@ENTRYDT", SqlDbType.DateTime).Value = getdate();
+
+                sqlcmd_Insert.Parameters.Add("@REMARK", SqlDbType.VarChar, 50).Value = REMARK.Trim();
+                //sqlcmd_Insert.Parameters.Add("@PAYDT", SqlDbType.VarChar, 50).Value =  Convert.ToDateTime(PAYDT.Trim());
+                sqlcmd_Insert.Parameters.Add("@VOUCHERNO", SqlDbType.VarChar, 50).Value = voucherNo.Trim();
+                sqlcmd_Insert.Parameters.Add("@OTHERDED", SqlDbType.Float).Value = OTHERDED;
+                sqlcmd_Insert.Parameters.Add("@TDSRATE", SqlDbType.Float).Value = TDSRATE;
+
+                sqlcmd_Insert.Parameters.Add("@TDS", SqlDbType.Float).Value = TDS;
+                sqlcmd_Insert.Parameters.Add("@SVCTAXDED", SqlDbType.Float).Value = SVCTAXDED;
+                sqlcmd_Insert.Parameters.Add("@OTHERCHRG", SqlDbType.Float).Value = OTHERCHRG;
+                sqlcmd_Insert.Parameters.Add("@NETAMT", SqlDbType.Float).Value = NETAMT;
+                sqlcmd_Insert.Parameters.Add("@tdsfor", SqlDbType.VarChar, 2).Value = tdsfor.Trim();
+
+                sqlcmd_Insert.Parameters.Add("@cessamt", SqlDbType.Float).Value = Convert.ToDecimal(cessamt);
+                sqlcmd_Insert.Parameters.Add("@tdsgrpcode", SqlDbType.VarChar, 7).Value = tdsgrpcode.Trim();
+                sqlcmd_Insert.Parameters.Add("@tdsgrpdesc", SqlDbType.VarChar, 50).Value = tdsgrpdesc.Trim();
+                sqlcmd_Insert.Parameters.Add("@betype", SqlDbType.VarChar, 50).Value = betype.Trim();
+                sqlcmd_Insert.Parameters.Add("@acccode", SqlDbType.VarChar, 7).Value = expenseacccode.Trim();
+
+                sqlcmd_Insert.Parameters.Add("@accdesc", SqlDbType.VarChar, 100).Value = expenseaccdesc.Trim();
+                sqlcmd_Insert.Parameters.Add("@REFNO", SqlDbType.VarChar, 50).Value = BILLNO.Trim();
+                sqlcmd_Insert.Parameters.Add("@tdsacccode", SqlDbType.VarChar, 7).Value = tdsacccode.Trim();
+                sqlcmd_Insert.Parameters.Add("@tdsaccdesc", SqlDbType.VarChar, 100).Value = tdsaccdesc.Trim();
+                sqlcmd_Insert.Parameters.Add("@servicetaxrate", SqlDbType.Float).Value = servicetaxrate;
+
+                sqlcmd_Insert.Parameters.Add("@othertaxrate", SqlDbType.Float).Value = othertax;
+                sqlcmd_Insert.Parameters.Add("@othertax", SqlDbType.Float).Value = ACTothertax;
+                sqlcmd_Insert.Parameters.Add("@DEDUCTION_CHRG", SqlDbType.Float).Value = DEDUCTION_CHRG;
+                sqlcmd_Insert.Parameters.Add("@discount", SqlDbType.Float).Value = discount;
+                sqlcmd_Insert.Parameters.Add("@PENDAMT", SqlDbType.Float).Value = NETAMT;
+
+                sqlcmd_Insert.Parameters.Add("@Hedu_cess", SqlDbType.Float).Value = (txtHEduCess.Text == "") ? 0 : Convert.ToDecimal(txtHEduCess.Text.Trim());
+                sqlcmd_Insert.Parameters.Add("@hdu_cessrate", SqlDbType.Decimal).Value = 1;
+                sqlcmd_Insert.Parameters.Add("@DISCOUNT_TYPE", SqlDbType.VarChar, 50).Value = strDiscountType;
+                sqlcmd_Insert.Parameters.Add("@DIS_PERC_VAL", SqlDbType.Decimal).Value = disPercVal;
+                sqlcmd_Insert.Parameters.Add("@Company_Code", SqlDbType.VarChar, 50).Value = SessionUtilities.DefaultCompanyCode.Trim();
+
+                sqlcmd_Insert.ExecuteNonQuery();
+
+                //string sqlInsert = "INSERT INTO WEBX_VENDORBILL_HDR (BILLNO, BILLSF, BRCD, BILLDT, VENDORCODE, VENDORNAME, VENDORBILLDT,VENDORBILLNO, PCAMT, ADVAMT, OTHAMT, SVCTAX, DUEDT,ENTRYBY, ENTRYDT, REMARK, PAYDT, VOUCHERNO, OTHERDED, TDSRATE, TDS,SVCTAXDED, OTHERCHRG, NETAMT,tdsfor,cessamt,tdsgrpcode,tdsgrpdesc,betype,acccode,accdesc,REFNO,tdsacccode,tdsaccdesc,servicetaxrate,othertaxrate,othertax,DEDUCTION_CHRG,discount,PENDAMT,Hedu_cess,hdu_cessrate) VALUES('" + BILLNO + "','.','" + Session["brcd"].ToString() + "','" + BILLDT + "','" + VENDORCODE + "','" + VENDORNAME + "','" + VENDORBILLDT + "','" + VENDORBILLNO + "'," + PCAMT + "," + ADVAMT + "," + OTHAMT + "," + SVCTAX + ",'" + DUEDT + "','" + ENTRYBY + "',getdate(),'" + REMARK + "'," + PAYDT + "," + voucherNo + "," + OTHERDED + "," + TDSRATE + "," + TDS + "," + SVCTAXDED + "," + OTHERCHRG + "," + NETAMT + ",'" + tdsfor + "'," + cessamt + ",'" + tdsgrpcode + "','" + tdsgrpdesc + "','" + betype + "','" + expenseacccode + "','" + expenseaccdesc + "','" + REFNO + "','" + tdsacccode + "','" + tdsaccdesc + "'," + servicetaxrate + "," + othertax + "," + ACTothertax + "," + DEDUCTION_CHRG + "," + discount + "," + NETAMT + ",'" + txtHEduCess.Text + "','1')";
+                //SqlCommand sqlcmd_Insert = new SqlCommand(sqlInsert, con, trn);
+                //sqlcmd_Insert.ExecuteNonQuery();
+
+                transdt = BILLDT;
+                string v_approve_reject_by = "null";
+                //string v_approve_reject_branch = "";
+                string v_closed_by = "null";
+                string v_closed_branch = "null";
+                string oppacccode = "null";
+                string v_approve_reject_dt = "null";
+                string prepareByLoc = Branch;
+                string Payto = "NUll";
+                string v_approve_reject_branch = SessionUtilities.CurrentBranchCode.ToString(), panno = "", servicetaxNo = "";
+                string entryfor = SessionUtilities.CurrentEmployeeID.ToString(), Entryby = SessionUtilities.CurrentEmployeeID.ToString();
+                string PBOV_code = VENDORCODE, PBOV_Name = VENDORNAME;
+                string Deptcode = "";
+                Branch = SessionUtilities.CurrentBranchCode.ToString();
+
+
+                //----------------------------------------------------------------------------------
+
+
+                //sqlDEL = "Delete from WEBX_TRIPSHEET_OILEXPDET where TripSheetNo='" + mTripSheetNo + "'";
+                //cmdDEL = new SqlCommand(sqlDEL, conn, trans);
+                //cmdDEL.ExecuteNonQuery();
+                // cmdDEL.Dispose();
+                double mTotOilExp = 0;
+                string mTripSheetNo = "";
+                string mBilldt_str = "";
+
+                foreach (DataGridItem gridrow in dgHSD_OIL_EXP.Items)
+                {
+                    if (dgHSD_OIL_EXP.Columns[1].Visible == false)
+                    {
+                        mTripSheetNo = "";
+                    }
+                    else
+                    {
+                        mTripSheetNo = ((TextBox)gridrow.FindControl("txtTripsheetNo")).Text;
+                    }
+                    string mOilPlace = ((TextBox)gridrow.FindControl("txtOilPlace")).Text;
+                    string mPPName = cboVendor.SelectedItem.Value;// ((DropDownList)gridrow.FindControl("ddlPPName")).SelectedItem.Text;
+                    string mBrand = "2"; //((DropDownList)gridrow.FindControl("ddlBrand")).SelectedItem.Text;
+                    string mFuelType = ((DropDownList)gridrow.FindControl("ddlFuelType")).SelectedItem.Value;
+                    string mLastKm = ((TextBox)gridrow.FindControl("txtLKmRead")).Text;
+
+                    string mCard_Cash = "Credit";// ((DropDownList)gridrow.FindControl("ddlPayment")).SelectedItem.Text;
+                    string mRemark = ((TextBox)gridrow.FindControl("txtRemarks")).Text;
+
+
+                    string mKM_Reading = ((TextBox)gridrow.FindControl("txtKM_Reading")).Text;
+                    string mBillno = ((TextBox)gridrow.FindControl("txtBillno")).Text;
+
+                    DateTime mBilldt = new DateTime();
+
+                    if (((TextBox)gridrow.FindControl("txtBilldt")).Text == "")
+                    {
+                        mBilldt_str = "NULL";
+                    }
+                    else
+                    {
+                        mBilldt = Convert.ToDateTime(((TextBox)gridrow.FindControl("txtBilldt")).Text, dtfi);
+                        mBilldt_str = "'" + mBilldt.ToString() + "'";
+                    }
+
+                    string mDiesel_Ltr = ((TextBox)gridrow.FindControl("txtDiesel_Ltr")).Text;
+                    string mOil_Ltr = "0";// ((TextBox)gridrow.FindControl("txtOil_Ltr")).Text;
+
+                    string mDiesel_Rate = ((TextBox)gridrow.FindControl("txtDieselRate_Ltr")).Text;
+                    string mOil_Rate = "0";// ((TextBox)gridrow.FindControl("txtOilRate_Ltr")).Text;
+
+                    double mAmtval = 0;
+                    mAmtval = (Convert.ToDouble(mDiesel_Ltr.ToString()) * Convert.ToDouble(mDiesel_Rate.ToString()));
+                    string mAmt = mAmtval.ToString();// ((TextBox)gridrow.FindControl("txtAmt")).Text;
+
+
+                    string mExeAmt = ((TextBox)gridrow.FindControl("txtExeAmt")).Text;
+
+                    mTotOilExp = mTotOilExp + Convert.ToDouble(mAmt);
+                    string Vslipno = "";
+                    string VehicleNo = "";
+                    if (mTripSheetNo != "")
+                    {
+                        conn.Open();
+
+                        string sqlstr = "Select Vslipno,VehicleNo from  WEBX_FLEET_VEHICLE_ISSUE where  Manual_TripSheetNo='" + mTripSheetNo.ToString() + "'";
+                        SqlCommand Sqlcmd1 = new SqlCommand(sqlstr, conn);
+                        SqlDataReader rdr1 = Sqlcmd1.ExecuteReader();
+                        if (rdr1.HasRows)
+                        {
+                            while (rdr1.Read())
+                            {
+                                Vslipno = rdr1["Vslipno"].ToString();
+                                VehicleNo = rdr1["VehicleNo"].ToString();
+                            }
+                        }
+                        rdr1.Dispose();
+                        rdr1.Close();
+                        conn.Close();
+                    }
+                    else
+                    {
+                        Vslipno = "";
+                        VehicleNo = ((TextBox)gridrow.FindControl("txtVehicleno")).Text; 
+                    }
+                    sql = " Insert into WEBX_TRIPSHEET_OILEXPDET (TripSheetNo,Place,KM_Reading,BillNo,BillDt,Diesel_Ltr,Oil_Ltr,Amount,Diesel_Rate,Oil_Rate,PetrolPName,Brand,FuelType,Last_Km_Read,Card_Cash,Remark,Exe_Amt,Currloc,vendor_billno,COMPANY_CODE) values ( "
+                         + "'" + Vslipno + "', '" + mOilPlace + "','" + mKM_Reading + "','" + mBillno + "','" + mBilldt + "','" + mDiesel_Ltr + "','" + mOil_Ltr + "','" + mAmt + "'," + mDiesel_Rate + "," + mOil_Rate + ",'" + mPPName + "','" + mBrand + "','" + mFuelType + "','" + mLastKm + "','" + mCard_Cash + "','" + mRemark + "','" + mExeAmt + "','" + SessionUtilities.CurrentBranchCode.ToString() + "','" + BILLNO + "','" + SessionUtilities.DefaultCompanyCode.ToString().Trim() + "')";
+                    SqlCommand HSDOilDetail = new SqlCommand(sql, con, trn);
+                    HSDOilDetail.CommandType = CommandType.Text;
+
+                    datarow_HSDOIL = _dataSet.HSD_OIL_EXP[gridrow.DataSetIndex];
+
+                    _dataSet.HSD_OIL_EXP[gridrow.DataSetIndex].ItemArray = datarow_HSDOIL.ItemArray;
+
+                    HSDOilDetail.ExecuteNonQuery();
+
+                    sql = " Insert into WEBX_VENDORBILL_DET_FUEL (TripSheetNo,Place,KM_Reading,BillNo,BillDt,Diesel_Ltr,Oil_Ltr,Amount,Diesel_Rate,Oil_Rate,PetrolPName,Brand,FuelType,Last_Km_Read,Card_Cash,Remark,Exe_Amt,Currloc,vendor_billno,COMPANY_CODE) values ( "
+                        + "'" + Vslipno + "', '" + mOilPlace + "','" + mKM_Reading + "','" + mBillno + "'," + mBilldt_str + ",'" + mDiesel_Ltr + "','" + mOil_Ltr + "','" + mAmt + "'," + mDiesel_Rate + "," + mOil_Rate + ",'" + mPPName + "','" + mBrand + "','" + mFuelType + "','" + mLastKm + "','" + mCard_Cash + "','" + mRemark + "','" + mExeAmt + "','" + SessionUtilities.CurrentBranchCode.ToString() + "','" + BILLNO + "','" + SessionUtilities.DefaultCompanyCode.ToString().Trim() + "')";
+                    SqlCommand HSDOilHeader1 = new SqlCommand(sql, con, trn);
+                    HSDOilHeader1.CommandType = CommandType.Text;
+                    HSDOilHeader1.ExecuteNonQuery();
+
+
+                    sql = " Update webx_vehicle_hdr set current_KM_Read='" + mKM_Reading + "'   where vehno='" + VehicleNo + "'";
+                    SqlCommand VH = new SqlCommand(sql, con, trn);
+                    VH.CommandType = CommandType.Text;
+                    VH.ExecuteNonQuery();
+
+
+                    string mActual_KMPL = "0";
+                    string mActual_Approved = "0";
+                    string mApproved_Ltr = "0";
+                    string mApproved_Rate = "0";
+                    string mApproved_Amt = "0";
+                    string mAmount = mTotOilExp.ToString();
+
+                    //sqlDEL = "Delete from WEBX_TRIPSHEET_OILEXPHDR where TripSheetNo='" + mTripSheetNo + "'";
+                    //cmdDEL = new SqlCommand(sqlDEL, conn, trans);
+                    //cmdDEL.ExecuteNonQuery();
+                    //cmdDEL.Dispose();
+
+
+                    sql = " Insert into WEBX_TRIPSHEET_OILEXPHDR (TripSheetNo,Actual_KMPL,Actual_Approved,Approved_Ltr,Approved_Rate,Approved_Amt,Amount,COMPANY_CODE) values ( "
+                            + "'" + Vslipno + "','" + mActual_KMPL + "','" + mActual_Approved + "','" + mApproved_Ltr + "','" + mApproved_Rate + "','" + mApproved_Amt + "','" + mAmount + "','" + SessionUtilities.DefaultCompanyCode.ToString().Trim() + "') ";
+                    SqlCommand HSDOilHeader = new SqlCommand(sql, con, trn);
+                    HSDOilHeader.CommandType = CommandType.Text;
+                    HSDOilHeader.ExecuteNonQuery();
+
+
+                }
+
+
+
+
+
+
+                //------------------------------------------------------------------------------------
+
+
+
+
+
+                string mFinYear = "";
+                mFinYear = SessionUtilities.FinYear.ToString();
+                string mYearVal = "";
+                GetFinancialYear objFinYear = new GetFinancialYear(Convert.ToString(Session["SqlProvider"]));
+                mYearVal = objFinYear.FinancialYear();
+                //string mFinYear = "";
+                //string sqlFinYear = "Select left(YearVal,2) as YearVal From vw_Get_Finacial_Years Where CurrentFinYear='T'";
+                //SqlCommand sqlcmdFinYear = new SqlCommand(sqlFinYear, con, trn);
+                //sqlcmdFinYear.CommandType = CommandType.Text;
+                //SqlDataReader drFinYear = sqlcmdFinYear.ExecuteReader();
+                //if (drFinYear.Read())
+                //{
+                //    mFinYear = drFinYear["YearVal"].ToString().Trim();
+                //}
+                //drFinYear.Close();
+
+                //string mYearVal = "";
+                //if (Session["FinYear_Change"] != null)
+                //{
+                //    mYearVal = Session["FinYear_Change"].ToString().Trim();
+                //}
+
+                string sqlAcc1 = "usp_Vendor_Fuel_Billentry_transaction";
+                SqlCommand sqlcmdAcc1 = new SqlCommand(sqlAcc1, con, trn);
+                sqlcmdAcc1.CommandType = CommandType.StoredProcedure;
+                sqlcmdAcc1.Parameters.Add("@currbrcd", SqlDbType.VarChar).Value = SessionUtilities.CurrentBranchCode;
+                sqlcmdAcc1.Parameters.Add("@transNo", SqlDbType.VarChar).Value = "1";
+                sqlcmdAcc1.Parameters.Add("@docNo", SqlDbType.VarChar).Value = BILLNO;
+                sqlcmdAcc1.Parameters.Add("@finYear", SqlDbType.VarChar).Value = mFinYear;
+                sqlcmdAcc1.Parameters.Add("@yearSuffix", SqlDbType.VarChar).Value = mYearVal;
+                sqlcmdAcc1.Parameters.Add("@COMPANY_CODE_37", SqlDbType.VarChar).Value = SessionUtilities.DefaultCompanyCode.ToString();
+
+                sqlcmdAcc1.ExecuteNonQuery();
+
+
+                //string sqlAcc2 = "usp_Vendor_Fixed_Variable_Billentry_transaction";
+                //SqlCommand sqlcmdAcc2 = new SqlCommand(sqlAcc2, con, trn);
+                //sqlcmdAcc2.CommandType = CommandType.StoredProcedure;
+                //sqlcmdAcc2.Parameters.Add("@currbrcd", SqlDbType.VarChar).Value = Session["brcd"].ToString();
+                //sqlcmdAcc2.Parameters.Add("@transNo", SqlDbType.VarChar).Value = "2";
+                //sqlcmdAcc2.Parameters.Add("@docNo", SqlDbType.VarChar).Value = BILLNO;
+                //sqlcmdAcc2.Parameters.Add("@finYear", SqlDbType.VarChar).Value = mFinYear;
+                //sqlcmdAcc2.Parameters.Add("@yearSuffix", SqlDbType.VarChar).Value = mYearVal;
+                //sqlcmdAcc2.ExecuteNonQuery();
+
+                string strPCamt = "SELECT PCAMT FROM WEBX_VENDORBILL_HDR WHERE BILLNO='" + BILLNO.Trim() + "'";
+                SqlCommand cmdPCamt = new SqlCommand(strPCamt, con, trn);
+                object objPCAMT;
+                objPCAMT = cmdPCamt.ExecuteScalar();
+                if (Convert.ToInt32(objPCAMT) == 0)
+                {
+                    lblError1.Text = "Net Amount can't be zero!!!";
+                    trn.Rollback();
+                }
+                else
+                {
+                    if (ddlDiscount.SelectedValue == "0")
+                    {
+                        lblError1.Text = "";
+                        trn.Commit();
+                        //trn.Rollback();
+                        con.Close();
+
+                        string final = "?BillNo=" + BILLNO;
+                        final += "&voucherNo=" + voucherNo;
+                        Response.Redirect("ExpenseEntryDone.aspx" + final);
+                    }
+                    else if (ddlDiscount.SelectedValue == "1")
+                    {
+                        if (Convert.ToDecimal(txtFinalAmt.Text) == 0)
+                        {
+                            lblError1.Text = "You must enter discount amount, if you select flat.";
+                            trn.Rollback();
+                        }
+                        else
+                        {
+                            lblError1.Text = "";
+                            trn.Commit();
+                            //trn.Rollback();
+                            con.Close();
+
+                            string final = "?BillNo=" + BILLNO;
+                            final += "&voucherNo=" + voucherNo;
+                            Response.Redirect("ExpenseEntryDone.aspx" + final);
+                        }
+                    }
+                    else if (ddlDiscount.SelectedValue == "2")
+                    {
+                        if (Convert.ToDecimal(txtPercAmt.Text) == 0 || Convert.ToDecimal(txtFinalAmt.Text) == 0)
+                        {
+                            lblError1.Text = "You must enter percantage discount amount, if you select %.";
+                            trn.Rollback();
+                        }
+                        else
+                        {
+                            lblError1.Text = "";
+                            trn.Commit();
+                            //trn.Rollback();
+                            con.Close();
+
+                            string final = "?BillNo=" + BILLNO;
+                            final += "&voucherNo=" + voucherNo;
+                            Response.Redirect("ExpenseEntryDone.aspx" + final);
+                        }
+                    }
+                }
+            }
+            catch (Exception e1)
+            {
+                Response.Write("<br><br><br><font class='blackboldfnt' >Error : " + e1.Message + "</font>");
+                string msg = e1.Message.ToString();
+                msg = msg.Replace('\n', ' ');
+                trn.Rollback();
+                //Response.Redirect("Message.aspx?" + e1.Message);
+                Response.End();
+            }
+        }
+    }
+
+
+
+    protected void cboVendorType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+
+        VendorList();
+
+    }
+
+    public void VendorList()
+    {
+
+        SqlConnection conn = new SqlConnection(Session["SqlProvider"].ToString().Trim());
+        conn.Open();
+
+        int strvendor = Convert.ToInt16(cboVendorType.SelectedValue);
+        string sql = "select top 1 '' as c1,'-Select-' as c2 from webx_vendor_hdr WITH(NOLOCK) Union select distinct m.vendorcode as c1 ,m.vendorname +':'+ m.vendorcode  as c2 from webx_vendor_hdr m  WITH(NOLOCK) ,webx_vendor_det d  WITH(NOLOCK)  where m.vendorcode=d.vendorcode and vendor_type='" + strvendor + "' and vendorbrcd like '%" + SessionUtilities.CurrentBranchCode.ToString() + "%'";
+        SqlCommand sqlcmd = new SqlCommand(sql, conn);
+
+        DataSet ds = new DataSet();
+        SqlDataAdapter da = new SqlDataAdapter(sqlcmd);
+        da.Fill(ds, "tab1");
+        cboVendor.DataSource = ds;
+        cboVendor.DataTextField = "c2";
+        cboVendor.DataValueField = "c1";
+
+        cboVendor.DataBind();
+        cboVendor.CssClass = "blackfnt";
+        sql = "select * from webx_AcctHead WITH(NOLOCK) where codeid='" + strvendor + "' and accthead is not null";
+
+        sqlcmd = new SqlCommand(sql, conn);
+        SqlDataReader dr;
+        dr = sqlcmd.ExecuteReader();
+        string acccode = "", accdesc = "";
+
+        while (dr.Read())
+        {
+            if (dr["accthead"].ToString() != "")
+            {
+                acccode = dr["accthead"].ToString();
+                accdesc = fn.getAccountDesc("webx_acctinfo", acccode);
+                // crediit_account.Text=dr["accthead"].ToString()+":"+fn.getAccountDesc(dr["accthead"].ToString());
+            }
+        }
+        crediit_account.Text = acccode + ":" + accdesc;
+        crediit_account.CssClass = "blackfnt";
+        dr.Close();
+
+        conn.Close();
+    }
+
+
+    protected void add_rowOil(object sender, EventArgs e)
+    {
+
+        string rowno;
+        int mroww = 0;
+        int miroww = 0;
+        rowno = txtAddRowOilExp.Text;
+        mroww = Convert.ToInt16(rowno);
+        int i;
+
+
+        int iroww = 0;
+        foreach (DataGridItem gridrow in dgHSD_OIL_EXP.Items)
+        {
+            iroww = iroww + 1;
+        }
+        miroww = iroww;
+
+        if (mroww < miroww)
+        {
+            miroww = mroww;
+        }
+
+
+        if (iroww >= 0)
+        {
+            for (i = iroww - 1; i > -1 + miroww; i--)
+            {
+                _dataSet.HSD_OIL_EXP.RemoveHSD_OIL_EXPRow(_dataSet.HSD_OIL_EXP[i]);
+            }
+        }
+
+
+        for (i = 0 + miroww; i < Int16.Parse(txtAddRowOilExp.Text); i++)
+        {
+            Double LastKm1 = 0;
+
+            string LastKm2 = "0";// lblStartKm.Text;
+            LastKm1 = 0;// Convert.ToDouble(lblStartKm.Text);
+            int LastKm = Convert.ToInt32(LastKm1);
+            //
+            //
+
+
+
+            if (i == 0)
+            {
+
+
+
+                _dataSet.HSD_OIL_EXP.AddHSD_OIL_EXPRow("", "", "", "", LastKm2, "", "", "", "0", "0", "", "0", "", "", "0", "0", "", "");
+            }
+            else
+            {
+
+                _dataSet.HSD_OIL_EXP.AddHSD_OIL_EXPRow("", "", "", "", "", "", "", "", "0", "0", "", "0", "", "", "0", "0", "", "");
+            }
+
+        }
+
+
+
+        BindGrid();
+
+    }
+
+
+
+
+
+    //protected void txtKM_Reading_TextChanged(object sender, EventArgs e)
+    //{
+    //    foreach (DataGridItem gridrow in dgHSD_OIL_EXP.Items)
+    //    {
+    //        TextBox mTripsheetNo = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtTripsheetNo");
+    //        if (((TextBox)gridrow.FindControl("txtLKmRead")).Text != "")
+    //        {
+    //            temp1 = ((TextBox)gridrow.FindControl("txtLKmRead")).Text;
+    //        }
+    //        temp = "";
+    //        if (((TextBox)gridrow.FindControl("txtKM_Reading")).Text != "")
+    //        {
+    //            temp = ((TextBox)gridrow.FindControl("txtKM_Reading")).Text;
+    //        }
+    //        if (temp != "" && temp1 != "")
+    //        {
+    //            if (temp1 == "NA")
+    //            {
+    //                temp1 = "0";
+    //            }
+    //            if (Convert.ToDouble(temp) < Convert.ToDouble(temp1))
+    //            {
+    //                if (lblError1.Text == "")
+    //                {
+    //                    lblError1.Visible = true;
+    //                    lblError1.Text = "Current km reading cannot be less than last km reading for Tripsheet no. " + mTripsheetNo.Text + " !";
+    //                }
+    //            }
+    //            else
+    //            {
+    //               // if (lblError1.Text == "")
+    //                {
+    //                    lblError1.Visible = true;
+    //                    lblError1.Text = "";
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+
+    public void BindGrid()
+    {
+        dgHSD_OIL_EXP.DataSource = _dataSet.HSD_OIL_EXP;
+        dgHSD_OIL_EXP.DataBind();
+        _lastEditedPage = dgHSD_OIL_EXP.CurrentPageIndex;
+    }
+
+
+    public void BindFuelType(DropDownList ddl)
+    {
+        DataControlManager dcm = new DataControlManager(Session["SqlProvider"].ToString().Trim());
+        dcm.DataBind(ddl, CommandType.Text, "select distinct CodeId,CodeDesc from Webx_Master_General where CodeType='FUELTY' Order By CodeDesc");
+    }
+    
+
+
+    protected void TripsheetNo_Change(object sender, EventArgs e)
+    {
+
+        SqlConnection conn = new SqlConnection(Session["SqlProvider"].ToString().Trim());
+        string sql = "";
+        string mVehNo = "";
+        string mLastKM = "0";
+
+        lblError1.Text = "";
+        conn.Open();
+        DieselDataSet.HSD_OIL_EXPRow datarow_OilExp;
+
+        double g_totamt = 0;
+        double g_totExeAmt = 0;
+        string mBilldt_str = "";
+
+        foreach (DataGridItem gridrow in dgHSD_OIL_EXP.Items)
+        {
+            datarow_OilExp = _dataSet.HSD_OIL_EXP[gridrow.ItemIndex];
+            if (gridrow.ItemIndex != -1)
+            {
+                TextBox mTripsheetNo = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtTripsheetNo");
+
+                TextBox mVehicleNo = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtVehicleno");
+                TextBox mLastKmRead = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtLKmRead");
+
+                TextBox KmRead = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtKM_Reading");
+
+
+
+                TextBox mDiesel_Ltr = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtDiesel_Ltr");
+                TextBox mDieselRate_Ltr = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtDieselRate_Ltr");
+                TextBox mAmt = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtAmt");
+                TextBox mExeAmt = (TextBox)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("txtExeAmt");
+                KmRead.Enabled = true;
+
+                string diesel_qty = mDiesel_Ltr.Text;
+                if (diesel_qty == "")
+                {
+                    diesel_qty = "0";
+                }
+                string diesel_rate = mDieselRate_Ltr.Text;
+
+                if (diesel_rate == "")
+                {
+                    diesel_rate = "0";
+                }
+
+                double totamt = Convert.ToDouble(diesel_qty) * Convert.ToDouble(diesel_rate);
+                double totExeAmt = Convert.ToDouble(mExeAmt.Text);
+                mAmt.Text = totamt.ToString();
+
+
+                g_totamt = g_totamt + totamt;
+                g_totExeAmt = g_totExeAmt + totExeAmt;
+
+                txtTotalAmt.Text = g_totamt.ToString();
+                txtTotalExeAmt.Text = g_totExeAmt.ToString();
+
+                mVehNo = "NA";
+                mLastKM = "NA";
+                string mCloseDt = "";
+                string mDriverSettleDt = "";
+                sql = "Select VehicleNo,current_KM_Read,end_dt_tm,DriverSettleDt from WEBX_FLEET_VEHICLE_ISSUE I,webx_vehicle_hdr v where V.vehno=I.VehicleNo and Manual_TripSheetNo='" + mTripsheetNo.Text.ToString() + "'";
+                SqlCommand Sqlcmd = new SqlCommand(sql, conn);
+                SqlDataReader rdr = Sqlcmd.ExecuteReader();
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        mVehNo = rdr["VehicleNo"].ToString();
+                        mLastKM = rdr["current_KM_Read"].ToString();
+                        mCloseDt = rdr["end_dt_tm"].ToString();
+                        mDriverSettleDt = rdr["DriverSettleDt"].ToString();
+                    }
+                }
+                rdr.Dispose();
+                rdr.Close();
+                if (mVehNo == "NA" && mTripsheetNo.Text != "")
+                {
+                    lblError1.Visible = true;
+                    lblError1.Text = "Invalid tripsheet no.:" + mTripsheetNo.Text + " !!!";
+                    KmRead.Enabled = false;
+                }
+                if (mDriverSettleDt != "")//mCloseDt
+                {
+                    lblError1.Visible = true;
+                    //lblError1.Text = "This tripsheet no. " + mTripsheetNo.Text.ToString() + " is already closed !!!";
+                    lblError1.Text = "This tripsheet no. " + mTripsheetNo.Text.ToString() + " is already closed & settled !!!";
+                }
+
+
+                DropDownList ddlFuelType = (DropDownList)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("ddlFuelType");
+                ddlFuelType.SelectedIndex = 2;
+                mVehicleNo.Text = mVehNo.ToString();
+                mLastKmRead.Text = mLastKM.ToString();
+
+                _dataSet.HSD_OIL_EXP[gridrow.DataSetIndex].ItemArray = datarow_OilExp.ItemArray;
+
+            }
+        }
+
+        conn.Close();
+
+        /*foreach (DataGridItem gridrow in dgHSD_OIL_EXP.Items)
+        {
+            DieselDataSet.HSD_OIL_EXPRow datarow_OilExp;
+            datarow_OilExp = _dataSet.HSD_OIL_EXP[gridrow.ItemIndex];
+            if (gridrow.ItemIndex != -1)
+            {
+                DropDownList ddlFuelType = (DropDownList)dgHSD_OIL_EXP.Items[gridrow.ItemIndex].FindControl("ddlFuelType");
+                ddlFuelType.SelectedIndex = 1;
+            }
+        }*/
+
+    }
+    private void ReverseBind()
+    {
+        foreach (DataGridItem gridrow in dgHSD_OIL_EXP.Items)
+        {
+            datarow_HSDOIL = _dataSet.HSD_OIL_EXP[gridrow.DataSetIndex];
+            datarow_HSDOIL.OilPlace = ((TextBox)gridrow.FindControl("txtOilPlace")).Text;
+            //datarow_HSDOIL.PPName = ((DropDownList)gridrow.FindControl("ddlPPName")).SelectedItem.Value;
+            //datarow_HSDOIL.Brand = ((DropDownList)gridrow.FindControl("ddlBrand")).SelectedItem.Value;
+            datarow_HSDOIL.FuelType = ((DropDownList)gridrow.FindControl("ddlFuelType")).SelectedItem.Value;
+            datarow_HSDOIL.Last_Km_Read = ((TextBox)gridrow.FindControl("txtLKMRead")).Text;
+            datarow_HSDOIL.KM_Reading = ((TextBox)gridrow.FindControl("txtKM_Reading")).Text;
+            datarow_HSDOIL.Billno = ((TextBox)gridrow.FindControl("txtBillno")).Text;
+            datarow_HSDOIL.Billdt = ((TextBox)gridrow.FindControl("txtBilldt")).Text;
+            datarow_HSDOIL.Diesel_Ltr = ((TextBox)gridrow.FindControl("txtDiesel_Ltr")).Text;
+            //datarow_HSDOIL.Oil_Ltr = ((TextBox)gridrow.FindControl("txtOil_Ltr")).Text;
+            datarow_HSDOIL.Diesel_Rate = ((TextBox)gridrow.FindControl("txtDieselRate_Ltr")).Text;
+
+            /*string diesel_qty = datarow_HSDOIL.Diesel_Ltr;
+            if (diesel_qty == "")
+            {
+                diesel_qty = "0";
+            }
+            string diesel_rate = datarow_HSDOIL.Diesel_Rate;
+
+            if (diesel_rate == "")
+            {
+                diesel_rate = "0";
+            }
+
+            double totamt = Convert.ToDouble(diesel_qty) * Convert.ToDouble(diesel_rate);*/
+            //((TextBox)e.Item.FindControl("txtAmt")).Text = totamt.ToString();// datarow_HSDOIL.Amt;
+            //datarow_HSDOIL.Amt = totamt.ToString();
+            datarow_HSDOIL.Amt = ((TextBox)gridrow.FindControl("txtAmt")).Text;
+
+
+            datarow_HSDOIL.Exe_Amt = ((TextBox)gridrow.FindControl("txtExeAmt")).Text;
+            //datarow_HSDOIL.Payment = ((DropDownList)gridrow.FindControl("ddlPayment")).SelectedItem.Value;
+            datarow_HSDOIL.Remarks = ((TextBox)gridrow.FindControl("txtRemarks")).Text;
+
+            //datarow_HSDOIL.Oil_Rate = ((TextBox)gridrow.FindControl("txtOilRate_Ltr")).Text;
+            datarow_HSDOIL.TripsheetNo = ((TextBox)gridrow.FindControl("txtTripsheetNo")).Text;
+            datarow_HSDOIL.VehicleNo = ((TextBox)gridrow.FindControl("txtVehicleno")).Text;
+
+        }
+    }
+
+    protected override void LoadViewState(object savedState)
+    {
+        base.LoadViewState(savedState);
+        if ((!(this.ViewState["Data"] == null)))
+        {
+            _dataSet = ((DieselDataSet)(this.ViewState["Data"]));
+        }
+        if ((!(this.ViewState["LastEditedPage"] == null)))
+        {
+            _lastEditedPage = ((int)(this.ViewState["LastEditedPage"]));
+        }
+    }
+
+    protected override object SaveViewState()
+    {
+        this.ViewState["Data"] = _dataSet;
+        this.ViewState["LastEditedPage"] = _lastEditedPage;
+        return (base.SaveViewState());
+    }
+ 
+}

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://123.108.47.77/webx/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://123.108.47.77/webx/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://123.108.47.77/webx/">
+      <s:element name="AddNewEntry">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pageID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageDesc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="emailID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="phone" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="website" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddNewEntryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddNewEntryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddNewEntry2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pageID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageDesc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="org" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="emailID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="phone" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="website" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="comment" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddNewEntry2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddNewEntry2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddNewEntrySoapIn">
+    <wsdl:part name="parameters" element="tns:AddNewEntry" />
+  </wsdl:message>
+  <wsdl:message name="AddNewEntrySoapOut">
+    <wsdl:part name="parameters" element="tns:AddNewEntryResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddNewEntry2SoapIn">
+    <wsdl:part name="parameters" element="tns:AddNewEntry2" />
+  </wsdl:message>
+  <wsdl:message name="AddNewEntry2SoapOut">
+    <wsdl:part name="parameters" element="tns:AddNewEntry2Response" />
+  </wsdl:message>
+  <wsdl:portType name="PageVisitorsLogServiceSoap">
+    <wsdl:operation name="AddNewEntry">
+      <wsdl:input message="tns:AddNewEntrySoapIn" />
+      <wsdl:output message="tns:AddNewEntrySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewEntry2">
+      <wsdl:input message="tns:AddNewEntry2SoapIn" />
+      <wsdl:output message="tns:AddNewEntry2SoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PageVisitorsLogServiceSoap" type="tns:PageVisitorsLogServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddNewEntry">
+      <soap:operation soapAction="http://123.108.47.77/webx/AddNewEntry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewEntry2">
+      <soap:operation soapAction="http://123.108.47.77/webx/AddNewEntry2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PageVisitorsLogServiceSoap12" type="tns:PageVisitorsLogServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddNewEntry">
+      <soap12:operation soapAction="http://123.108.47.77/webx/AddNewEntry" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewEntry2">
+      <soap12:operation soapAction="http://123.108.47.77/webx/AddNewEntry2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PageVisitorsLogService">
+    <wsdl:port name="PageVisitorsLogServiceSoap" binding="tns:PageVisitorsLogServiceSoap">
+      <soap:address location="http://124.153.77.48/webx/pagevisitorsLogService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PageVisitorsLogServiceSoap12" binding="tns:PageVisitorsLogServiceSoap12">
+      <soap12:address location="http://124.153.77.48/webx/pagevisitorsLogService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

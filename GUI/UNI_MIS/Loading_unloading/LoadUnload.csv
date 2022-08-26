@@ -1,0 +1,7 @@
+report_loc,Loccode,locName,Total_CN,CN_WT,Total_In_MF,MF_In_Wt,Total_out_MF,MF_OUT_Wt,Total_DRS,DRS_Wt,Loading_total_wt,UnLoading_total_wt,Grand_total,Rate,NetDue
+HQTR,HQTR,HEAD OFFICE,1,0.0,0,,0,,0,,0.0,0,0.0,,
+NRHQ,DEL,DELHI,5,9876.0,0,,0,,5,1304.0,9.876,1.304,11.180,,
+SRHQ,BLR,Banglore Airport,37,66815.0,0,,0,,0,,66.815,0,66.815,,
+HQTR,HQTR,HEAD OFFICE,1,0.0,0,,0,,0,,,,,,
+NRHQ,DEL,DELHI,5,9876.0,0,,0,,5,1304.0,,,,,
+SRHQ,BLR,Banglore Airport,37,66815.0,0,,0,,0,,,,,,

@@ -1,0 +1,121 @@
+ALTER Proc [dbo].[usp_Generate_ManualJVAccountDetails]            
+@Xml_Acccode_Details Text,            
+@Xml_Other_Details Text          
+As            
+Set NoCount On            
+          
+DECLARE @hDoc1 int          
+DECLARE @hDoc2 int          
+DECLARE @Finyear varchar(10),@Transdate varchar(15),@Transtype varchar(50),@Voucherno varchar(50)          
+DECLARE @Brcd varchar(15),@Entryby varchar(50),@Opertitle varchar(50),@ManualNo varchar(50)          
+DECLARE @preparefor varchar(50),@Refno varchar(50),@Narration varchar(255)
+DECLARE @pbov_code varchar(50),@pbov_name varchar(100),@pbov_typ varchar(1)
+DECLARE @debit numeric(12,2),@credit numeric(12,2)
+DECLARE @OppAcccode1 varchar(7),@OppAccdesc1 varchar(100)          
+DECLARE @OppAcccode2 varchar(7),@OppAccdesc2 varchar(100)          
+             
+BEGIN                  
+	EXEC sp_xml_preparedocument @hDoc1 OUTPUT, @Xml_Acccode_Details              
+	EXEC sp_xml_preparedocument @hDoc2 OUTPUT, @Xml_Other_Details              
+          
+	SELECT              
+	@Finyear=a.Finyear,@Transdate=a.Transdate,@Transtype=Transtype,@Voucherno=a.Voucherno,@Brcd=Brcd,          
+	@Entryby=a.Entryby,@Opertitle=a.Opertitle,@ManualNo=a.ManualNo,@preparefor=a.preparefor,@Refno=a.Refno,
+	@Narration=a.Narration,@pbov_code=a.pbov_code,@pbov_name=a.pbov_name,@pbov_typ=a.pbov_typ
+	FROM OPENXML(@hDoc2,'root/Other',2)              
+	WITH              
+	(           
+		Finyear varchar(10) 'Finyear',              
+		Transdate varchar(15) 'Transdate',                
+		Transtype varchar(50) 'Transtype',              
+		Voucherno varchar(50) 'Voucherno',          
+		Brcd varchar(15) 'Brcd',           
+		Entryby varchar(50) 'Entryby',          
+		Opertitle varchar(50) 'Opertitle',          
+		ManualNo varchar(50) 'ManualNo',          
+		preparefor varchar(15) 'preparefor',          
+		Refno varchar(50) 'Refno',          
+		Narration varchar(255) 'Narration',          
+		pbov_code varchar(50) 'pbov_code',          
+		pbov_name varchar(100) 'pbov_name',          
+		pbov_typ varchar(1) 'pbov_typ'     
+	) a           
+          
+	Insert into webx_Acccode_Details                     
+	(finyear,Transdate,Voucherno,Acccode,Accdesc,Debit,Credit,Narration,Brcd,Entryby,Entrydt,Voucher_Cancel,          
+	opertitle,comment)                
+	SELECT         
+	@Finyear,@Transdate,@Voucherno,b.Acccode,b.Accdesc,b.Debit,b.Credit,b.Narration,@Brcd,@Entryby,getdate(),'N',@Opertitle,Null          
+	FROM OPENXML(@hDoc1,'root/Acccode',2)              
+	WITH              
+	(	           
+		Acccode varchar(20) 'Acccode',              
+		Accdesc varchar(100) 'Accdesc',                
+		Debit Numeric(12,2) 'Debit',              
+		Credit Numeric(12,2) 'Credit',              
+		Narration varchar(255) 'Narration'          
+	) b              
+          
+	-- find oppaccocode and its description        
+          
+	select top 1 @OppAcccode1=acccode,@OppAccdesc1=accdesc from webx_Acccode_Details where voucherno=@Voucherno order by srno
+	select top 2 @OppAcccode2=acccode,@OppAccdesc2=accdesc from webx_Acccode_Details where voucherno=@Voucherno order by srno
+
+	-- end        
+          
+	if @Finyear = '2008'          
+	begin          
+		Insert into webx_acctrans_08_09            
+		(finyear,Transdate,Voucherno,Acccode,Chqno,Chqdate,Debit,Credit,Narration,Payto,Transtype,Brcd,Oppaccount,Entryby,          
+		Entrydt,Voucher_Cancel,autoentry,opertitle,PBOV_CODE,PBOV_NAME,PBOV_TYP,oppacccode,v_approve_reject_dt,          
+		v_closed_dt,entryfor)           
+		SELECT              
+		@Finyear,@Transdate,@Voucherno,c.Acccode,NULL,NULL,c.Debit,c.Credit,c.Narration,@pbov_code,@Transtype,@Brcd,@OppAccdesc2,          
+		@Entryby,getdate(),'N','N',@Opertitle,@pbov_code,@pbov_name,@pbov_typ,@OppAcccode2,getdate(),getdate(),@preparefor         
+		FROM OPENXML(@hDoc1,'root/Acccode',2)              
+		WITH              
+		(           
+			Acccode varchar(20) 'Acccode',              
+			Accdesc varchar(100) 'Accdesc',                
+			Debit Numeric(12,2) 'Debit',              
+			Credit Numeric(12,2) 'Credit',              
+			Narration varchar(255) 'Narration'          
+		) c          
+	end          
+	if @Finyear = '2007'          
+	begin          
+		Insert into webx_acctrans_07_08            
+		(finyear,Transdate,Voucherno,Acccode,Chqno,Chqdate,Debit,Credit,Narration,Payto,Transtype,Brcd,Oppaccount,Entryby,          
+		Entrydt,Voucher_Cancel,autoentry,opertitle,PBOV_CODE,PBOV_NAME,PBOV_TYP,oppacccode,v_approve_reject_dt,          
+		v_closed_dt,entryfor)           
+		SELECT              
+		@Finyear,@Transdate,@Voucherno,d.Acccode,NULL,NULL,d.Debit,d.Credit,d.Narration,@pbov_code,@Transtype,@Brcd,@OppAccdesc2,          
+		@Entryby,getdate(),'N','N',@Opertitle,@pbov_code,@pbov_name,@pbov_typ,@OppAcccode2,getdate(),getdate(),@preparefor
+		FROM OPENXML(@hDoc1,'root/Acccode',2)              
+		WITH              
+		(	           
+			Acccode varchar(20) 'Acccode',              
+			Accdesc varchar(100) 'Accdesc',                
+			Debit Numeric(12,2) 'Debit',              
+			Credit Numeric(12,2) 'Credit',              
+			Narration varchar(255) 'Narration'          
+		) d          
+	end          
+	if @Finyear = '2008'          
+	begin
+		UPDATE webx_acctrans_08_09 SET Oppacccode=@OppAcccode1,Oppaccount=@OppAccdesc1 where voucherno=@Voucherno and Acccode <> @OppAcccode1
+	end
+	else if @Finyear = '2007'          
+	begin
+		UPDATE webx_acctrans_07_08 SET Oppacccode=@OppAcccode1,Oppaccount=@OppAccdesc1 where voucherno=@Voucherno and Acccode <> @OppAcccode1
+	end        
+
+	-- Find Out Total Debit and Credit amount           
+	Select @debit=sum(debit),@credit=sum(credit) from webx_Acccode_Details where voucherno=@Voucherno          
+	-- End
+
+	-- sp for webx_vouchertrans_arch table insert data          
+	exec usp_webx_vouchertrans_arch_insert @Finyear,@Voucherno,@ManualNo,@Brcd,@Entryby,NULL,NULL,@preparefor,@Refno,@Narration,@Transdate,NULL,NULL,@pbov_code,@pbov_name,@pbov_typ,@Transtype,@Opertitle          
+	--end 
+	exec usp_webx_vouchertrans_arch_updateData @Voucherno,@pbov_code,@pbov_code,@pbov_name,@pbov_typ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@debit,@debit,@debit,NULL            	
+end

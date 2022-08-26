@@ -1,0 +1,463 @@
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[WebxNet_GLedger]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[WebxNet_GLedger]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[webxNet_TrailBalance]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[webxNet_TrailBalance]
+GO
+
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+--exec webxNet_TrailBalance '01 Apr 08','30 Apr 08','All','All','All','C00250031','All','3','3','08_09' 
+CREATE Procedure WebxNet_GLedger
+@RPT varchar(10)
+
+as
+IF EXISTS (SELECT * FROM tempdb..sysobjects WHERE id = object_id(N'[tempdb]..[#Net_Gldger]'))              
+Drop table #TrailBal          
+--temp table to hold list of missing  
+create table #Net_Gldger ([SRNO] [numeric](18, 0) IDENTITY (1, 1) NOT NULL,Heading Varchar(150),GCD Varchar(150),M_GCD Varchar(150),
+M_ACD Varchar(150),M_CAT Varchar(150),CUST_VEND   Varchar(150),acccode Varchar(150),brcd Varchar(150) ,
+Debit numeric(12,2),Credit numeric(12,2) ,TYP Varchar(150) ,VRNo Varchar(150),VRDATE Varchar(150), Party Varchar(150) ,Narration Varchar(1500),
+CHQNO   varchar(200)  ,CHQDT   datetime ,Particular Varchar(1500)          
+--,NotMissing int               
+) 
+
+declare @Opn_Cr float            
+declare @Opn_Dr float            
+declare @TOT_Opn_Cr float            
+declare @TOT_Opn_Dr float            
+declare @Close_Cr float            
+declare @Close_Dr float            
+declare @TOT_Trans_Cr float            
+declare @TOT_Trans_Dr float            
+declare @TOT_ON_AC_Cr float            
+declare @TOT_ON_AC_Dr float            
+declare @Opn_Cr_tr float            
+declare @Opn_Dr_tr float    
+
+Select @Opn_Cr_tr=isNull(sum(Credit),0.00),@Opn_Dr_tr=isNull(sum(Debit),0.00)     
+from  #TrailBal  with(NOLOCK)  where typ in ('OPN_TR','OPN')
+
+set @TOT_Opn_Cr=isnull(@Opn_Cr_tr,0)         
+set @TOT_Opn_Dr=isnull(@Opn_Dr_tr,0)             
+            
+if @TOT_Opn_Dr>@TOT_Opn_Cr            
+ begin            
+  set @TOT_Opn_Dr=@TOT_Opn_Dr-@TOT_Opn_Cr            
+  set @TOT_Opn_Cr=0            
+ end            
+else if @TOT_Opn_Cr>@TOT_Opn_Dr            
+ begin            
+  set @TOT_Opn_Cr=@TOT_Opn_Cr-@TOT_Opn_Dr            
+  set @TOT_Opn_Dr=0            
+ end            
+            
+            
+insert into #Net_Gldger(Heading,Debit,Credit)  select 'Opening Balance : ',cast(isnull(@TOT_Opn_Dr,0) as decimal(9,2)),cast(isnull(@TOT_Opn_Cr,0) as decimal(9,2))   
+
+insert into #Net_Gldger(VRDATE,VRNo,Particular,Debit,Credit,Party,Narration,CHQNO,CHQDT,CUST_VEND,acccode,GCD,M_CAT,brcd) SELECT   STUFF(convert(varchar,t.VRDATE,106),7,3,' ') as transdate1, (case when t.transtype='Journal' then 'JV :' + ' ' +  t.VRNo     
+when t.transtype='CASH RECIEPT' then 'CSH - R :' + ' ' +  t.VRNo     
+when t.transtype='Cash Payment' then 'CSH - P :' + ' ' +  t.VRNo     
+when t.transtype='Bank Payment' then 'BK - P :' + ' ' +  t.VRNo     
+when t.transtype='Bank Receipt' then 'BK - R :' + ' ' +  t.VRNo     
+when t.transtype='Credit Note' then 'CN :' + ' ' +  t.VRNo     
+when t.transtype='Debit note' then 'DN :' + ' ' +  t.VRNo     
+when t.transtype='Contra' then 'CON :' + ' ' +  t.VRNo     
+when t.transtype='Income' then 'INC :' + ' ' +  t.VRNo     
+when t.transtype='Expenses' then 'EXP :' + ' ' +  t.VRNo     
+when t.transtype='Sale' then 'SA :' + ' ' +  t.VRNo     
+when t.transtype='Purchase' then 'PUR :' + ' ' +  t.VRNo     
+else t.VRNo End) as VRNo,Particular,    
+convert(varchar,(convert(money,isNull(t.debit,'0'),2))) as debit,convert(varchar,(convert(money,isNull(t.credit,'0'),2))) as credit, isNull(t.party,'') as PROV ,  t.narration  ,CHQNO,CHQDT    ,CUST_VEND  ,M_ACD  ,GCD,M_CAT,brcd
+from #TrailBal t with(NOLOCK)  where typ in ('TR_VR') order by CUST_VEND,acccode,VRDATE
+
+
+select @TOT_Trans_Dr=sum(isnull(Debit,0)),@TOT_Trans_Cr=sum(isnull(credit,0)) 
+from #TrailBal  with(NOLOCK)  where typ in ('TR_VR')   
+
+insert into #Net_Gldger(Heading,Debit,Credit)  select 'Total Transaction : ',convert(varchar,convert(money,sum(isnull(@TOT_Trans_Dr,0)),2)) ,convert(varchar,convert(money,sum(isnull(@TOT_Trans_Cr,0)),2))         
+            
+if @TOT_Trans_Dr>@TOT_Trans_Cr            
+ begin            
+  set @TOT_ON_AC_Dr=@TOT_Trans_Dr-@TOT_Trans_Cr            
+  set @TOT_ON_AC_Cr=0            
+ end            
+else if @TOT_Trans_Cr>@TOT_Trans_Dr            
+ begin            
+  set @TOT_ON_AC_Cr=@TOT_Trans_Cr-@TOT_Trans_Dr            
+  set @TOT_ON_AC_Dr=0            
+ end            
+            
+
+insert into #Net_Gldger(Heading,Debit,Credit)  select 'Total for A/C (Dr./Cr.) : ',convert(varchar,convert(money,sum(isnull(@TOT_ON_AC_Dr,0)),2)) ,convert(varchar,convert(money,sum(isnull(@TOT_ON_AC_Cr,0)),2))               
+            
+set @Close_Cr=isnull(@TOT_Opn_Cr,0)+isnull(@TOT_ON_AC_Cr,0)            
+set @Close_Dr=isnull(@TOT_Opn_Dr,0)+isnull(@TOT_ON_AC_Dr,0)            
+--select @Opn_Cr,@TOT_ON_AC_Cr,@Close_Cr,@Close_Dr,@Opn_Dr,@TOT_ON_AC_Dr            
+if @Close_Dr>@Close_Cr            
+ begin            
+  set @Close_Dr=@Close_Dr-@Close_Cr            
+  set @Close_Cr=0            
+ end            
+else if @Close_Cr>@Close_Dr            
+ begin            
+  set @Close_Cr=@Close_Cr-@Close_Dr            
+  set @Close_Dr=0            
+ end   
+
+
+insert into #Net_Gldger(Heading,Debit,Credit)  select 'Closing Balance : ',convert(varchar,convert(money,sum(isnull(@Close_Dr,0)),2)) ,convert(varchar,convert(money,sum(isnull(@Close_Cr,0)),2))        
+--select Heading=isnull(Heading,''),VRNO=isnull(VRNO,''),VRDATE=isnull(VRDATE,''),particular=isnull(particular,''),debit=isnull(debit,0.00) ,credit=isnull(credit,0.00) ,party=isnull(party,''),Narration=isnull(Narration,''),CHQNO=isnull(CHQNO,''),CHQDT=isnull(CHQDT,'') from #Net_Gldger with(NOLOCK)            
+--clean up                
+      
+declare @SQL varchar(8000);
+	if @RPT='1'
+		select @SQL='select M_CAT,ac.groupcode as CD,isnull(ac.company_groupcode,ac.groupcode)+'+char(39)+' : '+char(39)+'+ groupdesc as NM '
+	else if @RPT='2' 
+		select @SQL='select report_loc ,loccode as CD,loccode+'+char(39)+' : '+char(39)+'+locname as NM'
+	else if @RPT='3' 
+		select @SQL='select custcd as CD,custcd+'+char(39)+' : '+char(39)+'+custnm as NM '
+	else if @RPT='4' 
+		select @SQL='select vendorcode as CD,vendorcode+'+char(39)+' : '+char(39)+'+vendorname as NM'
+	else if @RPT='5' 
+		select @SQL='select userid as CD,userid+'+char(39)+' : '+char(39)+'+name as NM'
+	else if @RPT='6' 
+		select @SQL='select ac.acccode as  CD,isnull(ac.company_acccode,ac.acccode)+'+char(39)+' : '+char(39)+'+accdesc as NM '
+	else if @RPT='7'   
+	 select @SQL='select driver_id as CD,driver_id+'+char(39)+' : '+char(39)+'+driver_name as NM' 
+		
+		 Select @sql = @sql +  ', a.acccode,brcd,Heading=isnull(Heading,'+char(39)+''+char(39)+'),DEBIT=isnull(Debit,0),Credit=isnull(credit,0) ,CUST_VEND,TYP,VRNo,VRDATE,Particular,Party,Narration,CHQNO,CHQDT
+		  from #Net_Gldger a		'
+
+	if @RPT='1'
+		 Select @sql = @sql +  'left join webx_groups ac on a.GCD=ac.groupcode 		 
+		order by srno,M_CAT,ac.groupcode,grouplevel,a.acccode'
+	else if @RPT='2' 
+		 Select @sql = @sql + 'left join webx_location l on a.brcd=l.loccode where 1=1			
+		order by srno,locname,a.acccode'
+	else if @RPT='3' 
+		 Select @sql = @sql +  'left join webx_custhdr c with(NOLOCK)  on a.CUST_VEND=c.custcd where 1=1		
+		order by srno,custnm,a.acccode'
+	else if @RPT='4' 
+		Select @sql = @sql + 'left join webx_vendor_hdr c with(NOLOCK)  on a.CUST_VEND=c.vendorcode where 1=1			
+		order by srno,vendorname,a.acccode'
+	else if @RPT='5' 
+		 Select @sql = @sql + 'left join webx_master_users  c with(NOLOCK) on a.CUST_VEND=c.userid where 1=1		
+		order by srno,name,a.acccode'
+	else if @RPT='6' 
+		Select @sql = @sql + 'left join webx_acctinfo  ac with(NOLOCK) on a.acccode=ac.acccode where 1=1			
+		order by srno,isnull(ac.company_acccode,ac.acccode)+'+char(39)+' : '+char(39)+'+accdesc,ac.acccode'
+	else if @RPT='7'   
+		Select @sql = @sql + 'left join WEBX_FLEET_DRIVERMST  c with(NOLOCK) on convert(varchar,a.CUST_VEND)=convert(varchar,c.driver_id) where 1=1  		  		
+		 order by srno,driver_name,a.acccode'  
+
+exec(@sql)  
+--select * from #Net_Gldger	
+
+IF EXISTS (SELECT * FROM tempdb..sysobjects WHERE id = object_id(N'[tempdb]..[#Net_Gldger]'))                
+Drop table #Net_Gldger  
+  
+
+
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+--exec webxNet_TrailBalance '01 Apr 08','29 Jul 08','All','All','All','C00250031,C00610005','All','3','1','08_09'
+--exec webxNet_TrailBalance '01 Apr 08','30 Apr 08','All','All','All','C00250031,C00410007','All','3','3','08_09' 
+CREATE Proc webxNet_TrailBalance
+@from_date varchar(200),
+@to_date varchar(200), 
+@loccode varchar(50), 
+@RO varchar(50), 
+@Groups varchar(200),
+@CUST_VEND varchar(2000),
+@ACCOUNT varchar(2000), 
+@RPT varchar(20), 
+@RPT_SUB varchar(20),
+--@CUM varchar(20),
+@Fin_Year  varchar(20)
+as
+--declare @Fin_Year  varchar(20),@from_date varchar(200),@to_date varchar(200), @loccode varchar(20), @CUM varchar(20)
+--declare  @RO varchar(20),@Groups varchar(200),@CUST_VEND varchar(2000),@ACCOUNT varchar(2000), @RPT varchar(20), @RPT_SUB varchar(20)
+declare  @Sel_SUB varchar(150), @Sel_SUB_G varchar(150)
+declare  @Sel_SUB_V varchar(150), @Sel_SUB_G_V varchar(150), @Sel_SUB_G_V1 varchar(150)
+declare @finyrstart varchar(100) 
+declare @toate_tr varchar(100)  
+
+
+--select @from_date ='01 Apr 08'
+--select @to_date='03 July 08'
+--select @Fin_Year='08_09'   
+--select @loccode='All'
+--select @RO='All'
+--select @CUST_VEND='C00010001,C00010003'
+--select @ACCOUNT='All'
+--select @CUM='Y'   
+--select @Groups='All'
+--select @ACCOUNT='All'
+--select @RPT='1'
+--select @RPT_SUB ='2'
+
+select @finyrstart='01 Apr '+left(@Fin_Year,2)     
+select  @toate_tr=convert(varchar,convert(datetime,@from_date,106)-1,106)  
+
+IF EXISTS (SELECT * FROM tempdb..sysobjects WHERE id = object_id(N'[tempdb]..[#TrailBal]'))              
+Drop table #TrailBal          
+--temp table to hold list of missing              
+create table #TrailBal ([SRNO] [numeric](18, 0) IDENTITY (1, 1) NOT NULL,GCD Varchar(150),M_GCD Varchar(150),
+M_ACD Varchar(150),M_CAT Varchar(150),   CUST_VEND   Varchar(150),          
+acccode Varchar(150),brcd Varchar(150) ,Debit numeric(12,2),          
+Credit numeric(12,2) ,TYP Varchar(150) ,VRNo Varchar(150),VRDATE datetime, Party Varchar(150) ,Narration Varchar(1500),
+CHQNO   varchar(200)  ,CHQDT   datetime ,Particular Varchar(1500)  ,transtype   Varchar(150)      
+--,NotMissing int               
+)           
+   
+if @RPT_SUB  =''
+	begin
+	select @Sel_SUB=''
+	SELECT @Sel_SUB_G=''
+	select @Sel_SUB_V  =' M_CAT,GCD,acccode,M_ACD,brcd,CUST_VEND,'
+	SELECT @Sel_SUB_G_V='group by g.main_category,g.groupcode,a.acccode,isnull(a.company_acccode,a.acccode)+'+char(39)+' : '+char(39)+'+accdesc,m.brcd,m.pbov_code'
+	SELECT @Sel_SUB_G_V1=' g.main_category,g.groupcode,a.acccode,isnull(a.company_acccode,a.acccode)+'+char(39)+' : '+char(39)+'+accdesc,m.brcd,m.pbov_code,'
+	
+	end
+else if @RPT_SUB  ='1'
+	begin
+	select @Sel_SUB  =' a.acccode AS s_TYP,M_ACD,'
+	SELECT @Sel_SUB_G=' a.acccode,M_ACD,'
+	select @Sel_SUB_V  =' M_CAT,GCD,acccode,M_ACD,brcd,CUST_VEND,'
+	SELECT @Sel_SUB_G_V='group by g.main_category,g.groupcode,a.acccode,isnull(a.company_acccode,a.acccode)+'+char(39)+' : '+char(39)+'+accdesc,m.brcd,m.pbov_code'
+	SELECT @Sel_SUB_G_V1=' g.main_category,g.groupcode,a.acccode,isnull(a.company_acccode,a.acccode)+'+char(39)+' : '+char(39)+'+accdesc,m.brcd,m.pbov_code,'
+	end
+else if @RPT_SUB  ='2'
+	begin
+	select @Sel_SUB  =' a.brcd AS s_TYP,M_ACD=(select top 1 loccode+'+char(39)+' : '+char(39)+'+locname from webx_location with(NOLOCK) where loccode=a.brcd),'
+	SELECT @Sel_SUB_G=' a.brcd,'
+	select @Sel_SUB_V  =' M_CAT,GCD,acccode,M_ACD,brcd,CUST_VEND,'
+	SELECT @Sel_SUB_G_V=' group by g.main_category,g.groupcode,a.acccode,isnull(a.company_acccode,a.acccode)+'+char(39)+' : '+char(39)+'+accdesc,m.brcd,m.pbov_code'
+	SELECT @Sel_SUB_G_V1=' g.main_category,g.groupcode,a.acccode,isnull(a.company_acccode,a.acccode)+'+char(39)+' : '+char(39)+'+accdesc,m.brcd,m.pbov_code,'
+	end
+else if @RPT_SUB  ='3'
+	begin
+	select @Sel_SUB  =' '
+	select @Sel_SUB_V  =' '
+	SELECT @Sel_SUB_G_V=' '
+	SELECT @Sel_SUB_G_V1=' '
+	end
+
+--select @Sel_SUB,@Sel_SUB_G
+declare @WhereCri varchar(1000),@WhereCri_CUST varchar(1000) ,@WhereCri_CAT varchar(1000) ,@WhereCri_ACC varchar(1000)   
+declare @SQL varchar(8000),@WhereCri_Sele_cum varchar(1000) ,@SQL1  varchar(8000),@SQL2 varchar(8000),@SQL3 varchar(8000)
+
+if @RO='All' and @loccode='All'               
+   select @whereCri  = ''  ,@WhereCri_Sele_cum=''             
+      else if @RO<>'All' and  @loccode='All'              
+   select @whereCri  = ' and (l.report_loc=' + char(39)  + @RO + char(39) +' or  l.loccode= '+ char(39)  + @RO  + char(39) +')'             ,@WhereCri_Sele_cum=''    
+      else if @RO<>'All' and  @loccode<>'All'              
+   select @whereCri  = 'and l.report_loc=' + char(39)  + @RO + char(39) +' and l.loccode= '+ char(39)  + @loccode  + char(39)     ,@WhereCri_Sele_cum='_i'             
+      else if @RO='All' and  @loccode<>'All'              
+   select @whereCri  = 'and  l.loccode= '+ char(39)  + @loccode  + char(39)    ,@WhereCri_Sele_cum='_i'    
+
+if @CUST_VEND='All' or @CUST_VEND=''
+	begin
+	if @RPT='3'
+		select  @WhereCri_CUST=' and m.pbov_code in (select custcd from webx_custhdr with(NOLOCK))'
+	else if @RPT='4'
+		select  @WhereCri_CUST=' and m.pbov_code in (select vendorcode from webx_vendor_hdr with(NOLOCK))'
+	else if @RPT='5'
+		select  @WhereCri_CUST=' and m.pbov_code in (select userid from webx_master_users with(NOLOCK))'
+	else 
+		select  @WhereCri_CUST=''
+	
+	end 
+else 
+	select @WhereCri_CUST=' and dbo.SplitWithSearch(' + char(39)  +@CUST_VEND + char(39)  +',' + char(39)  +',' + char(39)  +',m.pbov_code)=' + char(39)  +'1' + char(39)  +''
+
+if @Groups='All' or @Groups=''
+	select  @WhereCri_CAT=''
+else 
+	select @WhereCri_CAT=' and dbo.SplitWithSearch(' + char(39)  +@Groups + char(39)  +',' + char(39)  +',' + char(39)  +',g.main_category)=' + char(39)  +'1' + char(39)  +''
+
+if @ACCOUNT='All' or @ACCOUNT=''
+	select  @WhereCri_ACC=''
+else 
+	select @WhereCri_ACC=' and dbo.SplitWithSearch(' + char(39)  +@ACCOUNT + char(39)  +',' + char(39)  +',' + char(39)  +',a.acccode)=' + char(39)  +'1' + char(39)  +''
+
+
+select @SQL='insert into #TrailBal('+@Sel_SUB_V+'TYP,debit,credit)
+ select '+@Sel_SUB_G_V1+''+char(39)+'OPN_TR'+char(39)+',sum(isnull(m.debit,0)),sum(isnull(m.credit,0))
+from webx_acctrans_'+@Fin_Year+' M with(NOLOCK)
+inner join webx_acctinfo a  with(NOLOCK) on m.acccode=a.acccode
+inner join webx_groups g  with(NOLOCK) on g.groupcode=a.groupcode
+inner join webx_location l  with(NOLOCK) on m.brcd=l.loccode
+where 1=1 '+@whereCri+@WhereCri_CUST+@WhereCri_CAT+@WhereCri_ACC+'  and  isnull(Voucher_cancel,'+char(39)+'N'+char(39)+')='+char(39)+'N'+char(39)+' And 
+convert(varchar,transdate,106) between Convert(datetime,'+char(39)+@finyrstart+char(39)+',106) and convert(datetime,'+char(39)+@toate_tr+char(39)+',106) 
+ '+@Sel_SUB_G_V+' '
+--select  @SQL
+exec(@SQL)
+
+if @RPT='1' or @RPT='2'
+	begin
+	select @SQL='insert into #TrailBal(M_CAT,GCD,acccode,M_ACD,brcd,debit,credit,TYP) 
+	select g.main_category,g.groupcode,a.acccode,isnull(a.company_acccode,a.acccode)+'+char(39)+' : '+char(39)+'+accdesc,m.brcd,sum(isnull(m.opendebit'+@WhereCri_Sele_cum+',0)),sum(isnull(m.opencredit'+@WhereCri_Sele_cum+',0)) ,'+char(39)+'OPN'+char(39)+'
+	from webx_acctopening_'+@Fin_Year+' M with(NOLOCK)
+	inner join webx_acctinfo a  with(NOLOCK) on m.acccode=a.acccode
+	inner join webx_groups g  with(NOLOCK) on g.groupcode=a.groupcode
+	inner join webx_location l  with(NOLOCK) on m.brcd=l.loccode
+	where 1=1 '+@whereCri+@WhereCri_CAT+@WhereCri_ACC+' 
+	group by g.main_category,g.groupcode,a.acccode,a.company_acccode,a.accdesc,m.brcd'
+	end
+else if @RPT='3' or @RPT='4' or @RPT='5' or @RPT='6' or @RPT='7'
+	begin
+	select @WhereCri_CUST=replace(@WhereCri_CUST,'pbov_code','empcd')
+	select @Sel_SUB_G_V1=replace(@Sel_SUB_G_V1,'pbov_code','empcd')
+	select @Sel_SUB_G_V=replace(@Sel_SUB_G_V,'pbov_code','empcd')
+	select @Sel_SUB_G_V1=replace(@Sel_SUB_G_V1,'brcd','loccode')
+	select @Sel_SUB_G_V=replace(@Sel_SUB_G_V,'brcd','loccode')
+	--select @WhereCri_CUST
+	select @SQL='insert into #TrailBal('+@Sel_SUB_V+'TYP,debit,credit) 
+	select '+@Sel_SUB_G_V1+''+char(39)+'OPN'+char(39)+',sum(isnull(m.opendebit,0)),sum(isnull(m.opencredit,0))
+	from webx_acctopening_employee_'+@Fin_Year+' M with(NOLOCK)
+	inner join webx_acctinfo a  with(NOLOCK) on m.acccode=a.acccode
+	inner join webx_groups g  with(NOLOCK) on g.groupcode=a.groupcode
+	inner join webx_location l  with(NOLOCK) on m.loccode=l.loccode
+	where 1=1 '+@WhereCri_CAT+@WhereCri_ACC+@WhereCri_CUST+' 
+	'+@Sel_SUB_G_V+''
+	end
+	--select  @SQL
+exec(@SQL)
+	select @WhereCri_CUST=replace(@WhereCri_CUST,'empcd','pbov_code')
+	select @Sel_SUB_G_V1=replace(@Sel_SUB_G_V1,'empcd','pbov_code')
+	select @Sel_SUB_G_V=replace(@Sel_SUB_G_V,'empcd','pbov_code')
+	select @Sel_SUB_G_V1=replace(@Sel_SUB_G_V1,'loccode','brcd')
+	select @Sel_SUB_G_V=replace(@Sel_SUB_G_V,'loccode','brcd')
+
+if @RPT_SUB  ='3'
+	begin
+	select @SQL='insert into #TrailBal(M_CAT,GCD,acccode,M_ACD,brcd,debit,credit,CUST_VEND,TYP,VRNo,VRDATE,Particular,Party,Narration,CHQNO,CHQDT,transtype) 
+	select g.main_category,g.groupcode,a.acccode,isnull(a.company_acccode,a.acccode)+'+char(39)+' : '+char(39)+'+accdesc,m.brcd,(isnull(m.debit,0)),(isnull(m.credit,0)),m.pbov_code ,'+char(39)+'TR_VR'+char(39)+',
+	voucherno,transdate,oppaccount,PBOV_CODE+'+char(39)+' : '+char(39)+'+PBOV_name,Narration,CHQNO=convert(varchar,Chqno,6),CHQDT=convert(varchar,Chqdate,6) ,transtype
+	from webx_acctrans_'+@Fin_Year+' M with(NOLOCK)
+	inner join webx_acctinfo a  with(NOLOCK) on m.acccode=a.acccode
+	inner join webx_groups g  with(NOLOCK) on g.groupcode=a.groupcode
+	inner join webx_location l  with(NOLOCK) on m.brcd=l.loccode
+	where 1=1 '+@whereCri+@WhereCri_CUST+@WhereCri_CAT+@WhereCri_ACC+'  and (isnull(Debit,0)>0 or isnull(credit,0)>0) and 
+	 isnull(Voucher_cancel,'+char(39)+'N'+char(39)+')='+char(39)+'N'+char(39)+' And 
+	convert(varchar,transdate,106) between Convert(datetime,'+char(39)+@from_date+char(39)+',106) and convert(datetime,'+char(39)+@to_date+char(39)+',106) 
+	 '
+	exec(@SQL)
+
+	end
+else 
+	begin
+	select @SQL='insert into #TrailBal('+@Sel_SUB_V+'TYP,debit,credit) 
+	select '+@Sel_SUB_G_V1+''+char(39)+'TR'+char(39)+',sum(isnull(m.debit,0)),sum(isnull(m.credit,0))
+	from webx_acctrans_'+@Fin_Year+' M with(NOLOCK)
+	inner join webx_acctinfo a  with(NOLOCK) on m.acccode=a.acccode
+	inner join webx_groups g  with(NOLOCK) on g.groupcode=a.groupcode
+	inner join webx_location l  with(NOLOCK) on m.brcd=l.loccode
+	where 1=1 '+@whereCri+@WhereCri_CUST+@WhereCri_CAT+@WhereCri_ACC+'  and 
+	 isnull(Voucher_cancel,'+char(39)+'N'+char(39)+')='+char(39)+'N'+char(39)+' And 
+	convert(varchar,transdate,106) between Convert(datetime,'+char(39)+@from_date+char(39)+',106) and convert(datetime,'+char(39)+@to_date+char(39)+',106) 
+	 '+@Sel_SUB_G_V+' '
+	--select @WhereCri_CUST
+	exec(@SQL)
+	end
+
+
+if  @RPT_SUB <>'3'
+	begin
+	if @RPT='1'
+		select @SQL='select M_CAT,(case when grouplevel='+char(39)+'4'+char(39)+' then (select (isnull(company_groupcode,groupcode)+'+char(39)+' : '+char(39)+'+groupdesc) from webx_groups where groupcode=ac.PARENTCODE) else (isnull(company_groupcode,ac.groupcode)+'+char(39)+' : '+char(39)+'+groupdesc) end ) AS groupdesc_m,
+	ac.groupcode as CD,isnull(ac.company_groupcode,ac.groupcode)+'+char(39)+' : '+char(39)+'+ groupdesc as NM,'+@Sel_SUB+' '
+	else if @RPT='2' 
+		select @SQL='select report_loc ,loccode as CD,locname as NM,'+@Sel_SUB+''
+	else if @RPT='3' 
+		select @SQL='select custcd as CD,custnm as NM,'+@Sel_SUB+' '
+	else if @RPT='4' 
+		select @SQL='select vendorcode as CD,vendorname as NM, '+@Sel_SUB+''
+	else if @RPT='5' 
+		select @SQL='select userid as CD,name as NM, '+@Sel_SUB+''
+	else if @RPT='6' 
+		select @SQL='select ac.acccode as  CD,isnull(ac.company_acccode,ac.acccode)+'+char(39)+' : '+char(39)+'+accdesc as NM,'+@Sel_SUB+' '
+	else if @RPT='7'   
+	 select @SQL='select driver_id as CD,driver_name as NM, '+@Sel_SUB+''  	  
+
+		
+	 Select @sql = @sql + 'OPN_DEBIT=sum(case when (TYP='+char(39)+'OPN_TR'+char(39)+' or TYP='+char(39)+'OPN'+char(39)+') then isnull(Debit,0) else 0 end ),
+	OPN_Credit=sum(case when (TYP='+char(39)+'OPN_TR'+char(39)+' or TYP='+char(39)+'OPN'+char(39)+') then isnull(credit,0) else 0 end ),
+	CURR_DEBIT=sum(case when  TYP='+char(39)+'TR'+char(39)+' then isnull(Debit,0) else 0 end ),
+	CURR_Credit=sum(case when  TYP='+char(39)+'TR'+char(39)+' then isnull(credit,0) else 0 end )  from #TrailBal a
+	'
+	
+	if @RPT='1'
+		 Select @sql = @sql + 'inner join webx_groups ac on a.GCD=ac.groupcode where (isnull(Debit,0)>0 or isnull(credit,0)>0)
+		group by M_CAT,ac.groupcode,grouplevel,'+@Sel_SUB_G+'ac.company_groupcode,ac.Parentcode, groupdesc
+		order by M_CAT,ac.groupcode,grouplevel,'+@Sel_SUB_G+'isnull(ac.company_groupcode,ac.groupcode)+'+char(39)+' : '+char(39)+'+ groupdesc'
+	else if @RPT='2' 
+		 Select @sql = @sql + 'inner join webx_location l on a.brcd=l.loccode where (isnull(Debit,0)>0 or isnull(credit,0)>0)
+		and (isnull(credit,0))<>(isnull(debit,0))
+		group by report_loc,locname,'+@Sel_SUB_G+'loccode
+		order by locname,'+@Sel_SUB_G+'loccode'
+	else if @RPT='3' 
+		 Select @sql = @sql + 'inner join webx_custhdr c with(NOLOCK)  on a.CUST_VEND=c.custcd where (isnull(Debit,0)>0 or isnull(credit,0)>0)
+		and (isnull(credit,0))<>(isnull(debit,0))
+		group by '+@Sel_SUB_G+'custcd,custnm
+		order by custnm,'+@Sel_SUB_G+'custcd'
+	else if @RPT='4' 
+		 Select @sql = @sql + 'inner join webx_vendor_hdr c with(NOLOCK)  on a.CUST_VEND=c.vendorcode where (isnull(Debit,0)>0 or isnull(credit,0)>0)
+		and (isnull(credit,0))<>(isnull(debit,0))
+		group by '+@Sel_SUB_G+'vendorcode,vendorname
+		order by vendorname,'+@Sel_SUB_G+'vendorcode'
+	else if @RPT='5' 
+		 Select @sql = @sql + 'inner join webx_master_users  c with(NOLOCK) on a.CUST_VEND=c.userid where (isnull(Debit,0)>0 or isnull(credit,0)>0)
+		and (isnull(credit,0))<>(isnull(debit,0))
+		group by '+@Sel_SUB_G+'userid,name
+		order by name,'+@Sel_SUB_G+'userid'
+	else if @RPT='6' 
+		 Select @sql = @sql + 'inner join webx_acctinfo  ac with(NOLOCK) on a.acccode=ac.acccode where (isnull(Debit,0)>0 or isnull(credit,0)>0)
+		and (isnull(credit,0))<>(isnull(debit,0))
+		group by '+@Sel_SUB_G+'ac.acccode,isnull(ac.company_acccode,ac.acccode)+'+char(39)+' : '+char(39)+'+accdesc
+		order by isnull(ac.company_acccode,ac.acccode)+'+char(39)+' : '+char(39)+'+accdesc,'+@Sel_SUB_G+'ac.acccode'
+	else if @RPT='7'   
+		 Select @sql = @sql + 'inner join WEBX_FLEET_DRIVERMST  c with(NOLOCK) on convert(varchar,a.CUST_VEND)=convert(varchar,c.driver_id) where (isnull(Debit,0)>0 or isnull(credit,0)>0)  
+		 and (isnull(credit,0))<>(isnull(debit,0))  
+		 group by '+@Sel_SUB_G+'driver_id,driver_name  
+		 order by driver_name,'+@Sel_SUB_G+'driver_id'   
+	exec(@sql)  	
+ 	end 
+else 
+	begin
+	 exec WebxNet_GLedger @RPT
+	end 
+
+
+ --Select @sql='select * from    #TrailBal a'
+--select @SQL
+
+
+--IF EXISTS (SELECT * FROM tempdb..sysobjects WHERE id = object_id(N'[tempdb]..[#TrailBal]'))              
+--Drop table #TrailBal
+--GO
+
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO

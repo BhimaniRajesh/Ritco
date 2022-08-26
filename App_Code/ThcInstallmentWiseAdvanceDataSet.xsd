@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ThcInstallmentWiseAdvanceDataSet" targetNamespace="http://tempuri.org/ThcInstallmentWiseAdvanceDataSet.xsd" xmlns:mstns="http://tempuri.org/ThcInstallmentWiseAdvanceDataSet.xsd" xmlns="http://tempuri.org/ThcInstallmentWiseAdvanceDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ThcInstallmentWiseAdvanceDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="ThcInstallmentWiseAdvanceDataSet" msprop:Generator_UserDSName="ThcInstallmentWiseAdvanceDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ThcAdvanceCash" msprop:Generator_TableClassName="ThcAdvanceCashDataTable" msprop:Generator_TableVarName="tableThcAdvanceCash" msprop:Generator_RowChangedName="ThcAdvanceCashRowChanged" msprop:Generator_TablePropName="ThcAdvanceCash" msprop:Generator_RowDeletingName="ThcAdvanceCashRowDeleting" msprop:Generator_RowChangingName="ThcAdvanceCashRowChanging" msprop:Generator_RowEvHandlerName="ThcAdvanceCashRowChangeEventHandler" msprop:Generator_RowDeletedName="ThcAdvanceCashRowDeleted" msprop:Generator_RowClassName="ThcAdvanceCashRow" msprop:Generator_UserTableName="ThcAdvanceCash" msprop:Generator_RowEvArgName="ThcAdvanceCashRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SrNoAC" msprop:Generator_ColumnVarNameInTable="columnSrNoAC" msprop:Generator_ColumnPropNameInRow="SrNoAC" msprop:Generator_ColumnPropNameInTable="SrNoACColumn" msprop:Generator_UserColumnName="SrNoAC" type="xs:string" minOccurs="0" />
+              <xs:element name="InstallmentAmount" msprop:Generator_ColumnVarNameInTable="columnInstallmentAmount" msprop:Generator_ColumnPropNameInRow="InstallmentAmount" msprop:Generator_ColumnPropNameInTable="InstallmentAmountColumn" msprop:Generator_UserColumnName="InstallmentAmount" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ThcOtherAdvance" msprop:Generator_TableClassName="ThcOtherAdvanceDataTable" msprop:Generator_TableVarName="tableThcOtherAdvance" msprop:Generator_TablePropName="ThcOtherAdvance" msprop:Generator_RowDeletingName="ThcOtherAdvanceRowDeleting" msprop:Generator_RowChangingName="ThcOtherAdvanceRowChanging" msprop:Generator_RowEvHandlerName="ThcOtherAdvanceRowChangeEventHandler" msprop:Generator_RowDeletedName="ThcOtherAdvanceRowDeleted" msprop:Generator_UserTableName="ThcOtherAdvance" msprop:Generator_RowChangedName="ThcOtherAdvanceRowChanged" msprop:Generator_RowEvArgName="ThcOtherAdvanceRowChangeEvent" msprop:Generator_RowClassName="ThcOtherAdvanceRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SrNoOA" msprop:Generator_ColumnVarNameInTable="columnSrNoOA" msprop:Generator_ColumnPropNameInRow="SrNoOA" msprop:Generator_ColumnPropNameInTable="SrNoOAColumn" msprop:Generator_UserColumnName="SrNoOA" type="xs:string" minOccurs="0" />
+              <xs:element name="Perticular" msprop:Generator_ColumnVarNameInTable="columnPerticular" msprop:Generator_ColumnPropNameInRow="Perticular" msprop:Generator_ColumnPropNameInTable="PerticularColumn" msprop:Generator_UserColumnName="Perticular" type="xs:string" minOccurs="0" />
+              <xs:element name="Vendor" msprop:Generator_ColumnVarNameInTable="columnVendor" msprop:Generator_ColumnPropNameInRow="Vendor" msprop:Generator_ColumnPropNameInTable="VendorColumn" msprop:Generator_UserColumnName="Vendor" type="xs:string" minOccurs="0" />
+              <xs:element name="ReferenceNo" msprop:Generator_ColumnVarNameInTable="columnReferenceNo" msprop:Generator_ColumnPropNameInRow="ReferenceNo" msprop:Generator_ColumnPropNameInTable="ReferenceNoColumn" msprop:Generator_UserColumnName="ReferenceNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Unit" msprop:Generator_ColumnVarNameInTable="columnUnit" msprop:Generator_ColumnPropNameInRow="Unit" msprop:Generator_ColumnPropNameInTable="UnitColumn" msprop:Generator_UserColumnName="Unit" type="xs:string" minOccurs="0" />
+              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ThcAdvanceCheque" msprop:Generator_TableClassName="ThcAdvanceChequeDataTable" msprop:Generator_TableVarName="tableThcAdvanceCheque" msprop:Generator_TablePropName="ThcAdvanceCheque" msprop:Generator_RowDeletingName="ThcAdvanceChequeRowDeleting" msprop:Generator_RowChangingName="ThcAdvanceChequeRowChanging" msprop:Generator_RowEvHandlerName="ThcAdvanceChequeRowChangeEventHandler" msprop:Generator_RowDeletedName="ThcAdvanceChequeRowDeleted" msprop:Generator_UserTableName="ThcAdvanceCheque" msprop:Generator_RowChangedName="ThcAdvanceChequeRowChanged" msprop:Generator_RowEvArgName="ThcAdvanceChequeRowChangeEvent" msprop:Generator_RowClassName="ThcAdvanceChequeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SrNoAdvChq" msprop:Generator_ColumnVarNameInTable="columnSrNoAdvChq" msprop:Generator_ColumnPropNameInRow="SrNoAdvChq" msprop:Generator_ColumnPropNameInTable="SrNoAdvChqColumn" msprop:Generator_UserColumnName="SrNoAdvChq" type="xs:string" minOccurs="0" />
+              <xs:element name="ChequeNo" msprop:Generator_ColumnVarNameInTable="columnChequeNo" msprop:Generator_ColumnPropNameInRow="ChequeNo" msprop:Generator_ColumnPropNameInTable="ChequeNoColumn" msprop:Generator_UserColumnName="ChequeNo" type="xs:string" minOccurs="0" />
+              <xs:element name="BankName" msprop:Generator_ColumnVarNameInTable="columnBankName" msprop:Generator_ColumnPropNameInRow="BankName" msprop:Generator_ColumnPropNameInTable="BankNameColumn" msprop:Generator_UserColumnName="BankName" type="xs:string" minOccurs="0" />
+              <xs:element name="Date" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_UserColumnName="Date" type="xs:string" minOccurs="0" />
+              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:string" minOccurs="0" />
+              <xs:element name="Favour" msprop:Generator_ColumnVarNameInTable="columnFavour" msprop:Generator_ColumnPropNameInRow="Favour" msprop:Generator_ColumnPropNameInTable="FavourColumn" msprop:Generator_UserColumnName="Favour" type="xs:string" minOccurs="0" />
+              <xs:element name="CardNo" msprop:Generator_ColumnVarNameInTable="columnCardNo" msprop:Generator_ColumnPropNameInRow="CardNo" msprop:Generator_ColumnPropNameInTable="CardNoColumn" msprop:Generator_UserColumnName="CardNo" type="xs:string" minOccurs="0" />
+              <xs:element name="CardType" msprop:Generator_ColumnVarNameInTable="columnCardType" msprop:Generator_ColumnPropNameInRow="CardType" msprop:Generator_ColumnPropNameInTable="CardTypeColumn" msprop:Generator_UserColumnName="CardType" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ThcAdvanceChequeNew" msprop:Generator_TableClassName="ThcAdvanceChequeNewDataTable" msprop:Generator_TableVarName="tableThcAdvanceChequeNew" msprop:Generator_RowChangedName="ThcAdvanceChequeNewRowChanged" msprop:Generator_TablePropName="ThcAdvanceChequeNew" msprop:Generator_RowDeletingName="ThcAdvanceChequeNewRowDeleting" msprop:Generator_RowChangingName="ThcAdvanceChequeNewRowChanging" msprop:Generator_RowEvHandlerName="ThcAdvanceChequeNewRowChangeEventHandler" msprop:Generator_RowDeletedName="ThcAdvanceChequeNewRowDeleted" msprop:Generator_RowClassName="ThcAdvanceChequeNewRow" msprop:Generator_UserTableName="ThcAdvanceChequeNew" msprop:Generator_RowEvArgName="ThcAdvanceChequeNewRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SrNoAdvChq" msprop:Generator_ColumnVarNameInTable="columnSrNoAdvChq" msprop:Generator_ColumnPropNameInRow="SrNoAdvChq" msprop:Generator_ColumnPropNameInTable="SrNoAdvChqColumn" msprop:Generator_UserColumnName="SrNoAdvChq" type="xs:string" minOccurs="0" />
+              <xs:element name="ChequeNo" msprop:Generator_ColumnVarNameInTable="columnChequeNo" msprop:Generator_ColumnPropNameInRow="ChequeNo" msprop:Generator_ColumnPropNameInTable="ChequeNoColumn" msprop:Generator_UserColumnName="ChequeNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Date" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_UserColumnName="Date" type="xs:string" minOccurs="0" />
+              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:string" minOccurs="0" />
+              <xs:element name="Favour" msprop:Generator_ColumnVarNameInTable="columnFavour" msprop:Generator_ColumnPropNameInRow="Favour" msprop:Generator_ColumnPropNameInTable="FavourColumn" msprop:Generator_UserColumnName="Favour" type="xs:string" minOccurs="0" />
+              <xs:element name="CardNo" msprop:Generator_ColumnVarNameInTable="columnCardNo" msprop:Generator_ColumnPropNameInRow="CardNo" msprop:Generator_ColumnPropNameInTable="CardNoColumn" msprop:Generator_UserColumnName="CardNo" type="xs:string" minOccurs="0" />
+              <xs:element name="CardType" msprop:Generator_ColumnVarNameInTable="columnCardType" msprop:Generator_ColumnPropNameInRow="CardType" msprop:Generator_ColumnPropNameInTable="CardTypeColumn" msprop:Generator_UserColumnName="CardType" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,23 @@
+Please add followind function in file..
+
+//add this line in page load function
+if (Request.QueryString["Function"] == "CheckValidCustomer") { Response.Write(CheckValidCustomer()); }
+
+
+//Added this function at end
+    private string CheckValidCustomer()
+    {
+        TripSheet objTs = new TripSheet(str_Connection_String);
+
+        objTs.Customer = Request.QueryString["Customer"].ToString();
+        objTs.GetValidCustomer();
+
+        if (objTs.IsRecordFound == true)
+        {
+            return "Y~";
+        }
+        else
+        {
+            return "N~";
+        }
+    }

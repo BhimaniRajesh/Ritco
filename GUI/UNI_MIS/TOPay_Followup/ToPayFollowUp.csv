@@ -1,0 +1,3 @@
+dockno,destcd,paybas,tohub_br,dockdt,docksf,orgncd,csgncd,csgnnm,csgecd,csgenm,arrv_dt,mrsno,mrsdt,mrsamt,finclosedt,netamt,dkttot,ded_tds,ded_oth,remark,dely_dt,miscchrg,party,report_loc,loccode,locname,loc_level,docket,arrv_dt_small,mrsdt_small,dely_dt_small,finclosedt_small
+8900086,BLR,P03,,7/24/2007 3:49:00 PM,.,PNQ,8888,KJLJL,8888,JKLJ,7/24/2007 4:04:00 PM,MRBLR01055,7/24/2007 12:00:00 AM,1521,,1521,1521.44,,0.00,,7/24/2007 4:25:38 PM,0,8888,SRHQ,BLR,Banglore Airport,4,8900086.,24 Jul 2007,24 Jul 2007,24 Jul 2007,
+7890013,BLR,P03,,7/26/2007 12:59:00 PM,.,DEL,8888,VDFG,8888,FG,8/1/2007 5:35:00 PM,MRBLR01056,8/1/2007 12:00:00 AM,4948,,4948,4948.00,,0.00,,,0,8888,SRHQ,BLR,Banglore Airport,4,7890013.,01 Aug 2007,01 Aug 2007,,

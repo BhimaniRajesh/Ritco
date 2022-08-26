@@ -1,0 +1,16 @@
+SELECT * FROM webx_master_menu2 WHERE TEXT LIKE '%EXCEPTION%'
+
+SELECT * FROM webx_master_menu2 WHERE MENUID=10
+SELECT * FROM webx_master_menu2 WHERE PARENTID=10
+SELECT * FROM webx_master_menu2 WHERE PARENTID=74
+
+insert into webx_master_menu2(SrNo,Text,Description,ParentID,NavigationURL,MenuLevel,APP_Level,APP_Module,Status)
+VALUES(1,'Bill/MR Cancellation','Bill/MR Cancellation',74,'~/GUI/Finance/Bill_MR_Cancellation/Bill_MR_Cancellation_step_1.aspx',0,NULL,99,100)
+
+update webx_master_menu2 set app_module=menuid where text='Bill/MR Cancellation'
+
+SELECT STATUS,* FROM webx_master_menu2 WHERE TEXT LIKE '%CANCELLATION%'
+BEGIN TRAN
+COMMIT TRAN
+ROLLBACK TRAN
+UPDATE webx_master_menu2 SET STATUS=200 WHERE MENUID IN(92,93,94,95)

@@ -1,0 +1,4 @@
+from_report_loc,from_loccode,to_report_loc,to_loccode,dockno,actuwt,chrgwt,freight,dkttot,subtot
+SRHQ,BLR,NRHQ,DEL,12,37956.0,37956.0,166856.00,172306.00,168236.00
+SRHQ,BLR,NRHQ,DELS,3,4808.0,4808.0,32135.00,36107.00,32135.00
+SRHQ,BLR,PNRO,PNQ,1,4500.0,4500.0,45000.00,45030.00,45030.00

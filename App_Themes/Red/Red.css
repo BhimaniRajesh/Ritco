@@ -1,0 +1,282 @@
+.progressBackgroundFilter
+{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    z-index: 1000;
+}
+
+.processMessage
+{
+    position: fixed;
+    top: 40%;
+    left: 20%;
+    padding: 10px;
+    width: 14%;
+    z-index: 1001;
+}
+
+.hfnt
+{
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    font-family: verdana;
+    color: white;
+}
+
+.nfnt
+{
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    font-family: verdana;
+    color: black;
+}
+
+.ffnt
+{
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    font-family: verdana;
+    color: white;
+}
+
+
+
+.ltxt
+{
+    text-align: left;
+    border-style: groove;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+}
+
+.rtxt
+{
+    text-align: right;
+    border-style: groove;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    width: 80px;
+}
+
+.hbtn
+{
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    background-color: White;
+    font-weight: bold;
+    color: black;
+}
+
+.nbtn
+{
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    background-color: #ca0f24;
+    font-weight: bold;
+    color: White;
+}
+
+.ebtn
+{
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    background-color: #ca0f24;
+    font-weight: bold;
+    color: White;
+}
+
+.cmb
+{
+    text-align: left;
+    border-style: groove;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+}
+
+.ltxtm
+{
+    text-align: left;
+    border-style: groove;
+    background-color: #fcd1d6;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+}
+
+.rtxtm
+{
+    text-align: right;
+    border-style: groove;
+    background-color: #fcd1d6;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    width: 80px;
+}
+
+.cmbm
+{
+    text-align: left;
+    border-style: groove;
+    background-color: #fcd1d6;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+}
+
+.ltxte
+{
+    text-align: left;
+    border-style: groove;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    background-color: yellow;
+    color: black;
+}
+
+.rtxte
+{
+    text-align: right;
+    border-style: groove;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    width: 80px;
+    background-color: yellow;
+    color: black;
+}
+
+.cmbe
+{
+    text-align: left;
+    border-style: groove;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    background-color: yellow;
+    color: black;
+}
+
+.ltxtd
+{
+    text-align: left;
+    border-style: groove;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    background-color: #e6e6e6;
+}
+
+.rtxtd
+{
+    text-align: right;
+    border-style: groove;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    width: 80px;
+    background-color: #e6e6e6;
+}
+
+.cmbd
+{
+    text-align: left;
+    border-style: groove;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+    background-color: #e6e6e6;
+}
+
+.ftbl
+{
+    background-color: #ca0f24;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    font-family: verdana;
+    border-collapse: separate;
+    width: 100%;
+}
+
+.stbl
+{
+    background-color: #ca0f24;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    font-family: verdana;
+    border-collapse: separate;
+}
+
+.nrow
+{
+    background-color: #ffffff;
+    height: 18px;
+}
+
+.hrow
+{
+    color: White;
+    background-color: #ca0f24;
+    height: 18px;
+    font-weight: bold;
+}
+
+.frow
+{
+    color: White;
+    background-color: #ca0f24;
+    height: 18px;
+    font-weight: bold;
+}
+
+/* Print Table Style */
+
+.prnttbl
+{
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+}
+.prnttbl tr
+{
+    background-color: White;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+}
+.prnttbl td
+{
+    border: solid black 1px;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: verdana;
+}
+.prnttbl th
+{
+    border: solid black 1px;
+    font-weight: bold;
+    font-size: 11px;
+    font-family: verdana;
+}
+

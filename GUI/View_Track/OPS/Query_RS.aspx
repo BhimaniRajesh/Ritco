@@ -1,0 +1,197 @@
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/GUI/MasterPage.master" CodeFile="Query_RS.aspx.cs" Inherits="GUI_View_Track_Operation_Query_RS" %>
+
+
+<%@ Register TagName="HR" TagPrefix="Location" Src="~/GUI/Common_UserControls/LOC_HRCHY.ascx" %>
+<%@ Register TagName="HR_To" TagPrefix="Location_To" Src="~/GUI/Common_UserControls/LOC_HRCHY_TO.ascx" %>
+<%@ Register TagName="DT" TagPrefix="Date" Src="~/GUI/Common_UserControls/RPT_Date.ascx" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MyCPH1" runat="Server">
+<script language="JavaScript" src="../../Images/CalendarPopup.js"></script>
+
+    <script language="javascript" src="../../images/commonJs.js"></script>
+
+    <script language="JavaScript" type="text/javascript">
+var cal = new CalendarPopup("testdiv1"); 
+	cal.setCssPrefix("TEST");
+	cal.showNavigationDropdowns();
+	
+	function OnSub_DATACHECK()
+     {     
+     
+     //alert("HIii")
+     
+        if(!DateCheck())
+            return false;
+      //  alert("HIii")
+        //if(!FinDateCheck())
+           // return false;          
+     }
+
+    function DOCTYPEChange()
+     { 
+      // alert("hiiiiii")
+        var documet_type=document.getElementById("ctl00_MyCPH1_documet_type");
+        if(documet_type.value=="DKT")
+        {
+            document.getElementById('ctl00_MyCPH1_TRN1').style.display = "block";
+            document.getElementById('ctl00_MyCPH1_TRN2').style.display = "block";
+            document.getElementById('ctl00_MyCPH1_TRN3').style.display = "block";
+            document.getElementById('ctl00_MyCPH1_TRN4').style.display = "block";
+        }
+        else if(documet_type.value=="THC" || documet_type.value=="DRS")
+        {
+            document.getElementById('ctl00_MyCPH1_TRN1').style.display = "block";
+            document.getElementById('ctl00_MyCPH1_TRN2').style.display = "block";
+            document.getElementById('ctl00_MyCPH1_TRN3').style.display = "block";
+            document.getElementById('ctl00_MyCPH1_TRN4').style.display = "none";
+        }
+         else if(documet_type.value=="MF" || documet_type.value=="LS" || documet_type.value=="PFM" || documet_type.value=="PRS")
+        {
+            document.getElementById('ctl00_MyCPH1_TRN1').style.display = "block";
+            document.getElementById('ctl00_MyCPH1_TRN2').style.display = "block";
+            document.getElementById('ctl00_MyCPH1_TRN3').style.display = "none";
+            document.getElementById('ctl00_MyCPH1_TRN4').style.display = "none";
+        }
+       
+     }
+
+    </script>
+
+    <div align="left">
+        <table style="width: 10.5in" border="0" align="left" cellpadding="0" cellspacing="0">
+            <tr>
+                <td height="30">
+                    <font class="blklnkund"><strong>Module</strong></font> <strong>&gt; </strong><font
+                        class="blklnkund"><strong>Administrator </strong></font><font class="bluefnt"><strong>
+                            &gt; </strong><strong>View & Track - Operation</strong> </font>
+                </td>
+            </tr>
+            <tr>
+                <td class="horzblue">
+                    <img src="../../images/clear.gif" width="2" height="1" /></td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <div align="center">
+                        <asp:UpdateProgress ID="ProgressIndicator" runat="server">
+                            <ProgressTemplate>
+                                <div id="progressArea">
+                                    <asp:Label ID="lblLS" runat="server" Text="Please wait..." CssClass="redfnt" Font-Bold="true"></asp:Label>
+                                    <asp:Image ID="LoadingImage" runat="server" ImageUrl="~/GUI/images/indicator.gif" />
+                                </div>
+                            </ProgressTemplate>
+                        </asp:UpdateProgress>
+                    </div>
+                    <a href="javascript:window.history.go(-1)" title="back">
+                        <img alt="Back" src="../../images/back.gif" border="0" />
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td height="300" valign="top">
+                    <table cellspacing="1" style="width: 9.5in" class="boxbg" align="left">
+                        <tr class="bgbluegrey">
+                            <td colspan="0">
+                                <font class="blackfnt"></font>
+                            </td>
+                            <td colspan="4">
+                                <font class="blackfnt"><b>Select Sales Criteria</b></font>
+                            </td>
+                        </tr>
+                        <tr id="Tr1" visible="true" runat="server" style="background-color: white">
+                            <td align="left" colspan="2">
+                                <asp:Label ID="Label12" CssClass="blackfnt" Text="Select Document Type" runat="server"></asp:Label></td>
+                            <td align="left" colspan="2" valign="top">
+                                <asp:DropDownList ID="documet_type"  OnChange="Javascript:return DOCTYPEChange();" runat="server">
+                                </asp:DropDownList><asp:Label  Text="" runat="server" id="lbl123" CssClass="bluefnt" ></asp:Label>
+                            </td>
+                        </tr>
+                        <tr class="bgbluegrey">
+                            <td  colspan="2" align="center">
+                                <font class="blackfnt">From</font>
+                            </td>
+                            <td colspan="2" align="center">
+                                <font class="blackfnt">To</font>
+                            </td>
+                        </tr>
+                        <tr style="background-color: white">
+                            <td colspan="2" align="left">
+                                <Location:HR ID="Fromlc" runat="server" />
+                            </td>
+                            <td colspan="2" align="left">
+                                <Location_To:HR_To ID="Tolc" runat="server" />
+                            </td>
+                        </tr>
+                        <tr style="background-color: white">
+                            <td align="center" colspan="2">
+                                <font class="blackfnt">Select Documnet Date</font>
+                            </td>
+                            <td align="left" colspan="2">
+                                <Date:DT ID="DT" runat="server" />
+                            </td>
+                        </tr>
+                        <tr id="TRN1" runat="server"  style="background-color: white;display:none;">
+                            <td align="left" colspan="2">
+                                <font class="blackfnt">Document No(s). (System Generated No.) :</font>
+                            </td>
+                            <td align="left" colspan="2">
+                                <asp:TextBox runat="server" Text="" ID="txtsysno" Width="250"> </asp:TextBox>
+                                <font class="blackfnt">[seperated by <i>comma</i> if multiple]</font>
+                            </td>
+                        </tr>
+                        <tr id="TRN2" runat="server"  style="background-color: white;display:none;">
+                            <td align="left" colspan="2">
+                                <font class="blackfnt">Document No(s). (Manual No./Invoice No.):</font>
+                            </td>
+                            <td align="left" colspan="2">
+                                <asp:TextBox runat="server" Text="" ID="txtmanno" Width="250"> </asp:TextBox>
+                                <font class="blackfnt">[seperated by <i>comma</i> if multiple]</font>
+                            </td>
+                        </tr>
+                        <tr  id="TRN3" runat="server"  style="background-color: white;display:none;">
+                            <td align="left" colspan="2">
+                                <font class="blackfnt">Customer Ref. No./Vehicle No. :</font>
+                            </td>
+                            <td align="left" colspan="2">
+                                <asp:TextBox runat="server" Text="" ID="txtCustRefno" Width="250"> </asp:TextBox>
+                                <font class="blackfnt">[seperated by <i>comma</i> if multiple]</font>
+                            </td>
+                        </tr>
+                        <tr id="TRN4" runat="server"  style="background-color: white;display:none;">
+                            <td align="left" colspan="2">
+                                <font class="blackfnt">Free Text :</font>
+                            </td>
+                            <td align="left" colspan="2">
+                                <asp:TextBox runat="server" Text="" ID="txtFreeText" Width="250"> </asp:TextBox>
+                                <font class="blackfnt">[seperated by <i>comma</i> if multiple]</font>
+                            </td>
+                        </tr>
+                          <tr align="center"  id="TRPG" runat="Server" bgcolor="white" style=" display:block;">
+                                        <td colspan="6">
+                                        <font class="blackfnt">Select Records in One Page </font>
+                                            <asp:DropDownList ID="pgSize" CssClass="blackfnt" runat="server">
+                                                <asp:ListItem Text="25" Value="25"></asp:ListItem>
+                                                <asp:ListItem Text="50" Value="50"></asp:ListItem>
+                                                <asp:ListItem Text="100" Value="100"></asp:ListItem>
+                                                
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                        <tr align="center" bgcolor="white">
+                            <td colspan="4">
+                            </td>
+                        </tr>
+                        <tr align="center" bgcolor="white">
+                            <td colspan="4">
+                                <asp:Button ID="btnShow" OnClick="btnShow_Click" runat="server" Text="Show" Width="75px" />
+                            </td>
+                            <%--OnClientClick="Javascript: return DateCheck();"--%>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="testdiv1" style="position: absolute; visibility: hidden; background-color: white;
+        layer-background-color: white; z-index: 99;">
+    </div>
+</asp:Content>

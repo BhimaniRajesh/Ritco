@@ -1,0 +1,7 @@
+RowCounter,MRSNo,MRSDT,MRSTYPE,MRSBR,MRBRNNM,PartyNAME,ORGNCD,DOCBKNM,DESTCD,DOCDLNM,MRSAMT,dockno,Closeamt,MRS_Closed,Paymode,finclosedt,DEDUCTION,miscchrg,MR_CANCEL,NETAMT,chq_amt,remark,report_loc,MRChequeDetails,TDSDED,FRTDED,CLMDED,unexpded,MRS_Status
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+1,MRHQTR00843,21 Sep 2007,Misc.,HQTR,HEAD OFFICE,8888 : JHG CO,DELS,Okhla Branch,PNQ,Pune (chakkan- outside octroi),24420.00,9879002,0.00,,,-,0,0,,24420,20000,,HQTR,123456/12 Aug 2007,7481799.25,8293178.25,3117387.29,6424513.66,MR - Generated 
+2,MRHQTR00844,21 Sep 2007,Misc.,HQTR,HEAD OFFICE,C0011440 : BHARAT ENTERPRISES,DELS,Okhla Branch,PNQ,Pune (chakkan- outside octroi),39630.00,9879001,0.00,,,-,0,0,,39630,,,HQTR,,7481799.25,8293178.25,3117387.29,6424513.66,MR - Generated 
+3,MRHQTR00842,21 Sep 2007,Misc.,HQTR,HEAD OFFICE,8888 : NBG,DELS,Okhla Branch,PNQ,Pune (chakkan- outside octroi),11210.00,9879003,12079.00,,Cash,21 Sep 2007,1131,2000,,12079,,TESTING,HQTR,,7481799.25,8293178.25,3117387.29,6424513.66,MR - Close 

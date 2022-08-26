@@ -1,0 +1,79 @@
+<%--
+Default skin template. The following skins are provided as examples only.
+
+1. Named control skin. The SkinId should be uniquely defined because
+   duplicate SkinId's per control type are not allowed in the same theme.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Default skin. The SkinId is not defined. Only one default 
+   control skin per control type is allowed in the same theme.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+<asp:Menu runat="server" SkinId="MenuSkin"  
+    BorderWidth="0" 
+    BorderStyle="None"  
+    BorderColor="#ca0f24"
+    Width="100px" Style="text-align: center"    
+    DynamicHorizontalOffset="2" 
+    DynamicVerticalOffset="1" 
+    StaticSubMenuIndent="0px"      
+    Orientation="Horizontal"  
+    ForeColor="#000000"  
+    BackColor="#FFFFFF" >
+    <StaticMenuItemStyle HorizontalPadding="15px" 
+                        VerticalPadding="2px" 
+                        BorderColor="#ca0f24" 
+                        BorderWidth="1px" 
+                        ItemSpacing="0px" 
+                        BackColor="White" 
+                        Height="20px" 
+                        Width="100px" />
+    <StaticHoverStyle BackColor="#fcd1d6" ForeColor="#000000" Height="20px" />
+    <StaticSelectedStyle BackColor="White" />    
+    <DynamicMenuStyle BorderColor="#ca0f24" 
+                      BorderStyle="Solid" 
+                      BorderWidth="1px"  
+                      BackColor="#FFFFFF"/>
+    <DynamicMenuItemStyle BackColor="#FFFFFF" 
+                          HorizontalPadding="15px" 
+                          VerticalPadding="2px" 
+                          BorderWidth="0px" 
+                          Height="20px" />
+    <DynamicHoverStyle BackColor="#fcd1d6" ForeColor="#000000" Height="20px" />                        
+    <DynamicSelectedStyle BackColor="White" Height="20px" />                        
+</asp:Menu>      
+
+
+
+
+
+<%-- THEMES BEING USED BY CN ENTRY --%>
+<asp:Label runat="server" CssClass="nfnt" SkinID="skinNlbl"></asp:Label>
+<asp:Label runat="server" Font-Size="11px" Font-Names="Verdana" ForeColor="White" SkinID="skinHlbl"></asp:Label>
+<asp:Label runat="server" Font-Size="11px" Font-Names="Verdana" ForeColor="White" SkinID="skinFlbl"></asp:Label>
+
+  
+<asp:Table runat="server" CellSpacing="1" style="border-collapse:separate;" Font-Size="11px" Width="100%" Font-Names="Verdana" BackColor="#ca0f24" SkinID="skinTblMain"></asp:Table>
+<asp:Table runat="server" CellSpacing="1" style="border-collapse:separate;" Font-Size="11px" Font-Names="Verdana"  BackColor="#ca0f24" SkinID="skinTbl"></asp:Table>
+<asp:TableRow runat="server" SkinID="skinHrow" ForeColor="White" BackColor="#ca0f24" Height="20px" ></asp:TableRow>
+<asp:TableRow runat="server" SkinID="skinNrow" BackColor="#ffffff" Height="20px"></asp:TableRow>
+<asp:TableRow runat="server" SkinID="skinFrow" ForeColor="White" BackColor="#ca0f24" Height="20px"></asp:TableRow>
+
+<asp:GridView runat="server" SkinID="skinGrdVw"  CellSpacing="1" style="border-collapse:separate;" Font-Size="11px" 
+Width="100%" Font-Names="Verdana" BackColor="#ca0f24" Border="0" HeaderStyle-BackColor="#ca0f24" HeaderStyle-ForeColor="White" RowStyle-BackColor="#ffffff"
+ FooterStyle-BackColor="#ca0f24" FooterStyle-ForeColor="White" EmptyDataRowStyle-BackColor="#ca0f24" EmptyDataRowStyle-ForeColor="White"></asp:GridView>
+ 
+ <asp:TextBox runat="server" SkinID="skinLtxt" CssClass="ltxt"></asp:TextBox>
+ <asp:TextBox runat="server" SkinID="skinLtxtM" CssClass="ltxtm"></asp:TextBox>
+ <asp:TextBox runat="server" SkinID="skinRtxt"  CssClass="rtxt"></asp:TextBox>
+ <asp:TextBox runat="server" SkinID="skinRtxtM" CssClass="rtxtm"></asp:TextBox>
+ 
+ <asp:DropDownList SkinID="skinCmb" Font-Size="11px" Font-Names="Verdana" BackColor="White" runat="server" ></asp:DropDownList>
+ 
+ <asp:Button runat="server" Font-Bold="true" Font-Size="11px" Font-Names="Verdana" SkinID="skinSbtn"></asp:Button>
+ <asp:LinkButton runat="server" Font-Bold="true" Font-Size="11px" Font-Names="Verdana" SkinID="skinSbtn"></asp:LinkButton>
+<%-- END OF THEMES BEING USED BY CN ENTRY --%> 

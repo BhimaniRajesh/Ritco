@@ -1,0 +1,4 @@
+thcbr,thcno,THCName,TOTDKT,actuwt,ContractRS,vehno,thcdt,routename,outacm,coming_from,actdept_dt,actdept_tm,depdate_prevbr,deptime_prevbr,DTDep,stat,FreeSpace,lastlocation,DaysFromStart
+BLR,BLR_/THC/0000001,BLR : Banglore Airport,1.00,200.0,10000,ytttt353,04 Oct 2007,BLR-DEL,,,10/4/2007 12:00:00 AM,11:37,,,04 Oct 2007-11:37,Yet to Arrive,,,43
+BLR,BLR_/THC/0000002,BLR : Banglore Airport,1.00,100.0,0,GG6666,05 Oct 2007,BLR-DEL,,,10/5/2007 12:00:00 AM,14:05,,,05 Oct 2007-14:05,Yet to Arrive,,,42
+BLR,BLR_/THC/0000009,BLR : Banglore Airport,,,0,KA01B0689,16 Oct 2007,BLR-DEL-DELS,,,10/16/2007 12:00:00 AM,19:21,,,16 Oct 2007-19:21,Yet to Arrive,,,31

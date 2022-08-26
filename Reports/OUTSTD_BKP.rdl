@@ -1,0 +1,1384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="RPTDS">
+      <rd:DataSourceID>cf83a5d2-5283-49c5-8969-def02ef7e440</rd:DataSourceID>
+      <DataSourceReference>RPTDS</DataSourceReference>
+    </DataSource>
+  </DataSources>
+  <InteractiveHeight>11in</InteractiveHeight>
+  <ReportParameters>
+    <ReportParameter Name="CnnStr">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>Data Source=124.153.78.153;Initial Catalog=Ritco_live;UID=sa;pwd=R1i2T3c4O5</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CnnStr</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="str_age">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>&lt;AGE&gt;&lt;FIRST&gt;0&lt;/FIRST&gt;&lt;SECOND&gt;0&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;1&lt;/FIRST&gt;&lt;SECOND&gt;1&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;2&lt;/FIRST&gt;&lt;SECOND&gt;2&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;3&lt;/FIRST&gt;&lt;SECOND&gt;4&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;4&lt;/FIRST&gt;&lt;SECOND&gt;8&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;8&lt;/FIRST&gt;&lt;SECOND&gt;160&lt;/SECOND&gt;&lt;/AGE&gt;</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>str_age</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="fromdt">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>01 apr 09</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>fromdt</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="todt">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>15 feb 10</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>todt</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="location">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>All</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>location</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="locLevel">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>locLevel</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="LOC_TYP">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>LOC_TYP</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="DT_TYP">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>DT_TYP</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="RPT">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Report Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Location Wise  </Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>Customer  Wise </Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="RPT_SUB">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Report Sub Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>0</Value>
+            <Label>none</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Location Wise</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>Customer </Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="ASONDT">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>14 feb 10</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ASONDT</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="ASONDT_to">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>15 feb 10</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ASONDT_to</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CUSTSTR">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>C00060043,C00060073,C00060046</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CUSTSTR</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="FinYear">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>09_10</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>FinYear</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CLLIST">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>a</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Column List</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>ONACC</Value>
+            <Label>On Account Balance</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>LDBL</Value>
+            <Label>Ledger Balance</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>a</Value>
+            <Label>None</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="TYP">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Fromat Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Status Wise</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>Age Wise</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>3</Value>
+            <Label>Specific Date Range Wise A/R</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="BILLTYP">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>BILLTYP</DataSetName>
+          <ValueField>codeid</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Bill Type</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>BILLTYP</DataSetName>
+          <ValueField>codeid</ValueField>
+          <LabelField>codedesc</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:DrawGrid>true</rd:DrawGrid>
+  <InteractiveWidth>8.5in</InteractiveWidth>
+  <rd:SnapToGrid>true</rd:SnapToGrid>
+  <RightMargin>1in</RightMargin>
+  <LeftMargin>1in</LeftMargin>
+  <BottomMargin>1in</BottomMargin>
+  <rd:ReportID>26e8a414-7083-4842-8856-120d6ed3044a</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Fields>
+        <Field Name="RPTCD">
+          <DataField>RPTCD</DataField>
+        </Field>
+        <Field Name="RPTNM">
+          <DataField>RPTNM</DataField>
+        </Field>
+        <Field Name="RPTCD_SUB">
+          <DataField>RPTCD_SUB</DataField>
+        </Field>
+        <Field Name="RPTNM_SUB">
+          <DataField>RPTNM_SUB</DataField>
+        </Field>
+        <Field Name="FIRST">
+          <DataField>FIRST</DataField>
+        </Field>
+        <Field Name="SECOND">
+          <DataField>SECOND</DataField>
+        </Field>
+        <Field Name="AGE">
+          <DataField>AGE</DataField>
+        </Field>
+        <Field Name="AMT">
+          <DataField>AMT</DataField>
+        </Field>
+        <Field Name="On_AC_balance">
+          <DataField>On_AC_balance</DataField>
+        </Field>
+        <Field Name="Bill_Type">
+          <DataField>Bill_Type</DataField>
+        </Field>
+        <Field Name="loclv">
+          <DataField>loclv</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandText>if  @TYP='3'
+SELECT @str_age ='&lt;AGE&gt;&lt;FIRST&gt;2222&lt;/FIRST&gt;&lt;SECOND&gt;2222&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;3333&lt;/FIRST&gt;&lt;SECOND&gt;3333&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;4444&lt;/FIRST&gt;&lt;SECOND&gt;4444&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;5555&lt;/FIRST&gt;&lt;SECOND&gt;5555&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;6666&lt;/FIRST&gt;&lt;SECOND&gt;6666&lt;/SECOND&gt;&lt;/AGE&gt;'
+else if @TYP='1'
+SELECT @str_age ='&lt;AGE&gt;&lt;FIRST&gt;7777&lt;/FIRST&gt;&lt;SECOND&gt;7777&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;8888&lt;/FIRST&gt;&lt;SECOND&gt;8888&lt;/SECOND&gt;&lt;/AGE&gt;
+&lt;AGE&gt;&lt;FIRST&gt;9999&lt;/FIRST&gt;&lt;SECOND&gt;9999&lt;/SECOND&gt;&lt;/AGE&gt;'
+
+DECLARE @hDoc1 int ,@hDoc2 int  ,@str_age1  nvarchar(max)
+
+SELECT @str_age1=replace(@str_age,'&lt;ROOT&gt;','')
+SELECT @str_age1=replace(@str_age1,'&lt;/ROOT&gt;','')
+
+if charindex('ONACC',@CLLIST )&gt;0
+	select @str_age1=@str_age1+'&lt;AGE&gt;&lt;FIRST&gt;-1&lt;/FIRST&gt;&lt;SECOND&gt;-1&lt;/SECOND&gt;&lt;/AGE&gt;'
+if charindex('LDBL',@CLLIST )&gt;0
+	select @str_age1 =@str_age1+'&lt;AGE&gt;&lt;FIRST&gt;-2&lt;/FIRST&gt;&lt;SECOND&gt;-2&lt;/SECOND&gt;&lt;/AGE&gt;'
+
+select @str_age1 ='&lt;ROOT&gt; '+@str_age1+'&lt;/ROOT&gt; '
+
+ EXEC sp_xml_preparedocument @hDoc1 OUTPUT, @str_age1   
+ 
+ 
+IF EXISTS (SELECT * FROM tempdb..sysobjects WHERE id = object_id(N'[tempdb]..[#TBL_AGE]'))                    
+Drop table #TBL_AGE 
+CREATE TABLE #TBL_AGE ([SRNO] [numeric](18, 0) IDENTITY (1, 1) NOT NULL,
+FIRST NUMERIC(18,0),SECOND NUMERIC(18,0))
+
+INSERT INTO #TBL_AGE(FIRST,SECOND) SELECT FIRST,SECOND FROM OPENXML(@hDoc1, '/ROOT/AGE',2) 
+ WITH( FIRST NUMERIC(9,0) 'FIRST', SECOND NUMERIC(9,0) 'SECOND' )AG 
+
+ 
+Declare @SQL nvarchar(max),@WhereCust varchar(2000),@TYP_SEL varchar(200),@TYP_SEL_GRP varchar(200),@where_ON_ACC varchar(150),
+@WH_TYP_AMT varchar(2000),@WH_TYP_LBL varchar(2000),@whereLoc varchar(100),@WhereDT varchar(100),@SEL_ONACC varchar(1200),@SEL_LDBL varchar(2000), 
+@WH_SEL_ONACC varchar(500),@WH_SEL_LDBL varchar(500),@WH_SEL_WHE varchar(500)
+
+select @SEL_ONACC='0',@SEL_LDBL='0',@WH_SEL_ONACC='',@WH_SEL_LDBL=''
+
+if @LOC_TYP='1'
+	select @whereLoc='b.bbrcd=loccode'
+else if @LOC_TYP='2'
+	select @whereLoc='b.billsubbrcd=loccode'
+else if @LOC_TYP='3'
+	select @whereLoc='b.billcolbrcd=loccode'
+
+if @TYP='1'
+	select @whereLoc=' (b.bbrcd=loccode or b.billsubbrcd=loccode or b.billcolbrcd=loccode)'
+
+Declare @whereLOCfrm varchar(600), @WhereCri_TYP varchar(200)
+
+
+             
+ if @BILLTYP&lt;&gt;'All'               
+  select @WhereCri_TYP=' and paybas in ('''+replace(@BILLTYP,',',''',''')+''')'                   
+ else       
+  select @WhereCri_TYP=''     
+
+ select @whereLOCfrm=' inner join webx_location l on '+ @whereLoc+' '
+
+if @TYP='1'
+   select @whereLOCfrm=' inner join webx_location l on '+ @whereLoc+' '
+else 
+begin
+     if @location&lt;&gt;'All' and @locLevel&lt;&gt;''                                  
+       select @whereLOCfrm=' inner join webx_location l on '+ @whereLoc+' and l.loc_level&gt;='+@locLevel+' and (l.loccode=' + char(39) +@location+ char(39) +' Or l.Report_loc=' + char(39) +@location + char(39) +')'                                  
+ end
+	
+
+if @DT_TYP='1'
+	select @WhereDT='bgndt'
+else if @DT_TYP='2'
+	select @WhereDT='bsbdt'
+else if @DT_TYP='3'
+	select @WhereDT='bcldt'
+
+select @WhereCust='',@where_ON_ACC=''
+
+if @RPT='2' 
+	select @TYP_SEL=' RPTCD=CUSTCD,RPTNM=CUSTCD+'' : ''+custnm,',@TYP_SEL_GRP='CUSTCD,custnm,',
+	@where_ON_ACC=' and ptmsptcd=custcd '
+else if @RPT='1'
+	select @TYP_SEL=' RPTCD=Loccode,RPTNM=Loccode+'' : ''+Locname,loclv=lOC_LEVEL,',@TYP_SEL_GRP='Loccode,Locname,lOC_LEVEL,',
+	@where_ON_ACC=' and loccode=brcd '
+
+if @RPT_SUB='2' 
+	select @TYP_SEL=@TYP_SEL+' RPTCD_SUB=CUSTCD,RPTNM_SUB=CUSTCD+'' : ''+custnm,',@TYP_SEL_GRP=@TYP_SEL_GRP+'CUSTCD,custnm,',
+	@where_ON_ACC=@where_ON_ACC+' and ptmsptcd=custcd '
+else if @RPT_SUB='1' 
+	select @TYP_SEL=@TYP_SEL+' RPTCD_SUB=Loccode,RPTNM_SUB=Loccode+'' : ''+Locname,loclv=lOC_LEVEL,',@TYP_SEL_GRP=@TYP_SEL_GRP+'Loccode,Locname,lOC_LEVEL,',
+	@where_ON_ACC=@where_ON_ACC+' and loccode=brcd '
+
+--select @TYP_SEL,@TYP_SEL_GRP
+
+if @CUSTSTR&lt;&gt;'All'
+select @WhereCust=' and ptmscd in ('''+replace(@CUSTSTR,',',''',''')+''')',@where_ON_ACC=@where_ON_ACC+' and ptmsptcd in ('''+replace(@CUSTSTR,',',''',''')+''')  '
+
+if @TYP='2'
+	select @WH_TYP_AMT='',@WH_TYP_LBL='',@WH_SEL_WHE='WHEN FIRST=SECOND AND FIRST=0 AND datediff(day,convert(varchar,'+@WhereDT+',106),convert(datetime,'''+@ASONDT+''',106)) &lt; FIRST THEN 1
+ WHEN FIRST=SECOND AND FIRST &lt;&gt;0 AND  datediff(day,convert(varchar,'+@WhereDT+',106),convert(datetime,'''+@ASONDT+''',106)) = FIRST THEN  1
+ when FIRST &lt;&gt; SECOND and datediff(day,convert(varchar,'+@WhereDT+',106),convert(datetime,'''+@ASONDT+''',106)) BETWEEN FIRST AND SECOND THEN 1'
+else if @TYP='1'
+	select @WH_TYP_AMT='when FIRST=7777 and bbrcd=loccode then isnull(AMT,0)
+when FIRST=8888 and Billsubbrcd=loccode   and bsbdt is null then isnull(AMT,0)
+when FIRST=9999 and billcolbrcd=loccode  then  isnull(AMT,0)',
+@WH_TYP_LBL='WHEN FIRST=SECOND AND FIRST=7777  THEN ''Generated'' WHEN FIRST=SECOND AND FIRST=8888  THEN ''To Be Submitted'' WHEN FIRST=SECOND AND FIRST=9999  THEN ''To Be Collected''',
+@WH_SEL_WHE='WHEN FIRST=SECOND AND (FIRST=7777 or  FIRST=8888 or  FIRST=9999) then 1'
+else if @TYP='3'
+	select @WH_TYP_AMT='when FIRST=2222 then isnull(AMT,0) when FIRST=3333 and bgndt is not null and  Convert(varchar,bgndt,106) between Convert(datetime,'''+@ASONDT+''',106) and Convert(datetime,'''+@ASONDT_to+''',106) then  isnull(BillAmt,0)
+when FIRST=4444 and bsbdt is not null and  Convert(varchar,bsbdt,106) between Convert(datetime,'''+@ASONDT+''',106) and Convert(datetime,'''+@ASONDT_to+''',106) then  isnull(BillAmt,0)
+when FIRST=5555 and bcldt is not null and  Convert(varchar,bcldt,106) between Convert(datetime,'''+@ASONDT+''',106) and Convert(datetime,'''+@ASONDT_to+''',106)  then  isnull(PBillAmt,0) when FIRST=6666  then isnull(AMT_to,0)',
+@WH_TYP_LBL='WHEN FIRST=2222 THEN ''AA'' WHEN FIRST=SECOND AND FIRST=3333  THEN ''GG''
+WHEN FIRST=4444 THEN ''SS'' WHEN FIRST=5555 THEN  ''CC''
+WHEN FIRST=6666 THEN  ''AT''',@WH_SEL_WHE='WHEN (FIRST=2222 or FIRST=3333 or FIRST=4444 or FIRST=5555 or FIRST=6666) then 1'
+
+if charindex('ONACC',@CLLIST )&gt;0
+select @SEL_ONACC='CONVERT(NUMERIC(18,2),ISNULL((select sum(case when isnull(chqamt,0)-isnull(adjustamt,0) &gt;0 then (isnull(chqamt,0)-isnull(adjustamt,0)) else 0 end)  
+ from webx_CHQ_DET with(NOLOCK) where owncust=''C'' '+@where_ON_ACC+' ),0))',@WH_SEL_ONACC='WHEN FIRST=SECOND AND FIRST=-1 then 1'
+
+if charindex('LDBL',@CLLIST )&gt;0
+select @SEL_LDBL='(select sum(isnull(debit,0))-sum(isnull(credit,0)) from(select debit=sum(debit),credit=sum(credit)         
+from (select debit,credit,ptmsptcd=pbov_code,brcd,acccode from webx_acctrans_'+@FinYear+' with(NOLOCK) where acccode=''CDA0001'' and isnull(voucher_cancel,''N'')=''N'' 
+)T where 1=1 '+@where_ON_ACC+' union select debit=sum(isnull(debit,0)),credit=sum(isnull(credit,0)) from         
+(select debit=opendebit,credit=opencredit,acccode,ptmsptcd=empcd,brcd=loccode  from webx_acctopening_Employee_'+@FinYear+' where acccode=''CDA0001'')T        
+ where 1=1 '+@where_ON_ACC+')T)',@WH_SEL_LDBL='WHEN FIRST=SECOND AND FIRST=-2 then 1'
+--select @WH_SEL_WHE
+select @SQL='select * from (SELECT '+@TYP_SEL+@TYP_SEL_GRP+'FIRST,SECOND,AGE,
+AMT=(case when FIRST=-1 then '+@SEL_ONACC+' when FIRST=-2 then '+@SEL_LDBL+' else 
+sum((case when FIRST&gt;=0 and FIRST&lt;2222 then isnull(AMT,0) '+@WH_TYP_AMT+'  else 0 end)) end)
+FROM (SELECT CUSTCD,custnm,bbrcd,FIRST,SECOND,loccode,LOC_LEVEL,locname,bsbdt,bcldt,bgndt,Billsubbrcd,billcolbrcd,
+ AGE=(CASE WHEN FIRST=SECOND AND FIRST=0 THEN ''UnDue''When  FIRST=SECOND AND FIRST&lt;&gt;0 THEN cast(FIRST as varchar)   WHEN FIRST=-1 THEN ''On Account Balance'' WHEN FIRST=-2  THEN ''Ledger Balance'' 
+'+@WH_TYP_LBL+' WHEN FIRST=SECOND AND FIRST&gt;0 THEN ''&gt; ''+  CONVERT(VARCHAR,FIRST,106) ELSE CONVERT(VARCHAR,FIRST,106)+'' - ''+CONVERT(VARCHAR,SECOND,106) END),
+AMT=CONVERT(NUMERIC(18,2),sum(case when (convert(varchar,bcldt,106) &gt; convert(datetime,'''+@ASONDT+''',106)+0.9999 )  
+then  isnull(billamt,0)-isnull(pendamt,0) when convert(varchar,bgndt,106) &lt;= convert(datetime,'''+@ASONDT+''',106) and  pendamt&gt;0 then isnull(pendamt,0) else 0 end) ,106),
+AMT_TO=CONVERT(NUMERIC(18,2),sum(case when (convert(varchar,bcldt,106) &gt; convert(datetime,'''+@ASONDT_to+''',106)+0.9999 )   then  isnull(billamt,0)-isnull(pendamt,0)             
+when convert(varchar,bgndt,106) &lt;= convert(datetime,'''+@ASONDT_to+''',106) and  pendamt&gt;0  then isnull(pendamt,0) else 0 end) ,106),
+BillAmt=Sum(isnull(BillAmt,0)),PBillAmt=Sum(isnull(BillAmt,0)-isnull(pendamt,0))   
+FROM  #TBL_AGE AG LEFT OUTER JOIN (SELECT  b.*,custcd,custnm,locname,loccode,LOC_LEVEL
+FROM webx_billmst B with(NOLOCK)  '+@whereLOCfrm +'  inner join webx_custhdr on B.ptmscd=custcd  
+where  1=1 '+@WhereCust+@WhereCri_TYP+' and  BILLSTATUS!=''Bill Cancelled'' 
+and Convert(varchar,'+@WhereDT+',106) between Convert(datetime,'''+@fromdt+''',106) and Convert(datetime,'''+@todt+''',106)  and bgndt is not null )B ON 
+(CASE '+@WH_SEL_WHE+@WH_SEL_ONACC+@WH_SEL_LDBL+' ELSE 0 END)=1 
+GROUP BY CUSTCD,custnm,bbrcd,FIRST,SECOND,loccode,locname,LOC_LEVEL,bsbdt,bcldt,bgndt,billsubbrcd,billcolbrcd  )B 
+WHERE CUSTCD IS NOT NULL AND loccode IS NOT NULL Group by  '+@TYP_SEL_GRP+'FIRST,SECOND,AGE)A Where AMT&lt;&gt;0
+ Order by  '+@TYP_SEL_GRP+'FIRST,SECOND'
+--select @SQL
+exec(@SQL)</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@str_age">
+            <Value>=Parameters!str_age.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ASONDT">
+            <Value>=Parameters!ASONDT.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ASONDT_to">
+            <Value>=Parameters!ASONDT_to.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@RPT">
+            <Value>=Parameters!RPT.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@RPT_SUB">
+            <Value>=Parameters!RPT_SUB.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@CUSTSTR">
+            <Value>=Parameters!CUSTSTR.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@fromdt">
+            <Value>=Parameters!fromdt.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@todt">
+            <Value>=Parameters!todt.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@LOC_TYP">
+            <Value>=Parameters!LOC_TYP.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@DT_TYP">
+            <Value>=Parameters!DT_TYP.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@FinYear">
+            <Value>=Parameters!FinYear.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@CLLIST">
+            <Value>=join(Parameters!CLLIST.Value,",")</Value>
+          </QueryParameter>
+          <QueryParameter Name="@TYP">
+            <Value>=Parameters!TYP.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@location">
+            <Value>=Parameters!location.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@locLevel">
+            <Value>=Parameters!locLevel.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@BILLTYP">
+            <Value>=Join(Parameters!BILLTYP.Value,",")</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="RPTSTYLE">
+      <Fields>
+        <Field Name="BGCOLOR">
+          <DataField>BGCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERCOLOR">
+          <DataField>BORDERCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERSTYLE">
+          <DataField>BORDERSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERWIDTH">
+          <DataField>BORDERWIDTH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR">
+          <DataField>FNTCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE">
+          <DataField>FNTSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY">
+          <DataField>FNTFAMILY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE">
+          <DataField>FNTSIZE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight">
+          <DataField>FNTWeight</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR_HD">
+          <DataField>FNTCOLOR_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE_HD">
+          <DataField>FNTSTYLE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY_HD">
+          <DataField>FNTFAMILY_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE_HD">
+          <DataField>FNTSIZE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight_HD">
+          <DataField>FNTWeight_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BlackFnt">
+          <DataField>BlackFnt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandText>select * from webx_report_style</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="BILLTYP">
+      <Fields>
+        <Field Name="codeid">
+          <DataField>codeid</DataField>
+        </Field>
+        <Field Name="codedesc">
+          <DataField>codedesc</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandText>select codeid,codedesc  from webx_master_general where codetype='BILLTYP' and statuscode='Y'</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <Width>7.9375in</Width>
+  <Body>
+    <ReportItems>
+      <Table Name="table1">
+        <ZIndex>1</ZIndex>
+        <DataSetName>DataSet1</DataSetName>
+        <Top>0.5in</Top>
+        <Width>5.29166in</Width>
+        <Header>
+          <TableRows>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox15">
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                        <TextAlign>Left</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>9</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Date Range</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox14">
+                      <Style>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "RPTSTYLE")</FontWeight>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>8</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Parameters!ASONDT.Value+" - " +Parameters!ASONDT_to.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.25in</Height>
+            </TableRow>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox13">
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                        <TextAlign>Left</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>7</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>As On Date Range</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox6">
+                      <Style>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "RPTSTYLE")</FontWeight>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>6</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Parameters!fromdt.Value+" - " +Parameters!todt.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.25in</Height>
+            </TableRow>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox11">
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                        <TextAlign>Left</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>5</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Location</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox10">
+                      <Style>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "RPTSTYLE")</FontWeight>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>4</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value />
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.25in</Height>
+            </TableRow>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox9">
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                        <TextAlign>Left</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>3</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Report Type</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox8">
+                      <Style>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "RPTSTYLE")</FontWeight>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>2</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Parameters!RPT.Label+" - "+iif(Parameters!RPT_SUB.Value="0","",Parameters!RPT_SUB.Label)</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.25in</Height>
+            </TableRow>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox7">
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                        <TextAlign>Left</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>1</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Report View Type</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox5">
+                      <rd:DefaultName>textbox5</rd:DefaultName>
+                      <Style>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>Solid</Default>
+                        </BorderStyle>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "RPTSTYLE")</FontWeight>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Parameters!TYP.Label</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.25in</Height>
+            </TableRow>
+          </TableRows>
+        </Header>
+        <TableColumns>
+          <TableColumn>
+            <Width>2.64583in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.64583in</Width>
+          </TableColumn>
+        </TableColumns>
+        <Height>1.25in</Height>
+      </Table>
+      <Matrix Name="matrix1">
+        <MatrixColumns>
+          <MatrixColumn>
+            <Width>1.46875in</Width>
+          </MatrixColumn>
+        </MatrixColumns>
+        <DataSetName>DataSet1</DataSetName>
+        <RowGroupings>
+          <RowGrouping>
+            <Width>2.5in</Width>
+            <DynamicRows>
+              <Grouping Name="matrix1_RPTNM">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!RPTNM.Value</GroupExpression>
+                </GroupExpressions>
+              </Grouping>
+              <Subtotal>
+                <ReportItems>
+                  <Textbox Name="textbox3">
+                    <rd:DefaultName>textbox3</rd:DefaultName>
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Left</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <CanGrow>true</CanGrow>
+                    <Value>Total</Value>
+                  </Textbox>
+                </ReportItems>
+              </Subtotal>
+              <ReportItems>
+                <Textbox Name="RPTNM">
+                  <rd:DefaultName>RPTNM</rd:DefaultName>
+                  <Style>
+                    <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                    <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                    <BorderColor>
+                      <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                    </BorderColor>
+                    <BorderStyle>
+                      <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                    </BorderStyle>
+                    <BorderWidth>
+                      <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                    </BorderWidth>
+                    <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                    <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                    <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                    <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                    <TextAlign>Left</TextAlign>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                  <ZIndex>3</ZIndex>
+                  <CanGrow>true</CanGrow>
+                  <Value>=Fields!RPTNM.Value</Value>
+                </Textbox>
+              </ReportItems>
+            </DynamicRows>
+            <FixedHeader>true</FixedHeader>
+          </RowGrouping>
+          <RowGrouping>
+            <Width>2.5in</Width>
+            <DynamicRows>
+              <Grouping Name="SUBGrp">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!RPTNM_SUB.Value</GroupExpression>
+                </GroupExpressions>
+              </Grouping>
+              <Sorting>
+                <SortBy>
+                  <SortExpression>=Fields!RPTCD_SUB.Value</SortExpression>
+                  <Direction>Ascending</Direction>
+                </SortBy>
+              </Sorting>
+              <ReportItems>
+                <Textbox Name="textbox2">
+                  <rd:DefaultName>textbox2</rd:DefaultName>
+                  <Style>
+                    <BorderColor>
+                      <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                    </BorderColor>
+                    <BorderStyle>
+                      <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                    </BorderStyle>
+                    <BorderWidth>
+                      <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                    </BorderWidth>
+                    <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                    <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                    <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                    <FontWeight>=First(Fields!FNTWeight.Value, "RPTSTYLE")</FontWeight>
+                    <TextAlign>Left</TextAlign>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                  <ZIndex>2</ZIndex>
+                  <CanGrow>true</CanGrow>
+                  <Value>=Fields!RPTNM_SUB.Value</Value>
+                </Textbox>
+              </ReportItems>
+            </DynamicRows>
+            <FixedHeader>true</FixedHeader>
+          </RowGrouping>
+        </RowGroupings>
+        <Top>2in</Top>
+        <ColumnGroupings>
+          <ColumnGrouping>
+            <Height>0.22in</Height>
+            <DynamicColumns>
+              <Grouping Name="matrix1_AGE">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!AGE.Value</GroupExpression>
+                </GroupExpressions>
+              </Grouping>
+              <Sorting>
+                <SortBy>
+                  <SortExpression>=Fields!FIRST.Value</SortExpression>
+                  <Direction>Ascending</Direction>
+                </SortBy>
+                <SortBy>
+                  <SortExpression>=Fields!SECOND.Value</SortExpression>
+                  <Direction>Ascending</Direction>
+                </SortBy>
+              </Sorting>
+              <Subtotal>
+                <ReportItems>
+                  <Textbox Name="textbox4">
+                    <rd:DefaultName>textbox4</rd:DefaultName>
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>4</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>Total</Value>
+                  </Textbox>
+                </ReportItems>
+              </Subtotal>
+              <ReportItems>
+                <Textbox Name="AGE">
+                  <rd:DefaultName>AGE</rd:DefaultName>
+                  <Style>
+                    <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                    <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                    <BorderColor>
+                      <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                    </BorderColor>
+                    <BorderStyle>
+                      <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                    </BorderStyle>
+                    <BorderWidth>
+                      <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                    </BorderWidth>
+                    <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                    <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                    <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                    <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                    <TextAlign>Center</TextAlign>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                  <ZIndex>5</ZIndex>
+                  <CanGrow>true</CanGrow>
+                  <Value>=IIF(Parameters!TYP.Value="3",Switch(Fields!AGE.Value="AA","Outstanding As On "+Parameters!ASONDT.Value,
+Fields!AGE.Value="GG","Generated Between  "+Parameters!ASONDT.Value+" and "+Parameters!ASONDT_to.Value,
+Fields!AGE.Value="SS","Submitted Between  "+Parameters!ASONDT.Value+" and "+Parameters!ASONDT_to.Value,
+Fields!AGE.Value="CC","Collected Between  "+Parameters!ASONDT.Value+" and "+Parameters!ASONDT_to.Value,
+Fields!AGE.Value="AT","Outstanding As On "+Parameters!ASONDT_to.Value,
+Fields!AGE.Value="On Account Balance","On Account Balance",
+Fields!AGE.Value="Ledger Balance","Ledger Balance"),Fields!AGE.Value)</Value>
+                </Textbox>
+              </ReportItems>
+            </DynamicColumns>
+            <FixedHeader>true</FixedHeader>
+          </ColumnGrouping>
+        </ColumnGroupings>
+        <Corner>
+          <ReportItems>
+            <Textbox Name="textbox1">
+              <rd:DefaultName>textbox1</rd:DefaultName>
+              <Style>
+                <Color>=First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")</Color>
+                <BorderColor>
+                  <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                </BorderColor>
+                <BorderStyle>
+                  <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                </BorderStyle>
+                <BorderWidth>
+                  <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                </BorderWidth>
+                <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+              <ZIndex>6</ZIndex>
+              <CanGrow>true</CanGrow>
+              <Value />
+            </Textbox>
+          </ReportItems>
+        </Corner>
+        <MatrixRows>
+          <MatrixRow>
+            <Height>0.22in</Height>
+            <MatrixCells>
+              <MatrixCell>
+                <ReportItems>
+                  <Textbox Name="AMT">
+                    <rd:DefaultName>AMT</rd:DefaultName>
+                    <Action>
+                      <Drillthrough>
+                        <ReportName>=Switch(ReportItems!AMT.Value&lt;&gt;"0.00",IIF(Inscope("matrix1_RPTNM"),
+IIF(Inscope("matrix1_AGE"),
+iif(Fields!AGE.Value="Ledger Balance","ADV_TR_Balance",iif(Fields!AGE.Value="On Account Balance","None","Bill_Register")),"Bill_Register"),
+iif(Fields!AGE.Value="Ledger Balance","ADV_TR_Balance",iif(Fields!AGE.Value="On Account Balance","None","Bill_Register"))))</ReportName>
+                        <Parameters>
+                          <Parameter Name="fromdt">
+                            <Value>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),
+iif(Fields!AGE.Value="Ledger Balance","01 Apr "+CStr(Year(Now)),iif(Fields!AGE.Value="On Account Balance",Parameters!fromdt.Value,Parameters!fromdt.Value)),Parameters!fromdt.Value),
+iif(Fields!AGE.Value="Ledger Balance","01 Apr "+CStr(Year(Now)),iif(Fields!AGE.Value="On Account Balance",Parameters!fromdt.Value,Parameters!fromdt.Value)))</Value>
+                          </Parameter>
+                          <Parameter Name="todt">
+                            <Value>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),
+iif(Fields!AGE.Value="Ledger Balance","31 Mar "+CStr(Year(Now)+1),iif(Fields!AGE.Value="On Account Balance",Parameters!fromdt.Value,Parameters!todt.Value)),Parameters!todt.Value),
+iif(Fields!AGE.Value="Ledger Balance","31 Mar "+CStr(Year(Now)+1),iif(Fields!AGE.Value="On Account Balance",Parameters!fromdt.Value,Parameters!todt.Value)))</Value>
+                          </Parameter>
+                          <Parameter Name="location">
+                            <Value>=Switch(Parameters!RPT.Value="1" and  Parameters!RPT_SUB.Value="0",
+(IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("SUBGrp"),Fields!RPTCD.Value,Parameters!location.Value),Parameters!location.Value )),
+Parameters!RPT.Value="1" and  Parameters!RPT_SUB.Value="2",
+(IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("SUBGrp"),Fields!RPTCD.Value,Parameters!location.Value),Parameters!location.Value)),
+Parameters!RPT.Value="2" and  Parameters!RPT_SUB.Value="1",
+(IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("SUBGrp"),Fields!RPTCD.Value,Parameters!location.Value),Parameters!location.Value)),
+Parameters!RPT.Value="2" and  Parameters!RPT_SUB.Value="0",Parameters!location.Value)</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),
+IIF(Inscope("matrix1_AGE"),
+iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),
+iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="locLevel">
+                            <Value>1</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),
+IIF(Inscope("matrix1_AGE"),
+iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),
+iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="CUSTCD">
+                            <Value>=Switch(Parameters!RPT.Value="2" and  Parameters!RPT_SUB.Value="0",
+(IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("SUBGrp"),Fields!RPTCD.Value,Parameters!location.Value),Parameters!CUSTSTR.Value )),
+Parameters!RPT.Value="2" and  Parameters!RPT_SUB.Value="1",
+(IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("SUBGrp"),Fields!RPTCD.Value,Parameters!location.Value),Parameters!CUSTSTR.Value)),
+Parameters!RPT.Value="1" and  Parameters!RPT_SUB.Value="2",
+(IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("SUBGrp"),Fields!RPTCD.Value,Parameters!location.Value),Parameters!CUSTSTR.Value)),
+Parameters!RPT.Value="1" and  Parameters!RPT_SUB.Value="0",Parameters!CUSTSTR.Value)</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="TYPDET">
+                            <Value>=IIF(Inscope("matrix1_AGE"),iif(Parameters!TYP.Value="1" ,
+Switch(Fields!FIRST.Value="7777","1",
+Fields!FIRST.Value="8888","2",
+Fields!FIRST.Value="9999","3"),Parameters!LOC_TYP.Value),Parameters!LOC_TYP.Value)</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="Bill_TYP">
+                            <Value>=Parameters!BILLTYP.Value</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="DTTYP">
+                            <Value>=Parameters!DT_TYP.Value</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="Bill_STATuS">
+                            <Value>=Switch(Parameters!TYP.Value="1","11",
+Parameters!TYP.Value="2","10",
+Parameters!TYP.Value="3","12")</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="Bill_TYP_CL">
+                            <Value>All</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="bill_TYP_LIST">
+                            <Value>All</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="OVDAYS">
+                            <Value>0</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="AMT">
+                            <Value>0</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="Select_LIST">
+                            <Value>BillNo,bgndt,bbrcd,BillTYP,Party,billstatus,Billcolbrcd,FinClosedt,Billamt,PENDAMT</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="BillNO_LIST">
+                            <Value />
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="MR_LIST">
+                            <Value />
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="MANBillNO_LIST">
+                            <Value />
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="DOCKNO_LIST">
+                            <Value />
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="ASONDT">
+                            <Value>=Parameters!ASONDT.Value</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="ASONDT_to">
+                            <Value>=Parameters!ASONDT_to.Value</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="AGE1">
+                            <Value>=IIf(Parameters!TYP.Value="2",IIF(Inscope("matrix1_AGE"),
+Fields!FIRST.Value,IIF(Inscope("matrix1_RPTNM"),"0",iif(Parameters!TYP.Value="10"," ",Fields!FIRST.Value))),iif(Parameters!TYP.Value="10"," ",Fields!FIRST.Value))</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="AGE2">
+                            <Value>=IIf(Parameters!TYP.Value="2",IIF(Inscope("matrix1_AGE"),Fields!SECOND.Value,IIF(Inscope("matrix1_RPTNM"),"365","")),"")</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="RPTBRK">
+                            <Value>7</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)),false),iif(Fields!AGE.Value="Ledger Balance",true,iif(Fields!AGE.Value="On Account Balance",true,false)))</Omit>
+                          </Parameter>
+                          <Parameter Name="finyear">
+                            <Value>=Parameters!FinYear.Value</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)),true),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)))</Omit>
+                          </Parameter>
+                          <Parameter Name="acccode">
+                            <Value>CDA0001</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)),true),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)))</Omit>
+                          </Parameter>
+                          <Parameter Name="CUST_VENDCD">
+                            <Value>=Parameters!CUSTSTR.Value</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)),true),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)))</Omit>
+                          </Parameter>
+                          <Parameter Name="RPT">
+                            <Value>=iif(Parameters!RPT.Value="1","2","4")</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)),true),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)))</Omit>
+                          </Parameter>
+                          <Parameter Name="RPT_SUB">
+                            <Value>=iif(Parameters!RPT.Value="1","0","1")</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)),true),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)))</Omit>
+                          </Parameter>
+                          <Parameter Name="BRCD">
+                            <Value>=Switch(Parameters!RPT.Value="1" and  Parameters!RPT_SUB.Value="0",
+(IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("SUBGrp"),Fields!RPTCD.Value,Parameters!location.Value),Parameters!location.Value )),
+Parameters!RPT.Value="1" and  Parameters!RPT_SUB.Value="2",
+(IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("SUBGrp"),Fields!RPTCD.Value,Parameters!location.Value),Parameters!location.Value)),
+Parameters!RPT.Value="2" and  Parameters!RPT_SUB.Value="1",
+(IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("SUBGrp"),Fields!RPTCD.Value,Parameters!location.Value),Parameters!location.Value)),
+Parameters!RPT.Value="2" and  Parameters!RPT_SUB.Value="0",Parameters!location.Value)</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)),true),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)))</Omit>
+                          </Parameter>
+                          <Parameter Name="CnnStr">
+                            <Value>=Parameters!CnnStr.Value</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)),true),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)))</Omit>
+                          </Parameter>
+                          <Parameter Name="Cumulative">
+                            <Value>=iif(Parameters!RPT.Value="1","N",iif(Parameters!RPT_SUB.Value="2","N","Y" ))</Value>
+                            <Omit>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_AGE"),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)),true),iif(Fields!AGE.Value="Ledger Balance",false,iif(Fields!AGE.Value="On Account Balance",true,true)))</Omit>
+                          </Parameter>
+                        </Parameters>
+                      </Drillthrough>
+                    </Action>
+                    <Style>
+                      <Color>=IIF(Inscope("matrix1_AGE"),IIF(Inscope("matrix1_RPTNM"),First(Fields!FNTCOLOR.Value, "RPTSTYLE"),First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE")),First(Fields!FNTCOLOR_HD.Value, "RPTSTYLE"))</Color>
+                      <BackgroundColor>=IIF(Inscope("matrix1_AGE"),IIF(Inscope("matrix1_RPTNM"),"Transparent",First(Fields!BGCOLOR.Value, "RPTSTYLE")),First(Fields!BGCOLOR.Value, "RPTSTYLE"))</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=IIF(Inscope("matrix1_AGE"),IIF(Inscope("matrix1_RPTNM"),First(Fields!FNTWeight.Value, "RPTSTYLE"),"Bold"),"Bold")</FontWeight>
+                      <Format>N</Format>
+                      <TextDecoration>=Switch(ReportItems!AMT.Value&lt;&gt;"0.00",IIF(Inscope("matrix1_RPTNM"),
+IIF(Inscope("matrix1_AGE"),
+iif(Fields!AGE.Value="Ledger Balance","Underline",iif(Fields!AGE.Value="On Account Balance","None","Underline")),"Underline"),
+iif(Fields!AGE.Value="Ledger Balance","Underline",iif(Fields!AGE.Value="On Account Balance","None","Underline"))))</TextDecoration>
+                      <TextAlign>Right</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>1</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>=IIF(Inscope("matrix1_RPTNM"),
+IIF(Inscope("matrix1_AGE"),
+iif(Fields!AGE.Value="Ledger Balance" ,iif(CDec(Sum(Fields!AMT.Value))&gt;0,CStr(Sum(Fields!AMT.Value))+" Dr",CStr(CDec(Sum(Fields!AMT.Value))-CDec(Sum(Fields!AMT.Value))-CDec(Sum(Fields!AMT.Value)))+" Cr" ),CDec(Sum(Fields!AMT.Value))),
+iif(Parameters!TYP.Value="1" or Parameters!TYP.Value="3","",CDec(Sum(iif(Fields!AGE.Value="On Account Balance" or Fields!AGE.Value="Ledger Balance" ,Fields!AMT.Value-Fields!AMT.Value,Fields!AMT.Value))))),
+IIF(Inscope("matrix1_AGE"),
+iif(Fields!AGE.Value="Ledger Balance" ,iif(CDec(Sum(Fields!AMT.Value))&gt;0,CStr(Sum(Fields!AMT.Value))+" Dr",CStr(CDec(Sum(Fields!AMT.Value))-CDec(Sum(Fields!AMT.Value))-CDec(Sum(Fields!AMT.Value)))+" Cr" ),CDec(Sum(Fields!AMT.Value))),
+iif(Parameters!TYP.Value="1" or Parameters!TYP.Value="3","",CDec(Sum(iif(Fields!AGE.Value="On Account Balance" or Fields!AGE.Value="Ledger Balance" ,Fields!AMT.Value-Fields!AMT.Value,Fields!AMT.Value))))))</Value>
+                  </Textbox>
+                </ReportItems>
+              </MatrixCell>
+            </MatrixCells>
+          </MatrixRow>
+        </MatrixRows>
+      </Matrix>
+    </ReportItems>
+    <Height>2.66in</Height>
+  </Body>
+  <Language>en-US</Language>
+  <TopMargin>1in</TopMargin>
+</Report>

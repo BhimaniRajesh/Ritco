@@ -1,0 +1,1203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="RPTDS">
+      <rd:DataSourceID>f951e99b-6445-4982-ae63-b9c25d7ee64a</rd:DataSourceID>
+      <DataSourceReference>RPTDS</DataSourceReference>
+    </DataSource>
+  </DataSources>
+  <InteractiveHeight>11in</InteractiveHeight>
+  <ReportParameters>
+    <ReportParameter Name="location">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>All</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>location</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="locLevel">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>locLevel</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="Fromdt">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>30 sep 10</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Fromdt</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="todt">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>30 sep 10</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>todt</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:DrawGrid>true</rd:DrawGrid>
+  <InteractiveWidth>8.5in</InteractiveWidth>
+  <rd:SnapToGrid>true</rd:SnapToGrid>
+  <RightMargin>1in</RightMargin>
+  <LeftMargin>1in</LeftMargin>
+  <BottomMargin>1in</BottomMargin>
+  <rd:ReportID>be2470e0-2784-4bb0-8e8e-4270f9f46da3</rd:ReportID>
+  <DataSets>
+    <DataSet Name="RPTDS">
+      <Fields>
+        <Field Name="sourcehb">
+          <DataField>sourcehb</DataField>
+        </Field>
+        <Field Name="tobh_code">
+          <DataField>tobh_code</DataField>
+        </Field>
+        <Field Name="thcno">
+          <DataField>thcno</DataField>
+        </Field>
+        <Field Name="manualTHCNo">
+          <DataField>manualTHCNo</DataField>
+        </Field>
+        <Field Name="vhcdt">
+          <DataField>vhcdt</DataField>
+        </Field>
+        <Field Name="pcamt">
+          <DataField>pcamt</DataField>
+        </Field>
+        <Field Name="advamt">
+          <DataField>advamt</DataField>
+        </Field>
+        <Field Name="totwt">
+          <DataField>totwt</DataField>
+        </Field>
+        <Field Name="totfrt">
+          <DataField>totfrt</DataField>
+        </Field>
+        <Field Name="totdkt">
+          <DataField>totdkt</DataField>
+        </Field>
+        <Field Name="vehno">
+          <DataField>vehno</DataField>
+        </Field>
+        <Field Name="ftl">
+          <DataField>ftl</DataField>
+        </Field>
+        <Field Name="ChargeWt">
+          <DataField>ChargeWt</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>WebxNet_Market_Vehicle_ver1</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@location">
+            <Value>=Parameters!location.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@locLevel">
+            <Value>=Parameters!locLevel.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@Fromdt">
+            <Value>=Parameters!Fromdt.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@todt">
+            <Value>=Parameters!todt.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="DSStyle">
+      <Fields>
+        <Field Name="BGCOLOR">
+          <DataField>BGCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERCOLOR">
+          <DataField>BORDERCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERSTYLE">
+          <DataField>BORDERSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERWIDTH">
+          <DataField>BORDERWIDTH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR">
+          <DataField>FNTCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE">
+          <DataField>FNTSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY">
+          <DataField>FNTFAMILY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE">
+          <DataField>FNTSIZE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight">
+          <DataField>FNTWeight</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR_HD">
+          <DataField>FNTCOLOR_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE_HD">
+          <DataField>FNTSTYLE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY_HD">
+          <DataField>FNTFAMILY_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE_HD">
+          <DataField>FNTSIZE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight_HD">
+          <DataField>FNTWeight_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BlackFnt">
+          <DataField>BlackFnt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandText>select * from webx_report_style</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <Width>13.875in</Width>
+  <Body>
+    <ReportItems>
+      <Rectangle Name="rectangle1">
+        <ReportItems>
+          <Textbox Name="textbox2">
+            <rd:DefaultName>textbox2</rd:DefaultName>
+            <Top>0.125in</Top>
+            <Width>4.625in</Width>
+            <Style>
+              <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+              <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+              <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+              <FontSize>18pt</FontSize>
+              <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+              <TextAlign>Left</TextAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+            <ZIndex>3</ZIndex>
+            <CanGrow>true</CanGrow>
+            <Height>0.375in</Height>
+            <Value>Market Vehicle Report</Value>
+          </Textbox>
+          <Textbox Name="textbox1">
+            <rd:DefaultName>textbox1</rd:DefaultName>
+            <Top>0.5in</Top>
+            <Width>1in</Width>
+            <Style>
+              <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+              <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+              <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+              <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+              <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+              <TextAlign>Left</TextAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+            <ZIndex>2</ZIndex>
+            <CanGrow>true</CanGrow>
+            <Height>0.25in</Height>
+            <Value>You Selected </Value>
+          </Textbox>
+          <Table Name="table3">
+            <ZIndex>1</ZIndex>
+            <DataSetName>RPTDS</DataSetName>
+            <Top>1.5in</Top>
+            <Width>13.75in</Width>
+            <Details>
+              <TableRows>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox43">
+                          <rd:DefaultName>textbox43</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>12</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=RowNumber(Nothing)</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox25">
+                          <rd:DefaultName>textbox25</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>11</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!sourcehb.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox26">
+                          <rd:DefaultName>textbox26</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>10</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!tobh_code.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox27">
+                          <rd:DefaultName>textbox27</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>9</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!thcno.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox4">
+                          <rd:DefaultName>textbox4</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>8</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!manualTHCNo.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox29">
+                          <rd:DefaultName>textbox29</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>7</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!vhcdt.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox31">
+                          <rd:DefaultName>textbox31</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>6</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!vehno.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox33">
+                          <rd:DefaultName>textbox33</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>5</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!ftl.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox35">
+                          <rd:DefaultName>textbox35</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Right</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>4</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!totwt.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox6">
+                          <rd:DefaultName>textbox6</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Right</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>3</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!ChargeWt.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox37">
+                          <rd:DefaultName>textbox37</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Right</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>2</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!totfrt.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox39">
+                          <rd:DefaultName>textbox39</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Right</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>1</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!pcamt.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox41">
+                          <rd:DefaultName>textbox41</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Right</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!advamt.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.25in</Height>
+                </TableRow>
+              </TableRows>
+            </Details>
+            <Header>
+              <TableRows>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox42">
+                          <rd:DefaultName>textbox42</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>25</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>SR No.</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox16">
+                          <rd:DefaultName>textbox16</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>24</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Origin</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox19">
+                          <rd:DefaultName>textbox19</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>23</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Destination</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox22">
+                          <rd:DefaultName>textbox22</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>22</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>THC No</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox3">
+                          <rd:DefaultName>textbox3</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>21</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Manual THC No</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox28">
+                          <rd:DefaultName>textbox28</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>20</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>THC Date</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox30">
+                          <rd:DefaultName>textbox30</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>19</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Vehicle NO</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox32">
+                          <rd:DefaultName>textbox32</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>18</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Vehicle Capacity</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox34">
+                          <rd:DefaultName>textbox34</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>17</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Total Weight</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox5">
+                          <rd:DefaultName>textbox5</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>16</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Charge Weight</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox36">
+                          <rd:DefaultName>textbox36</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>15</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Total Freight</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox38">
+                          <rd:DefaultName>textbox38</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>14</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>THC Amount</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox40">
+                          <rd:DefaultName>textbox40</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR_HD.Value, "DSStyle")</Color>
+                            <BackgroundColor>=First(Fields!BGCOLOR.Value, "DSStyle")</BackgroundColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE_HD.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight_HD.Value, "DSStyle")</FontWeight>
+                            <TextAlign>Center</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>13</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Advance Amount</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.25in</Height>
+                </TableRow>
+              </TableRows>
+            </Header>
+            <TableColumns>
+              <TableColumn>
+                <Width>0.375in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>1.625in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>2.375in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>1.75in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>1.5in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>0.75in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>0.875in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>0.75in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>0.75in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>0.75in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>0.75in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>0.75in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>0.75in</Width>
+              </TableColumn>
+            </TableColumns>
+          </Table>
+          <Table Name="table2">
+            <DataSetName>DSStyle</DataSetName>
+            <Top>0.75in</Top>
+            <Width>3.625in</Width>
+            <Header>
+              <TableRows>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox14">
+                          <rd:DefaultName>textbox14</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>3</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Date :</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox15">
+                          <rd:DefaultName>textbox15</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>2</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=" "+CStr(Parameters!Fromdt.Value)+" - "+CStr(Parameters!todt.Value)</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.25in</Height>
+                </TableRow>
+              </TableRows>
+            </Header>
+            <TableColumns>
+              <TableColumn>
+                <Width>0.875in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>2.75in</Width>
+              </TableColumn>
+            </TableColumns>
+            <Height>0.5in</Height>
+            <Footer>
+              <TableRows>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox20">
+                          <rd:DefaultName>textbox20</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>1</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>Location :</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox21">
+                          <rd:DefaultName>textbox21</rd:DefaultName>
+                          <Style>
+                            <Color>=First(Fields!FNTCOLOR.Value, "DSStyle")</Color>
+                            <BorderColor>
+                              <Default>=First(Fields!BORDERCOLOR.Value, "DSStyle")</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>=First(Fields!BORDERSTYLE.Value, "DSStyle")</Default>
+                            </BorderStyle>
+                            <BorderWidth>
+                              <Default>=First(Fields!BORDERWIDTH.Value, "DSStyle")</Default>
+                            </BorderWidth>
+                            <FontStyle>=First(Fields!FNTSTYLE.Value, "DSStyle")</FontStyle>
+                            <FontFamily>=First(Fields!FNTFAMILY.Value, "DSStyle")</FontFamily>
+                            <FontSize>=First(Fields!FNTSIZE.Value, "DSStyle")</FontSize>
+                            <FontWeight>=First(Fields!FNTWeight.Value, "DSStyle")</FontWeight>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=" "+CStr(Parameters!location.Value)</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.25in</Height>
+                </TableRow>
+              </TableRows>
+            </Footer>
+          </Table>
+        </ReportItems>
+      </Rectangle>
+    </ReportItems>
+    <Height>2in</Height>
+  </Body>
+  <Language>en-US</Language>
+  <TopMargin>1in</TopMargin>
+</Report>

@@ -1,0 +1,297 @@
+insert into webx_master_menu2(SrNo,Text,Description,ParentID,NavigationURL,MenuLevel,APP_Level,APP_Module,Status)
+VALUES(1,'New Cheque Deposit','New Cheque Deposit',26,'~/GUI/Finance/Cheque_Deposit/ChqDepositVoucher_step1.aspx',0,NULL,99,100)
+
+go
+
+update webx_master_menu2 set app_module=menuid where text='New Cheque Deposit'
+
+go
+
+/****** Object:  Stored Procedure dbo.usp_depovoucher_chqlist_ver1    Script Date: 23/09/2008 3:56:41 PM ******/              
+              
+CREATE PROCEDURE usp_depovoucher_chqlist_ver1                
+@CHQNO VARCHAR(100)                      
+,@DATEFROM VARCHAR(12)                      
+,@DATETO VARCHAR(12)                      
+,@COLBRCD VARCHAR(4)  
+,@DATETYPE VARCHAR(50)             
+,@finyear varchar(50)                  
+,@Tablename   varchar(50)                 
+AS                      
+                      
+DECLARE @SQL VARCHAR(2000),@CUSTCDCLS VARCHAR(200),@DATECLS VARCHAR(200),@COLBRCDCLS VARCHAR(200)                      
+                      
+IF @COLBRCD!='All'                       
+ SELECT @COLBRCDCLS='  AND a.BRCD=' + CHAR(39) + @COLBRCD + CHAR(39)                       
+ELSE                      
+ SELECT @COLBRCDCLS=''                      
+                      
+SELECT @DATECLS =''                    
+                      
+IF @CHQNO!='All'                       
+ SELECT @CUSTCDCLS='  AND a.CHQNO IN (' + CHAR(39) + REPLACE(@CHQNO,',',CHAR(39)+','+CHAR(39)) + CHAR(39) + ')'                     
+ELSE                      
+ BEGIN     
+   IF @DATETYPE != 'chqdt'  
+   BEGIN                 
+ SELECT @CUSTCDCLS=''                      
+ SELECT @DATECLS ='  AND convert(varchar,chqdt,106) > convert(datetime,'+ CHAR(39) + '31 Mar 2006' + CHAR(39) +',106)  AND convert(varchar,b.transdate,106) BETWEEN convert(DATETIME,' + CHAR(39) + @DATEFROM + CHAR(39) +',106)  AND convert(DATETIME,' + CHAR(39) + @DATETO + CHAR(39) +',106) '                      
+   END  
+   ELSE   
+   BEGIN   
+ SELECT @CUSTCDCLS=''                         
+ SELECT @DATECLS ='  AND convert(varchar,chqdt,106) > convert(datetime,'+ CHAR(39) + '31 Mar 2006' + CHAR(39) +',106)  AND convert(varchar,ENTRYDT,106) BETWEEN convert(DATETIME,' + CHAR(39) + @DATEFROM + CHAR(39) +',106)  AND convert(DATETIME,' + CHAR(39) + @DATETO + CHAR(39) +',106) '           
+   END  
+ END                      
+IF @DATETYPE != 'chqdt'  
+ SELECT @SQL='SELECT distinct a.chqno,convert(varchar,chqdt,106) as chqdt,convert(varchar,chqdt,103) as chqdate,cast(chqindex as varchar)+ ''|'' + a.chqno + ''|'' + convert(varchar,chqdt,103) + ''|'' + cast(chqamt as varchar) as chqnodt,a.chqamt,convert(varchar,b.transdate,106) as entrydt,ptmsptcd +' + char(39) +' : ' + char(39)+ ' + (select top 1  custnm from webx_custhdr  where custcd=ptmsptcd) as party,convert(varchar,b.chqdate,103) as chaqdate   FROM webx_CHQ_DET  a  WITH(NOLOCK) inner join  ' + @Tablename + '   b  WITH(NOLOCK) on a.chqno=b.chqno and a.chqdt=b.chqdate where DepoFlag='+ CHAR(39) + 'N' + CHAR(39)   + @CUSTCDCLS +  @DATECLS  + @COLBRCDCLS + ' order by chqdt'                      
+ELSE                      
+ SELECT @SQL='SELECT chqno,convert(varchar,chqdt,106) as chqdt,convert(varchar,chqdt,103) as chqdate,cast(chqindex as varchar)+ ''|'' + chqno + ''|'' + convert(varchar,chqdt,103) + ''|'' + cast(chqamt as varchar) as chqnodt,chqamt,convert(varchar,entrydt,106) as entrydt,ptmsptcd +' + char(39) +' : ' + char(39)+ ' + (select top 1  custnm from webx_custhdr  where custcd=ptmsptcd) as party FROM webx_CHQ_DET a where DepoFlag='+ CHAR(39) + 'N' + CHAR(39)   + @CUSTCDCLS +  @DATECLS  + @COLBRCDCLS + ' order by chqdt'                                
+--select @CUSTCDCLS  
+--select @DATECLS  
+--SELECT @SQL                      
+EXECUTE (@SQL)  
+
+
+GO
+
+
+CREATE Proc usp_ChequeTranscation   
+@voucherno varchar(30),  
+@transdt varchar(25),               
+@chqindex varchar(25),                
+@finYear varchar(4),  
+@Narration varchar(150),  
+@empcd varchar(20),  
+@acccode varchar(10)                
+As                
+Set NoCount On                
+Declare @chqno varchar(7), @Finyear1 float,@chqamt float,@accdesc varchar(150)               
+Declare @ptmsptcd varchar(10),@ptmsptnm varchar(100),@brcd varchar(10)  
+declare @yearSuffix varchar(10)  
+DECLARE @chqdt DATETIME  
+            
+set @yearSuffix= @finYear + '_' +  replace(space(2-len(convert(numeric,@finYear)+1)),' ','0') +  convert(varchar,convert(numeric,@finYear)+1)                
+                
+set @Finyear1=convert(numeric, '20' + @finYear)                
+                
+select @chqno=chqno,@chqdt=chqdt,@chqamt=chqamt,@ptmsptcd=ptmsptcd,@ptmsptnm=ptmsptnm,@brcd=brcd   
+from webx_chq_det where chqindex=@chqindex                
+  
+select @accdesc=accdesc from webx_acctinfo where acccode=@acccode  
+ --Generate voucherno for acctounting transcation  
+  --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output     
+ --fund transfer debit                
+exec usp_acctrans_insertData @Finyear1,@transdt,@voucherno,@acccode,@chqno,@chqdt,@chqamt,0,@Narration,NULL,NULL,'BANK RECEIPT',@chqno,NULL,@brcd,'CHEQUES IN HAND',@empcd,'Y','CHEQUE TRANSACTION',2,NULL,NULL,NULL,'ACA0002',NULL,NULL,NULL,NULL,NULL,NULL,NULL,@empcd,NULL,NULL,@yearSuffix                     
+ --cash/bank credit                
+exec usp_acctrans_insertData @Finyear1,@transdt,@voucherno,'ACA0002',@chqno,@chqdt,0,@chqamt,@Narration,NULL,NULL,'BANK RECEIPT',@chqno,NULL,@brcd,@accdesc,@empcd,'Y','CHEQUE TRANSACTION',2,NULL,NULL,NULL,@acccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@empcd,NULL,NULL,@yearSuffix                     
+ --Update webx_chq_det table  
+UPDATE WEBX_CHQ_DET SET DEPOFLAG='Y',VOUCHERNO=@voucherno,depoloccode=@brcd,acccode=@acccode,transdate=@transdt WHERE CHQINDEX=@chqindex         
+  
+  
+GO
+
+/****** Object:  Stored Procedure dbo.usp_acctrans_insertData    Script Date: 2/14/2008 12:18:40 PM ******/      
+      
+/****** Object:  Stored Procedure dbo.usp_acctrans_insertData    Script Date: 11/28/2007 3:56:40 PM ******/      
+      
+CREATE PROCEDURE [dbo].[usp_acctrans_insertData]          
+ (@finyear_1  [numeric],          
+  @Transdate_2  [smalldatetime],          
+  @Voucherno_3 [varchar](20),          
+  @Acccode_4  [varchar](7),          
+  @Chqno_5  [varchar](6),          
+  @Chqdate_6  [datetime],          
+  @Debit_7  [numeric](12,2),          
+  @Credit_8  [numeric](12,2),          
+  @Narration_9  [varchar](255),          
+  @Payto_10  [varchar](255),          
+  @Bookcode_11  [varchar](25),          
+  @Transtype_12  [varchar](25),          
+  @DocNo_13  [varchar](20),          
+  @Docsf_14  [varchar](1),          
+  @Brcd_15  [varchar](5),          
+  @Oppaccount_16  [varchar](100),          
+  @Entryby_17  [varchar](10),          
+  @autoentry_18  [varchar](1),          
+  @opertitle_19  [varchar](50),          
+  @transNo_20  [int],          
+  @PBOV_CODE_21  [varchar](10),          
+  @PBOV_NAME_22  [varchar](100),          
+  @PBOV_TYP_23  [varchar](10),          
+  @oppacccode_24  [varchar](10),          
+  @entryfor_25  [varchar](20),          
+  @prepareByLoc_26  [varchar](10),          
+  @panno_27  [varchar](10),          
+  @servicetaxNo_28  [varchar](25),          
+  @billno_29  [varchar](20),          
+  @billdt_30  [datetime],          
+  @billduedt_31  [datetime],          
+  @UpdateBy_32  [varchar](10),          
+  @dockno_34  [varchar](15),          
+  @docksf_35  [varchar](1),          
+  @YearSuffix_36    [varchar](8)           
+ )          
+          
+          
+AS           
+          
+declare @sql varchar(5000) ,@tablename varchar(2000)         
+        
+if convert(datetime,@Chqdate_6,106)= convert(datetime,'01 Jan 1900' ,106)        
+     set @Chqdate_6=null        
+        
+if convert(datetime,@billduedt_31,106)= convert(datetime,'01 Jan 1900' ,106)        
+     set @billduedt_31=null        
+        
+if convert(datetime,@billdt_30,106)= convert(datetime,'01 Jan 1900' ,106)        
+     set @billdt_30=null        
+if @finyear_1='2007'    
+begin    
+ INSERT INTO webx_acctrans_07_08    
+    
+  ( [finyear],          
+  [Transdate],          
+  [Voucherno],          
+  [Acccode],          
+  [Chqno],          
+  [Chqdate],          
+  [Debit],          
+  [Credit],          
+  [Narration],          
+  [Payto],          
+  [Bookcode],          
+  [Transtype],          
+  [DocNo],          
+  [Docsf],          
+  [Brcd],          
+  [Oppaccount],          
+  [Entryby],          
+  [autoentry],          
+  [opertitle],          
+  [transNo],          
+  [PBOV_CODE],          
+  [PBOV_NAME],          
+  [PBOV_TYP],          
+  [oppacccode],          
+  [entryfor],          
+  [prepareByLoc],          
+  [panno],          
+  [servicetaxNo],          
+  [billno],          
+  [billdt],          
+  [billduedt],          
+  [UpdateBy],          
+  [dockno],          
+  [docksf],Entrydt)           
+           
+VALUES           
+ (@finyear_1 ,           
+  @Transdate_2  ,          
+  @Voucherno_3  ,          
+  @Acccode_4  ,          
+  @Chqno_5  ,          
+  @Chqdate_6  ,          
+  @Debit_7  ,          
+  @Credit_8  ,          
+  @Narration_9 ,          
+  @Payto_10 ,          
+  @Bookcode_11 ,          
+  @Transtype_12 ,          
+  @DocNo_13 ,          
+  @Docsf_14 ,          
+  @Brcd_15 ,          
+  @Oppaccount_16 ,          
+  @Entryby_17 ,          
+  @autoentry_18 ,          
+  @opertitle_19 ,          
+  @transNo_20 ,          
+  @PBOV_CODE_21 ,          
+  @PBOV_NAME_22 ,          
+  @PBOV_TYP_23 ,          
+  @oppacccode_24 ,          
+  @entryfor_25 ,          
+  @prepareByLoc_26 ,          
+  @panno_27 ,          
+  @servicetaxNo_28 ,          
+  @billno_29 ,          
+  @billdt_30 ,          
+  @billduedt_31 ,          
+  @UpdateBy_32 ,          
+  @dockno_34 ,          
+  @docksf_35,getdate())      
+end    
+else if @finyear_1='2008'    
+begin    
+ INSERT INTO webx_acctrans_08_09    
+ ( [finyear],          
+  [Transdate],          
+  [Voucherno],          
+  [Acccode],          
+  [Chqno],          
+  [Chqdate],          
+  [Debit],          
+  [Credit],          
+  [Narration],          
+  [Payto],          
+  [Bookcode],          
+  [Transtype],          
+  [DocNo],          
+  [Docsf],          
+  [Brcd],          
+  [Oppaccount],          
+  [Entryby],          
+  [autoentry],          
+  [opertitle],          
+  [transNo],          
+  [PBOV_CODE],          
+  [PBOV_NAME],          
+  [PBOV_TYP],          
+  [oppacccode],          
+  [entryfor],          
+  [prepareByLoc],          
+  [panno],          
+  [servicetaxNo],          
+  [billno],          
+  [billdt],          
+  [billduedt],          
+  [UpdateBy],          
+  [dockno],          
+  [docksf],Entrydt)           
+           
+VALUES           
+ (@finyear_1 ,           
+  @Transdate_2  ,          
+  @Voucherno_3  ,          
+  @Acccode_4  ,          
+  @Chqno_5  ,          
+  @Chqdate_6  ,          
+  @Debit_7  ,          
+  @Credit_8  ,          
+  @Narration_9 ,          
+  @Payto_10 ,          
+  @Bookcode_11 ,          
+  @Transtype_12 ,          
+  @DocNo_13 ,          
+  @Docsf_14 ,          
+  @Brcd_15 ,          
+  @Oppaccount_16 ,          
+  @Entryby_17 ,          
+  @autoentry_18 ,          
+  @opertitle_19 ,          
+  @transNo_20 ,          
+  @PBOV_CODE_21 ,          
+  @PBOV_NAME_22 ,          
+  @PBOV_TYP_23 ,          
+  @oppacccode_24 ,          
+  @entryfor_25 ,          
+  @prepareByLoc_26 ,          
+  @panno_27 ,          
+  @servicetaxNo_28 ,          
+  @billno_29 ,          
+  @billdt_30 ,          
+  @billduedt_31 ,          
+  @UpdateBy_32 ,          
+  @dockno_34 ,          
+  @docksf_35,getdate())      
+end

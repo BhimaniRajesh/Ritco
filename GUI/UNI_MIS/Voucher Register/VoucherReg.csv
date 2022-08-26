@@ -1,0 +1,3 @@
+entryby,Employee,voucher_status,voucherno,brcd,location,totdebit,totcredit,transdate,transtype,autoentry
+U0347,Sanjay Verma,Closed,VRIDR-0615969,IDR,IDR : Indore branch,850.00,850.00,31 Jul 2007,Cash Payment,N
+S0278,Badlia Jitendra Kumar,Closed,VRPNQ-0614391,PNQ,PNQ : Pune (chakkan- outside octroi),500.00,500.00,31 Jul 2007,Cash Payment,N

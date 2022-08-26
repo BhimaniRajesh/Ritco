@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemlist>
+	<item id="Panel1" Text="Introduction">
+		
+	</item>
+	<item id="Panel2" text="Calendar selector">
+		
+	</item>
+	<item id="Panel3" text="Code behind">
+	</item>
+</itemlist>

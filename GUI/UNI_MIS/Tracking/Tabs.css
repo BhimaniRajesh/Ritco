@@ -1,0 +1,57 @@
+﻿body 
+{
+	font-family: Lucida Sans;
+	font-size: 0.7em;
+}
+
+/* CLASSES FOR TABS */
+.tabs
+{
+	height: 20px; width: 80px;
+	border: Solid 1.5px DarkGray;
+	text-align: center;
+	padding-left: 0px;
+	background: white url(gfx/tab_bg1.gif) repeat-x left;
+}
+.tabover
+{
+	height: 20px; width: 80px;
+	border: Solid 1.5px DarkGray;
+	text-align: center; 
+	TEXT-DECORATION: underline;
+	
+	padding-left: 0px;
+	background: white url(gfx/tab_bg2.gif) repeat-x left;
+	
+}
+.tabactive
+{
+	height: 20px; width: 80px;
+	border: Solid 1.5px DarkGray;
+	border-bottom: Solid 1px White;
+	 text-decoration: underline;
+	text-align: center;
+	padding-left: 0px;
+	background: url(gfx/tab_bg.gif) repeat-x left;
+	
+}
+.spacer
+{
+	width: 0px;
+	border-bottom: Solid 1px Black;
+}
+
+/* CLASSES FOR TAB BUTTON STYLE */
+a.tabbtn
+{
+	color: Black;
+	 
+}
+
+/* CLASSES FOR NEW CAR LAYOUT */
+.itemSpan
+{
+	width: 110px;
+	float: left;
+	margin-top: 0px;
+}

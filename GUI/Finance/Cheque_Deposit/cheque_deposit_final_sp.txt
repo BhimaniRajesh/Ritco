@@ -1,0 +1,159 @@
+--*********************Developed by Manish Kher For Cheque Deposit Voucher on 24 Sep 2008************************
+
+alter Proc usp_ChequeTranscation_ver1     
+@voucherno varchar(30),    
+@transdt varchar(25),                 
+@chqindex varchar(25),                  
+@finYear varchar(4),    
+@Narration varchar(150),    
+@empcd varchar(20),    
+@acccode varchar(10)                  
+As                  
+Set NoCount On                  
+Declare @chqno varchar(7), @Finyear1 float,@chqamt float,@accdesc varchar(150)                 
+Declare @ptmsptcd varchar(10),@ptmsptnm varchar(100),@ptmspttype varchar(10), @brcd varchar(10)    
+declare @yearSuffix varchar(10),@Count numeric    
+DECLARE @chqdt DATETIME    
+              
+set @yearSuffix= @finYear + '_' +  replace(space(2-len(convert(numeric,@finYear)+1)),' ','0') +  convert(varchar,convert(numeric,@finYear)+1)                  
+                  
+set @Finyear1=convert(numeric, '20' + @finYear)                  
+                  
+select @chqno=chqno,@chqdt=chqdt,@chqamt=chqamt,@ptmsptcd=ptmsptcd,@ptmsptnm=ptmsptnm,@brcd=brcd     
+from webx_chq_det where chqindex=@chqindex                  
+    
+select @accdesc=accdesc from webx_acctinfo where acccode=@acccode    
+
+-- This code is used to find out party name when party code is present but partyname is not present
+
+if @ptmsptcd != '' and @ptmsptcd is not null and @ptmsptcd != '8888'
+begin
+	if @ptmsptnm is null or @ptmsptnm=''
+	begin
+		select @Count=count(*) from webx_CUSTHDR where custcd=@ptmsptcd
+		if @Count > 0
+		begin
+			select @ptmsptnm=custnm from webx_CUSTHDR where custcd=@ptmsptcd
+			select @ptmspttype = 'P'
+		end
+		else
+		begin
+			select @Count=count(*) from webx_VENDOR_HDR where vendorcode=@ptmsptcd
+			if @Count > 0
+			begin
+				select @ptmsptnm=vendorname from webx_VENDOR_HDR where vendorcode=@ptmsptcd
+				select @ptmspttype = 'V'
+			end
+			else
+			begin
+				select @Count=count(*) from webx_master_users where userid=@ptmsptcd
+				if @Count > 0
+				begin
+					select @ptmsptnm=name from webx_master_users where userid=@ptmsptcd
+					select @ptmspttype = 'U'
+				end
+			end	
+		end	
+	end
+	else 
+	begin
+		select @Count=count(*) from webx_CUSTHDR where custcd=@ptmsptcd
+		if(@Count > 0)
+		begin
+			select @ptmspttype = 'P'
+		end
+		else
+		begin
+			select @Count=count(*) from webx_VENDOR_HDR where vendorcode=@ptmsptcd
+			if(@Count > 0)
+			begin
+				select @ptmspttype = 'V'
+			end
+			else
+			begin
+				select @Count=count(*) from webx_master_users where userid=@ptmsptcd
+				if(@Count > 0)
+				begin
+					select @ptmspttype = 'V'
+				end
+				else
+				begin
+					select @ptmspttype = 'M'
+				end
+			end
+		end	
+	end
+end
+ --fund transfer debit                  
+exec usp_acctrans_insertData @Finyear1,@transdt,@voucherno,@acccode,@chqno,@chqdt,@chqamt,0,@Narration,NULL,NULL,'BANK RECEIPT',@chqno,NULL,@brcd,'CHEQUES IN HAND',@empcd,'Y','CHEQUE TRANSACTION',2,@ptmsptcd,@ptmsptnm,@ptmspttype,'ACA0002',NULL,NULL,NULL,NULL,NULL,NULL,NULL,@empcd,NULL,NULL,@yearSuffix                       
+ --cash/bank credit                  
+exec usp_acctrans_insertData @Finyear1,@transdt,@voucherno,'ACA0002',@chqno,@chqdt,0,@chqamt,@Narration,NULL,NULL,'BANK RECEIPT',@chqno,NULL,@brcd,@accdesc,@empcd,'Y','CHEQUE TRANSACTION',2,@ptmsptcd,@ptmsptnm,@ptmspttype,@acccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@empcd,NULL,NULL,@yearSuffix                       
+ --Update webx_chq_det table    
+UPDATE WEBX_CHQ_DET SET DEPOFLAG='Y',VOUCHERNO=@voucherno,depoloccode=@brcd,acccode=@acccode,transdate=@transdt WHERE CHQINDEX=@chqindex           
+ 
+
+GO
+
+
+/****** Object:  Stored Procedure dbo.usp_depovoucher_chqlist_ver1    Script Date: 23/09/2008 3:56:41 PM ******/                
+                
+ALTER PROCEDURE usp_depovoucher_chqlist_ver1                  
+@CHQNO VARCHAR(100)                        
+,@DATEFROM VARCHAR(12)                        
+,@DATETO VARCHAR(12)                        
+,@COLBRCD VARCHAR(4)    
+,@DATETYPE VARCHAR(50)               
+,@finyear varchar(50)                    
+,@Tablename   varchar(50)                   
+AS                        
+                        
+DECLARE @SQL VARCHAR(2000),@CUSTCDCLS VARCHAR(200),@DATECLS VARCHAR(200),@COLBRCDCLS VARCHAR(200)                        
+                        
+IF @COLBRCD!='All'                         
+ SELECT @COLBRCDCLS='  AND a.BRCD=' + CHAR(39) + @COLBRCD + CHAR(39)                         
+ELSE                        
+ SELECT @COLBRCDCLS=''                        
+                        
+SELECT @DATECLS =''                      
+                        
+IF @CHQNO!='All'                         
+ SELECT @CUSTCDCLS='  AND a.CHQNO IN (' + CHAR(39) + REPLACE(@CHQNO,',',CHAR(39)+','+CHAR(39)) + CHAR(39) + ')'                       
+ELSE                        
+ BEGIN       
+   IF @DATETYPE != 'chqdt'    
+   BEGIN                   
+ 	SELECT @CUSTCDCLS=''                        
+	SELECT @DATECLS ='  AND convert(varchar,chqdt,106) > convert(datetime,'+ CHAR(39) + '31 Mar 2006' + CHAR(39) +',106)  AND convert(varchar,b.transdate,106) BETWEEN convert(DATETIME,' + CHAR(39) + @DATEFROM + CHAR(39) +',106)  AND convert(DATETIME,' + CHAR(39) + @DATETO + CHAR(39) +',106) '                        
+   END    
+   ELSE     
+   BEGIN     
+	 SELECT @CUSTCDCLS=''                           
+	 SELECT @DATECLS ='  AND convert(varchar,chqdt,106) > convert(datetime,'+ CHAR(39) + '31 Mar 2006' + CHAR(39) +',106)  AND convert(varchar,ENTRYDT,106) BETWEEN convert(DATETIME,' + CHAR(39) + @DATEFROM + CHAR(39) +',106)  AND convert(DATETIME,' + CHAR(39) + @DATETO + CHAR(39) +',106) '             
+   END    
+ END                        
+ IF @DATETYPE != 'chqdt'    
+ 	SELECT @SQL='SELECT distinct a.chqno,convert(varchar,chqdt,106) as chqdt,convert(varchar,chqdt,103) as chqdate,cast(chqindex as varchar)+ ''|'' + a.chqno + ''|'' + convert(varchar,chqdt,103) + ''|'' + cast(chqamt as varchar) as chqnodt,a.chqamt,convert(varchar,b.transdate,106) as entrydt,party = (case when ptmsptcd is null or ptmsptcd='''' then ''--'' when ptmsptcd is not null or ptmsptcd != '''' and ptmsptnm is not null or ptmsptnm != '''' then ptmsptcd + '' : '' + ptmsptnm end),convert(varchar,b.chqdate,103) as chaqdate   FROM webx_CHQ_DET  a  WITH(NOLOCK) inner join  ' + @Tablename + '   b  WITH(NOLOCK) on a.chqno=b.chqno and a.chqdt=b.chqdate where DepoFlag='+ CHAR(39) + 'N' + CHAR(39)   + @CUSTCDCLS +  @DATECLS  + @COLBRCDCLS + ' order by chqdt'                       
+ ELSE                        
+ 	SELECT @SQL='SELECT chqno,convert(varchar,chqdt,106) as chqdt,convert(varchar,chqdt,103) as chqdate,cast(chqindex as varchar)+ ''|'' + chqno + ''|'' + convert(varchar,chqdt,103) + ''|'' + cast(chqamt as varchar) as chqnodt,chqamt,convert(varchar,entrydt,106) as entrydt,party = (case when ptmsptcd is null or ptmsptcd='''' then ''--'' when ptmsptcd is not null or ptmsptcd != '''' and ptmsptnm is not null or ptmsptnm != '''' then ptmsptcd + '' : '' + ptmsptnm end) FROM webx_CHQ_DET a where DepoFlag='+ CHAR(39) + 'N' + CHAR(39)   + @CUSTCDCLS +  @DATECLS  + @COLBRCDCLS + ' order by chqdt'                                  
+
+--select @CUSTCDCLS    
+--select @DATECLS    
+--SELECT @SQL                        
+EXECUTE (@SQL)    
+
+
+GO
+
+SELECT * FROM WEBX_MASTER_MENU2 WHERE TEXT LIKE '%CHEQUE%'
+
+insert into webx_master_menu2(SrNo,Text,Description,ParentID,NavigationURL,MenuLevel,APP_Level,APP_Module,Status)
+VALUES(1,'New Cheque Deposit','New Cheque Deposit',26,'~/GUI/Finance/Cheque_Deposit/ChqDepositVoucher_step1.aspx',0,NULL,99,100)
+
+go
+
+update webx_master_menu2 set app_module=menuid where text='New Cheque Deposit'
+  
+go
+
+
+

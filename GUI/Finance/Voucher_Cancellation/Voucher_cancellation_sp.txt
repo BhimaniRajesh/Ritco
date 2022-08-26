@@ -1,0 +1,49 @@
+alter table webx_chq_det_cancelled alter column staffcd varchar(50) null
+
+go
+
+--Use for Voucher Cancellation created by Manish Kher Ecfy Surat      
+--exec usp_ManualVoucherCancellation '08','VR/HQTR/08/000316','06/11/2008','testing'      
+CREATE proc usp_ManualVoucherCancellation      
+@finyear varchar(50),      
+@voucherno varchar(50),      
+@canceldt varchar(25),      
+@comment varchar(250)      
+as      
+      
+set nocount on      
+      
+Declare @Acctable varchar(20)      
+Declare @transtype varchar(15)      
+Declare @yearSuffix varchar(10)      
+Declare @sql varchar(2000)      
+      
+set @yearSuffix= @finyear + '_' +  replace(space(2-len(convert(numeric,@finyear)+1)),' ','0') +  convert(varchar,convert(numeric,@finyear)+1)                              
+set @Acctable = 'webx_acctrans_' + @yearsuffix         
+      
+select @transtype=transtype from webx_vouchertrans_arch where voucherno=@voucherno and transtype like '%bank%'      
+      
+set @sql = 'UPDATE '+ @Acctable + ' WITH(ROWLOCK) SET voucher_cancel=''Y'',v_closed_dt = convert(datetime,'''+ @canceldt + ''',103),comment=''' + @comment + ''' where voucherno=''' + @voucherno + ''''      
+exec(@sql)      
+      
+UPDATE webx_vouchertrans_arch WITH(ROWLOCK) SET voucher_cancel='Y',v_closed_dt = convert(datetime,@canceldt,103),Cancel_Reason=@comment where voucherno=@voucherno      
+      
+if @transtype = 'BANK PAYMENT' or @transtype = 'BANK RECEIPT' or @transtype = 'BOTH PAYMENT' or @transtype = 'BOTH RECEIPT'       
+begin      
+ update webx_chq_det set comments='Chequeno Cancelled by Voucher Cancellation',chq_status='Cancelled' where voucherno=@voucherno        
+       
+ --Insert into webx_chq_det_cancelled select * from webx_chq_det where voucherno=@voucherno      
+     
+ Insert into webx_chq_det_cancelled select       
+ chqindex,chqno,chqdt,chqamt,banknm,ptmsptcd,ptmsptnm,comments,bacd,banm,brcd,brnm,      
+ empcd,empnm,adjustamt,staffcd,staffnm,CHQSTATUS,BANKBRN,chq_trf,chq_flag,recdbrcd,      
+ recdbrnm,OwnCust,DepoFlag,Entrydt,voucherNo,acccode,transdate,depoloccode,chqsf,chq_depattempt,      
+ chq_clear,chq_status,Chq_BounceAmt,chq_bounce_dt,chq_reoffer_dt      
+ from webx_chq_det where voucherno=@voucherno     
+       
+ delete from webx_chq_det where voucherno=@voucherno      
+
+end  
+
+
+go

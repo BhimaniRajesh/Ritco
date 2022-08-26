@@ -1,0 +1,103 @@
+CREATE View vw_DocketList_For_MF_Generation
+As
+SELECT 
+WMD.DOCKNO+WTDS.DOCKSF As DocketNo,
+(CASE 
+  WMD.TRN_Mod 
+	  WHEN 1 THEN 'Air' 
+	  WHEN 2 THEN 'Road' 
+	  WHEN 3 THEN 'Train'
+	  WHEN 4 THEN 'Express' ELSE '-' 
+ END 
+) AS TransMode, 
+Convert(varchar,WMD.DOCKDT,106) AS DocketDate, 
+WMD.ORGNCD AS OrgCode, 
+WMD.CSGNCD AS ConsCD, 
+WMD.CSGNNM AS ConsName, 
+WTDS.NextLoc AS DelyLoc, 
+(Case When Reassign_DestCD is NULL Then WMD.DestCd When Ltrim(Rtrim(Reassign_destcd))='' Then  WMD.DestCd Else Reassign_DestCD End) AS DestCode, 
+Convert(varchar,WMD.CDELDT,106) AS Commited_DelyDate, 
+IsNull(WTDS.ArrPkgQty,WMD.PKGSNO) AS PackagesLB, 
+Convert(int, IsNull(WTDS.ArrWeightQty,WMD.ACTUWT)) AS WeightLB, 
+WMD.CHRGWT AS ChargeWeight, 
+WTDS.DOCKET_MODE AS DocketMode, 
+WMD.paybas AS PayBase, 
+WMD.Reassign_destcd, 
+ISNULL(WMD.from_loc, '') + ' - ' + ISNULL(WMD.to_loc, '') AS FromTo,
+WMD.DOCKNO,
+WTDS.DOCKSF,
+WMD.TRN_Mod,
+WMD.DOCKDT,
+ReDestCode=IsNull(WMD.DESTCD,WMD.Reassign_destcd),
+WMD.from_loc,
+WMD.to_loc,
+WTDS.Curr_Loc 
+From 
+WebX_Master_Docket WMD 
+INNER JOIN 
+WebX_Trans_Docket_Status WTDS 
+ON WMD.DOCKNO = WTDS.DOCKNO --and (Case When Reassign_DestCD is NULL Then DestCd When Ltrim(Rtrim(Reassign_destcd))='' Then  DestCd Else Reassign_DestCD End)<>WTDS.Curr_LOC
+Left Outer Join
+(
+Select WTH.TCNO,WTH.TCBR,Dockno,DockSF,CANCELLED
+From 
+WebX_TCHDR WTH
+Inner Join
+WebX_TCTRN WTN
+On WTH.TCNO = WTN.TCNO
+)V
+On WMD.Dockno = V.Dockno and WTDS.DockSF = V.DockSF and WTDS.Curr_Loc = V.TCBR
+WHERE (V.TCNO is NULL OR IsNull(V.CANCELLED,'N')='Y') and
+(IsNULL(LocalCN_YN,'N')='N' OR Rtrim(Ltrim(LocalCN_YN))='-') 
+and
+( 
+(Case When Reassign_DestCD is NULL Then DestCd When Ltrim(Rtrim(Reassign_destcd))='' Then  DestCd Else Reassign_DestCD End)<>WTDS.Curr_LOC
+Or
+ORGNCD=DESTCD
+Or
+ORGNCD=REASSIGN_DESTCD
+) 
+and WTDS.Dely_Date is NULL and WTDS.LS IS NULL AND WTDS.MF IS NULL AND (WTDS.Cancelled = 'N' or WTDS.Cancelled is NULL) AND (WTDS.detained = 'N' or WTDS.detained is NULL)
+and IsNull(WTDS.ArrPkgQty,WMD.PKGSNO)>0
+
+GO
+
+CREATE View Vw_DocketList_For_DRS_Generation
+As
+Select 
+WMD.DOCKNO,WTDS.DOCKSF,Docket_Mode,
+Bkg_Date=Convert(varchar,WMD.DockDT,106),
+Arrival_Date = (Select Top 1 Convert(Varchar,ATAD,106) + ' ' + Convert(Varchar,ATAD,108) From Webx_Trans_Docket_Track Where Dockno=WMD.Dockno and DockSF=WTDS.DockSF and In_Out='I' and Curloc=WTDS.Curr_Loc Order By ATAD Desc),
+Commited_Dely_Date = Convert(Varchar,CDELDT,106),
+ORGNCD,
+DEST_CD=(Case When IsNull(Ltrim(rtrim(WMD.Reassign_Destcd)),'')='' Then WMD.DestCD Else Ltrim(rtrim(WMD.Reassign_Destcd)) End),
+Curr_Loc,PendPkgQty=IsNull(PendPkgQty,PKGSNO),ArrPkgQty,PKGSNO,
+PayBas,
+PAYBAS_Str=(Select CodeDesc From WebX_Master_General Where CodeID=WMD.PayBas and CodeType='PAYTYP'),
+DockDT,
+ATAD=(Select Top 1 ATAD From Webx_Trans_Docket_Track Where Dockno=WMD.Dockno and DockSF=WTDS.DockSF and In_Out='I' and Curloc=WTDS.Curr_Loc Order By ATAD Desc),
+CDELDT,
+WMD.TRN_MOD
+From 
+WebX_Master_Docket WMD
+Inner Join
+WebX_Trans_Docket_Status WTDS
+On 
+WMD.Dockno = WTDS.Dockno 
+and 
+(
+ (Case When IsNull(Ltrim(rtrim(WMD.Reassign_Destcd)),'')='' Then WMD.DestCD Else Ltrim(rtrim(WMD.Reassign_Destcd)) End)=WTDS.Curr_Loc
+ OR 
+ LocalCN_YN='Y'
+)
+and IsNull(PendPkgQty,PKGSNO)>0 
+and Dely_Date is NULL
+Left Outer Join
+Vw_DRS V
+On WTDS.DRS = V.DRSNO
+Where Docket_Mode='F' and IsNull(V.DRSStatus,'-') not in ('G','D')
+
+
+
+
+

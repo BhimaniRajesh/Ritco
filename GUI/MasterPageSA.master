@@ -1,0 +1,123 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPageSA.master.cs" Inherits="MasterPage3" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <%--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />--%>
+
+    <title>WebXNet</title>
+    <link id="Link1" href="~/GUI/images/style.css" rel="Stylesheet" type="text/css" runat="server" />
+    <link id="Link2" href="~/GUI/images/TabStyleSheet.css" rel="Stylesheet" type="text/css" runat="server" />
+    
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+    <meta http-equiv="EXPIRES" content="-1">
+
+    <script type="text/javascript">
+
+        function initStatLyr() {
+            var statLyr = new Glider("glideDiv", 768, 45, null, null, 500, -1);
+            statLyr.s.how();
+        }
+    
+    </script>
+
+</head>
+<body>
+    <form id="form1" name="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager" runat="server" EnableScriptGlobalization="true" EnablePartialRendering="true">
+        <Services>
+            <asp:ServiceReference Path="Operation/DocketEntry/DocketService.asmx" />
+        </Services>
+    </asp:ScriptManager>
+    <table style="width: 100%" cellpadding="1" cellspacing="1" border="0">
+        <tr>
+            <td width="55%" align="left" valign="top">
+                &nbsp;<asp:Image Height="40" ID="imgLogo" ImageUrl="~/GUI/images/webxpress_logo.gif" runat="server" />
+            </td>
+            <td width="45%" align="right" valign="top" rowspan="2">
+                <asp:LinkButton ID="Label1" Text="Home" CssClass="blackfnt" Font-Underline="true" Font-Size="X-Small" runat="server" Font-Bold="false" PostBackUrl="~/GUI/admin/sa.aspx" />
+                <asp:Label ID="Label2" Text=" | " CssClass="blackfnt" Font-Size="X-Small" runat="server" Font-Bold="true" />
+                <asp:LinkButton ID="Label3" Text="Logout" CssClass="blackfnt" Font-Underline="true" Font-Size="X-Small" runat="server" Font-Bold="false" PostBackUrl="~/GUI/LogOut.aspx" />
+            </td>
+        </tr>
+        <tr>
+            <td width="55%" align="left" valign="top">
+                <asp:Label ID="lblEmployee" CssClass="blackfnt" Font-Size="X-Small" runat="server" Font-Bold="false" />
+                <asp:Label ID="lbl1" Text=" | " CssClass="blackfnt" Font-Size="X-Small" runat="server" Font-Bold="true" />
+                <asp:Label ID="lblEmpNameVal" CssClass="blackfnt" Font-Size="X-Small" runat="server" Font-Bold="false" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="blackfnt">
+                <!--Font-Names="Verdana" Font-Size="Small"-->
+                <%--StaticMenuItemStyle-BorderColor="#006699" DynamicMenuItemStyle-BorderColor="#006699"--%>
+                <asp:Menu ID="Menu1" runat="server" StaticPopOutImageUrl="~/GUI/images/clear.gif" SkinID="MenuSkin" StaticMenuItemStyle-BorderColor="#8ba0e5" DynamicMenuItemStyle-BorderColor="#8ba0e5" Orientation="Horizontal" DynamicHorizontalOffset="2" StaticSubMenuIndent="10px" BackColor="#ffffff" CssClass="blackfnt">
+                    <%--                    <Items>
+                        
+                        <asp:MenuItem Text="Manage Menus" Value="a" NavigateUrl="~/GUI/admin/ManageMenus.aspx">
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Manage Rules" Value="b">
+                            <asp:MenuItem Text="Process Choice" Value="b1" 
+                            NavigateUrl="~/GUI/admin/rules/WebXpressRules_Step3.aspx">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Document Nomenclature Settings" Value="b2" 
+                            NavigateUrl="~/GUI/admin/rules/WebXpressRules_Step4.aspx">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Delivery Process Setting" Value="b3"></asp:MenuItem>
+                            <asp:MenuItem Text="Billing Settings" Value="b4">
+                                <asp:MenuItem Text="Accounting" Value="b41"></asp:MenuItem>
+                                <asp:MenuItem Text="General" Value="b42"></asp:MenuItem>
+                                <asp:MenuItem Text="Charges Master" Value="b43"></asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Docket Entry Accounting" Value="b5"></asp:MenuItem>
+                            <asp:MenuItem Text="Docket/Contract Charge" Value="b6"></asp:MenuItem>
+                            <asp:MenuItem Text="Docket Entry Setting" Value="b7" 
+                            NavigateUrl="~/GUI/admin/DocketCustomization/DocketCustomization_Step1.aspx">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Set Balance Sheet Category" Value="b8"></asp:MenuItem>
+                            <asp:MenuItem Text="DFM Rules" Value="b9" 
+                            NavigateUrl="~/GUI/admin/rules/Rules_DFM.aspx">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="General Master" Value="b10"></asp:MenuItem>
+                            <asp:MenuItem Text="Master Rules" Value="b11"></asp:MenuItem>
+                            <asp:MenuItem Text="Business Type Wise Mode of Service Master" Value="b12">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Manual Vouchers Rules" Value="b13"></asp:MenuItem>
+                            <asp:MenuItem Text="Account/Group Master Rules" Value="b14"></asp:MenuItem>
+                            <asp:MenuItem Text="Octroi Service Tax Rule Master" Value="b15"></asp:MenuItem>
+                            <asp:MenuItem Text="Service Tax Rate & Rebate Settings" Value="b16"></asp:MenuItem>
+                        </asp:MenuItem>
+                    </Items>--%>
+                    <%--<StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" BorderColor="blue"
+                        BorderStyle="Solid" BorderWidth="1px" />
+                    <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+                    <DynamicMenuStyle BorderColor="blue" BorderStyle="Solid" BorderWidth="1px" BackColor="#d4e0e7" />
+                    <StaticMenuStyle />
+                    <StaticSelectedStyle BackColor="#d4e0e7" />
+                    <DynamicSelectedStyle BackColor="#d4e0e7" />
+                    <StaticHoverStyle BackColor="White" ForeColor="#ca0f24" />
+                    <DynamicHoverStyle BackColor="White" ForeColor="#ca0f24" />--%>
+                    <DynamicMenuStyle BorderColor="#8ba0e5" BorderStyle="Solid" BorderWidth="1px" />
+                    <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" BorderColor="#8ba0e5" BorderStyle="Solid" BorderWidth="1px" />
+                    <DataBindings>
+                        <asp:MenuItemBinding DataMember="SubMenu" NavigateUrlField="Url" TextField="Text" />
+                    </DataBindings>
+                </asp:Menu>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" colspan="2" style="width: 992px">
+                <asp:Label ID="lblBlank" runat="server" Text="" CssClass="blackfnt"></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:ContentPlaceHolder ID="MyCPH1" runat="server">
+                </asp:ContentPlaceHolder>
+            </td>
+        </tr>
+    </table>
+    </form>
+</body>
+</html>

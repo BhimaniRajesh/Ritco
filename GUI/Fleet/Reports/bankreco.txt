@@ -1,0 +1,65 @@
+CREATE Procedure USP_Bank_Reconsilation        
+@BankCode varchar(100),        
+@Fromdate varchar(100),        
+@ToDate Varchar(100),        
+@TableName varchar(100),        
+@AmountConsederation varchar(100)        
+AS         
+        
+Declare @Sql Varchar(8000)        
+        
+Set @Sql='select  Voucherno,Transdate as trndt,convert(varchar,Transdate,106)  as Transdate,transtype,Chqno,convert(varchar,Chqdate,106)  as Chqdate,Debit,Credit      
+,pbov_Code+'+char(39)+':'+char(39)+'+pbov_name as Party,convert(varchar,chqcleardate,106)  as CLear_Dt  from VW_Across_Year_Transaction  with (NOLOCK)         
+      
+where (convert(varchar,transdate,106)) between convert(datetime,'+Char(39)+@Fromdate+Char(39)+',106) and convert(datetime,'+Char(39)+@ToDate+Char(39)+',106)        
+and Acccode = '+Char(39)+@BankCode+Char(39)+' and (('+@AmountConsederation+' > 0))         
+and transtype in ('+Char(39)+'BANK PAYMENT'+Char(39)+','+Char(39)+'Bank Receipt'+Char(39)+','+Char(39)+'BANK Receipt'+Char(39)+','+Char(39)+'Contra'+Char(39)+')        
+and (convert(varchar,chqcleardate,106) > convert(datetime,'+Char(39)+@ToDate+Char(39)+',106) or (chqcleardate is null))         
+and voucher_cancel='+Char(39)+'N'+Char(39)+' Order by trndt '        
+--select (@Sql)  
+Exec(@Sql)       
+
+Go
+  
+CREATE Procedure USP_Bank_Reconsilation_Module          
+@BankCode varchar(100),          
+@Fromdate varchar(100),          
+@ToDate Varchar(100),          
+@TableName varchar(100),          
+@AmountConsederation varchar(100),      
+@Type varchar(100)          
+AS           
+          
+Declare @Sql Varchar(8000)          
+         
+Declare @TYpe_Cls varchar(8000)      
+      
+if @Type='A'      
+ set @TYpe_Cls=''      
+else if @Type='NR'      
+ set @TYpe_Cls='And chqcleardate is  null '      
+else if @Type='R'      
+ set @TYpe_Cls='And chqcleardate is not null '      
+      
+Set @Sql='select  Srno,Voucherno,convert(varchar,Transdate,106)  as Transdate,transtype,Chqno,convert(varchar,Chqdate,106)  as Chqdate,Debit,Credit        
+,pbov_Code+'+char(39)+':'+char(39)+'+pbov_name as Party         
+,chqcleardate=(case when chqcleardate is not null then convert(varchar,chqcleardate,103)  else '+Char(39)+''+Char(39)+' end)   ,Narration       
+,Flag=(case when chqcleardate is not null then '+Char(39)+'Y'+Char(39)+'  else '+Char(39)+'N'+Char(39)+' end),comment      
+ from VW_Across_Year_Transaction with (NOLOCK)         
+where (convert(varchar,transdate,106)) between convert(datetime,'+Char(39)+@Fromdate+Char(39)+',106) and convert(datetime,'+Char(39)+@ToDate+Char(39)+',106)          
+and Acccode = '+Char(39)+@BankCode+Char(39)+' and (('+@AmountConsederation+' > 0))           
+and transtype in ('+Char(39)+'BANK PAYMENT'+Char(39)+','+Char(39)+'BANK Receipt'+Char(39)+','+Char(39)+'Contra'+Char(39)+')          
+and voucher_cancel='+Char(39)+'N'+Char(39)+ @TYpe_Cls + '  Order by transtype,ChqDate,Chqno  '       
+--and (convert(varchar,chqcleardate,106) > convert(datetime,'+Char(39)+@ToDate+Char(39)+',106) or (chqcleardate is null))           
+           
+Exec(@Sql)   
+
+GO
+
+CREATE view VW_Across_Year_Transaction as     
+select * from webx_acctrans_06_07 WITH(NOLOCK) where     voucher_cancel='N'   
+Union  
+select * from webx_acctrans_07_08 WITH(NOLOCK) where     voucher_cancel='N'    
+Union     
+select * from webx_acctrans_08_09 WITH(NOLOCK) where     voucher_cancel='N'    
+   

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ContractServices xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FlagFound>true</FlagFound>
+  <FlagAir>true</FlagAir>
+  <FlagRoad>true</FlagRoad>
+  <FlagTrain>true</FlagTrain>
+  <FlagExpress>true</FlagExpress>
+  <FlagSundry>true</FlagSundry>
+  <FlagFTL>true</FlagFTL>
+  <FlagVolumetric>false</FlagVolumetric>
+  <FlagCODDODEnable>false</FlagCODDODEnable>
+  <FlagDACCEnable>false</FlagDACCEnable>
+  <PickUpDel>GG, GD, DD, DG</PickUpDel>
+  <RiskType>C</RiskType>
+  <VolMeasureType>-1</VolMeasureType>
+  <FOVType>%</FOVType>
+  <BillingLoc>HQTR</BillingLoc>
+  <CFT2KG>0</CFT2KG>
+  <CubicRate>0</CubicRate>
+  <FOVCharge>0</FOVCharge>
+  <FOVOwnerRate>0.3</FOVOwnerRate>
+  <FOVCarrierRate>3</FOVCarrierRate>
+  <CODDODCharged>0</CODDODCharged>
+  <DACCCharged>0</DACCCharged>
+</ContractServices>

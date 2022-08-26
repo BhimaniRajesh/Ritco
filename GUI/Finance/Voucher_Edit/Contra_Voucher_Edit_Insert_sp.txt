@@ -1,0 +1,226 @@
+CREATE Proc [dbo].[usp_Generate_Ins_Up_ContraAccountDetails]            
+@Xml_Acccode_Details Text,            
+@Xml_Other_Details Text          
+As            
+Set NoCount On            
+          
+DECLARE @hDoc1 int          
+DECLARE @hDoc2 int          
+DECLARE @brnm varchar(100)          
+DECLARE @Finyear varchar(10),@Transdate varchar(15),@Transtype varchar(50),@Voucherno varchar(50)          
+DECLARE @Brcd varchar(15),@Entryby varchar(50),@Opertitle varchar(50),@ManualNo varchar(50)          
+DECLARE @Refno varchar(50)          
+DECLARE @Narration varchar(255),@chqno varchar(50),@adjustamt numeric(12,2),@chqdt varchar(15)          
+DECLARE @pbov_code varchar(50),@pbov_name varchar(100),@pbov_typ varchar(1)
+DECLARE @debit numeric(12,2),@credit numeric(12,2),@Total numeric(12,2)          
+DECLARE @OppAcccode1 varchar(7),@OppAccdesc1 varchar(100),@OppAcccategory1 varchar(50)          
+DECLARE @OppAcccode2 varchar(7),@OppAccdesc2 varchar(100),@OppAcccategory2 varchar(50)          
+DECLARE @ChqueEntryYN varchar(1),@ChqueRefYN varchar(1),@bankAcccode varchar(10)
+DECLARE @EntryType varchar(50), @Total_count numeric(12,2)
+
+BEGIN                  
+  
+	EXEC sp_xml_preparedocument @hDoc1 OUTPUT, @Xml_Acccode_Details              
+	EXEC sp_xml_preparedocument @hDoc2 OUTPUT, @Xml_Other_Details              
+          
+	SELECT              
+	@Finyear=a.Finyear,@Transdate=a.Transdate,@Transtype=Transtype,@Voucherno=a.Voucherno,@Brcd=Brcd,          
+	@Entryby=a.Entryby,@Opertitle=a.Opertitle,@ManualNo=a.ManualNo,@Refno=a.Refno,@Narration=a.Narration,          
+	@chqno=a.chqno,@chqdt=a.chqdt,@ChqueEntryYN=a.ChqueEntryYN,@ChqueRefYN=a.ChqueRefYN,
+	@pbov_code=a.pbov_code,@pbov_name=a.pbov_name,@pbov_typ=a.pbov_typ,@EntryType=a.EntryType
+	FROM OPENXML(@hDoc2,'root/Other',2)              
+	WITH              
+	(           
+		Finyear varchar(10) 'Finyear',              
+		Transdate varchar(15) 'Transdate',                
+		Transtype varchar(50) 'Transtype',              
+		Voucherno varchar(50) 'Voucherno',          
+		Brcd varchar(15) 'Brcd',           
+		Entryby varchar(50) 'Entryby',          
+		Opertitle varchar(50) 'Opertitle',          
+		ManualNo varchar(50) 'ManualNo',          
+		Refno varchar(50) 'Refno',          
+		Narration varchar(255) 'Narration',          
+		Panno varchar(10) 'Panno',          
+		Svrtaxno varchar(20) 'Svrtaxno',          
+		chqno varchar(50) 'chqno',          
+		chqdt varchar(15) 'chqdt',
+		ChqueEntryYN varchar(1) 'ChqueEntryYN',
+		ChqueRefYN varchar(1) 'ChqueRefYN',		          
+		pbov_code varchar(50) 'pbov_code',          
+		pbov_name varchar(100) 'pbov_name',          
+		pbov_typ varchar(1) 'pbov_typ',
+		EntryType varchar(10) 'EntryType'
+	) a
+          
+	if @EntryType = 'Update'
+	begin
+		select @Total_count=count(*) from webx_Acccode_Details where voucherno=@Voucherno and voucher_cancel='N'
+		if @Total_count > 0
+		begin
+			UPDATE webx_Acccode_Details SET Voucher_Cancel='Y',comment='VOUCHER WAS EDITED' where voucherno=@Voucherno and voucher_cancel='N' 
+		end
+		select @Total_count=count(*) from webx_vouchertrans_arch where voucherno=@Voucherno
+		if @Total_count > 0
+		begin
+			Update webx_vouchertrans_arch set Voucher_cancel='Y',Voucher_Status='Edited',Entryby=@Entryby,Entrydt=getdate() where voucherno=@Voucherno
+			Insert into webx_vouchertrans_Arch_Edit_Details select * from Webx_vouchertrans_arch where voucherno=@Voucherno
+			delete from Webx_vouchertrans_arch where voucherno=@Voucherno
+			
+			update webx_chq_det set comments='Contra Voucher Edited',chq_status='Cancelled' where voucherno=@Voucherno
+			Insert into webx_chq_det_cancelled select * from webx_chq_det where voucherno=@Voucherno
+			--Insert into webx_chq_det_cancelled select chqindex,chqno,chqdt,chqamt,banknm,ptmsptcd,ptmsptnm,comments,
+			--bacd,banm,brcd,brnm,empcd,empnm,adjustamt,staffcd,staffnm,CHQSTATUS,BANKBRN,chq_trf,chq_flag,recdbrcd,
+			--recdbrnm,OwnCust,DepoFlag,Entrydt,voucherNo,acccode,transdate,depoloccode,chqsf,chq_depattempt,
+			--chq_clear,chq_status,Chq_BounceAmt,chq_bounce_dt,chq_reoffer_dt from webx_chq_det where voucherno=@Voucherno
+			delete from webx_chq_det where voucherno=@Voucherno
+		end
+		if @Finyear = '2007'
+		begin
+			Update webx_acctrans_07_08 set Voucher_cancel='Y',Comment='VOUCHER WAS EDITED',V_Approve_reject_dt=Getdate() where voucherno=@Voucherno and voucher_cancel='N'
+		end
+		if @Finyear = '2008'
+		begin
+			Update webx_acctrans_08_09 set Voucher_cancel='Y',Comment='VOUCHER WAS EDITED',V_Approve_reject_dt=Getdate() where voucherno=@Voucherno and voucher_cancel='N'
+		end
+		if @Finyear = '2009'
+		begin
+			Update webx_acctrans_09_10 set Voucher_cancel='Y',Comment='VOUCHER WAS EDITED',V_Approve_reject_dt=Getdate() where voucherno=@Voucherno and voucher_cancel='N'
+		end
+	end
+
+	Insert into webx_Acccode_Details                     
+	(finyear,Transdate,Voucherno,Acccode,Accdesc,Debit,Credit,Narration,Brcd,Entryby,Entrydt,Voucher_Cancel,          
+	opertitle,comment)                
+	SELECT         
+	@Finyear,@Transdate,@Voucherno,b.Acccode,b.Accdesc,b.Debit,b.Credit,@Narration,@Brcd,@Entryby,getdate(),
+	'N',@Opertitle,Null          
+	FROM OPENXML(@hDoc1,'root/Acctdetails',2)              
+	WITH              
+	(           
+		Acccode varchar(20) 'Acccode',              
+		Accdesc varchar(100) 'Accdesc',                
+		Debit Numeric(12,2) 'Debit',              
+		Credit Numeric(12,2) 'Credit'          
+	) b            
+	
+	if @chqno = ''
+	begin
+		set @chqno = null
+		set @chqdt = null
+	end
+
+	-- find oppaccocode and its description        
+	SELECT @OppAcccode1=acccode,@OppAccdesc1=accdesc,@OppAcccategory1=acccategory from webx_acctinfo where acccode in(select top 1 Acccode from webx_Acccode_Details where voucher_cancel='N' and voucherno=@Voucherno order by srno desc)
+	SELECT @OppAcccode2=acccode,@OppAccdesc2=accdesc,@OppAcccategory2=acccategory from webx_acctinfo where acccode in(select top 1 Acccode from webx_Acccode_Details where voucher_cancel='N' and voucherno=@Voucherno order by srno)          
+	-- end  
+	
+	if @Finyear = '2008'          
+	begin          
+		Insert into webx_acctrans_08_09            
+		(finyear,Transdate,Voucherno,Acccode,Chqno,Chqdate,Debit,Credit,Narration,Payto,Transtype,Brcd,Oppaccount,Entryby,          
+		Entrydt,Voucher_Cancel,autoentry,opertitle,PBOV_CODE,PBOV_NAME,PBOV_TYP,oppacccode,v_approve_reject_dt,          
+		v_closed_dt)           
+		SELECT              
+		@Finyear,@Transdate,@Voucherno,c.Acccode,@chqno,@chqdt,c.Debit,c.Credit,@Narration,null,@Transtype,@Brcd,@OppAccdesc1,          
+		@Entryby,getdate(),'N','N',@Opertitle,null,null,null,@OppAcccode1,getdate(),getdate()
+		FROM OPENXML(@hDoc1,'root/Acctdetails',2)              
+		WITH              
+		(           
+			Acccode varchar(20) 'Acccode',              
+			Accdesc varchar(100) 'Accdesc',                
+			Debit Numeric(12,2) 'Debit',              
+			Credit Numeric(12,2) 'Credit'          
+		) c          
+	end          
+	if @Finyear = '2007'          
+	begin          
+		Insert into webx_acctrans_07_08            
+		(finyear,Transdate,Voucherno,Acccode,Chqno,Chqdate,Debit,Credit,Narration,Payto,Transtype,Brcd,Oppaccount,
+		Entryby,Entrydt,Voucher_Cancel,autoentry,opertitle,PBOV_CODE,PBOV_NAME,PBOV_TYP,oppacccode,
+		v_approve_reject_dt,v_closed_dt)           
+		SELECT              
+		@Finyear,@Transdate,@Voucherno,d.Acccode,@chqno,@chqdt,d.Debit,d.Credit,@Narration,null,@Transtype,@Brcd,
+		@OppAccdesc1,@Entryby,getdate(),'N','N',@Opertitle,null,null,null,@OppAcccode1,getdate(),getdate()
+		FROM OPENXML(@hDoc1,'root/Acctdetails',2)              
+		WITH              
+		(           
+			Acccode varchar(20) 'Acccode',              
+			Accdesc varchar(100) 'Accdesc',                
+			Debit Numeric(12,2) 'Debit',              
+			Credit Numeric(12,2) 'Credit'         
+		) d          
+	end          
+        
+	-- sp for webx_vouchertrans_arch table insert data          
+	exec usp_webx_vouchertrans_arch_insert @Finyear,@Voucherno,@ManualNo,@Brcd,@Entryby,null,null,null,@Refno,@Narration,@Transdate,@chqno,@chqdt,null,null,null,@Transtype,@Opertitle          
+	--end        
+        
+	select @Total=sum(debit) from webx_Acccode_Details where voucher_cancel='N' and voucherno=@Voucherno
+	select @bankAcccode=Acccode from webx_Acccode_Details where voucher_cancel='N' and voucherno=@Voucherno and credit > 0 and Acccode in(select Acccode from webx_acctinfo where acccategory='BANK')
+	
+	-- Entry in webx_chq_det table for chque taranscation          
+	if UPPER(@ChqueEntryYN)='Y' and UPPER(@ChqueRefYN) = 'N'          
+	Begin         
+		SELECT @brnm=locname from webx_location where loccode=@Brcd
+		Insert into webx_chq_det(Chqno, chqdt, chqamt,ptmsptcd,ptmsptnm,comments,empcd,brcd,brnm,chq_trf,OwnCust,          
+		adjustamt,voucherno,transdate,acccode,banknm,depoloccode,DepoFlag)           
+		values(@chqno,@chqdt,@Total,null,null,'',@Entryby,@Brcd,@brnm,null,'O',@Total,@Voucherno,      
+		@Transdate,@bankAcccode,null,@Brcd,'Y')          
+	End      
+	-- End
+	if @Finyear = '2007' 
+	begin
+		UPDATE WEBX_ACCTRANS_07_08 SET Oppaccount=@OppAccdesc2,oppacccode=@OppAcccode2 WHERE Voucherno=@Voucherno and Acccode=@OppAcccode1
+	end
+	if @Finyear = '2008' 
+	begin
+		UPDATE WEBX_ACCTRANS_08_09 SET Oppaccount=@OppAccdesc2,oppacccode=@OppAcccode2 WHERE Voucherno=@Voucherno and Acccode=@OppAcccode1
+	end
+	if @Finyear = '2009' 
+	begin
+		UPDATE WEBX_ACCTRANS_09_10 SET Oppaccount=@OppAccdesc2,oppacccode=@OppAcccode2 WHERE Voucherno=@Voucherno and Acccode=@OppAcccode1
+	end
+	exec usp_webx_vouchertrans_arch_updateData @Voucherno,null,null,null,null,null,null,null,null,null,null,null,null,null,@Total,0,0,@Total
+end
+
+go
+
+ALTER PROCEDURE usp_webx_vouchertrans_arch_insert    
+@finyear_1 varchar(10),      
+@Voucherno_2   varchar(50),      
+@Manual_Voucherno_3   varchar(25),            
+@Brcd_4   varchar(10),      
+@Entryby_5 varchar(25),      
+@Business_type_6   varchar(50),            
+@Accounting_Brcd_7   varchar(50),      
+@Preparefor_8   varchar(50),            
+@Refno_9    varchar(50),      
+@Narration_10    varchar(250),                
+@Transdate_11    varchar(20),    
+@Chqno_12 varchar(50),    
+@Chqdt_13 varchar(15),    
+@Pbov_code_14 varchar(50),    
+@Pbov_name_15 varchar(100),    
+@Pbov_typ_16 varchar(1),    
+@Transtype_17 varchar(15),  
+@Opertitle_18 varchar(30)    
+    
+AS            
+INSERT INTO [webx_vouchertrans_arch]            
+([finyear],[Voucherno],[Manual_Voucherno],[Brcd],[Entryby],[Business_type],[Accounting_Brcd],      
+ [preparefor],[Refno],[Narration],[voucher_cancel],[srno],[Entrydt],[Transdate],[Chqno],[Chqdate],    
+ [Payto],[PBOV_CODE],[PBOV_NAME],[PBOV_TYP],[Transtype],[Opertitle])                
+VALUES(@finyear_1,@Voucherno_2,@Manual_Voucherno_3,@Brcd_4,@Entryby_5,@Business_type_6,      
+@Accounting_Brcd_7,@Preparefor_8,@Refno_9,@Narration_10,'N','100',getdate(),@Transdate_11,@Chqno_12,    
+@Chqdt_13,@Pbov_code_14,@Pbov_code_14,@Pbov_name_15,@Pbov_typ_16,@Transtype_17,@Opertitle_18)    
+
+go
+
+alter table webx_acctrans_08_09 alter column Chqno varchar(50)
+alter table webx_acctrans_07_08 alter column Chqno varchar(50)
+alter table webx_vouchertrans_arch alter column Chqno varchar(50)
+alter table webx_vouchertrans_Arch_Edit_Details alter column Chqno varchar(50)
+
+go
+

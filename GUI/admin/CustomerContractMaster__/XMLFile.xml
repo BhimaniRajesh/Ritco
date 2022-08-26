@@ -1,0 +1,30 @@
+<root>
+  <customercontract>
+    <contractid>CN01223</contractid>
+    <custcode>C0010881</custcode>
+    <contractcat>Contract</contractcat>
+    <custcat>Corporate</custcat>
+    <contracttype></contracttype>
+    <contractstartdate>9/1/2007 12:00:00 AM</contractstartdate>
+    <contractenddate>10/31/2007 12:00:00 AM</contractenddate>
+    <contracteffectivedate>10/2/2007 12:00:00 AM</contracteffectivedate>
+    <custrepresentative></custrepresentative>
+    <compempname></compempname>
+    <custdesig></custdesig>
+    <compdesig></compdesig>
+    <custwitness></custwitness>
+    <compwitness></compwitness>
+    <billaddress></billaddress>
+    <billcity></billcity>
+    <billpin></billpin>
+    <contractsignloccode>NDA</contractsignloccode>
+    <entryby>10001</entryby>
+    <entrydate>01-Oct-2007</entrydate>
+    <accrep>Contract</accrep>
+    <st>N</st>
+    <paytype></paytype>
+    <addcontractloccode></addcontractloccode>
+    <stpaidby></stpaidby>
+    <sku>N</sku>
+  </customercontract>
+</root>

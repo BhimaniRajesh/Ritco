@@ -1,0 +1,280 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <!-- Use IE7 mode -->
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" id="uiCompatible" runat="server" />
+    <title>WebXNet</title>
+    <link href="~/GUI/images/style.css" rel="Stylesheet" type="text/css" runat="server" />
+    <link id="Link1" href="cal/popcalendar.css" rel="Stylesheet" type="text/css" runat="server" />
+    <link id="Link3" href="~/GUI/images/TabStyleSheet.css" rel="Stylesheet" type="text/css"
+        runat="server" />
+	  <link href='<%# ResolveUrl("~/GUI/Js/select2.min.css") %>' rel="Stylesheet" type="text/css" />
+ <script src='<%# ResolveUrl("~/GUI/Js/jquery.min.js") %>' type='text/javascript'></script>
+    <script src='<%# ResolveUrl("~/GUI/Js/jquery-ui-1.10.4.custom.js") %>' type='text/javascript'></script>
+    <script src='<%# ResolveUrl("~/GUI/Js/json3.min.js") %>' type='text/javascript'></script>
+    <script src='<%# ResolveUrl("~/GUI/Js/jquery.validate.js") %>' type='text/javascript'></script>
+
+    <script src='<%# ResolveUrl("~/GUI/Js/Webx.Common.js?v401") %>' type='text/javascript'></script>
+<script src='<%# ResolveUrl("~/GUI/Js/WebxConvert.js?v10") %>' type='text/javascript'></script>
+    <script src='<%# ResolveUrl("~/GUI/Js/moment-with-locales.js") %>' type='text/javascript'></script>
+    <script src='<%# ResolveUrl("~/GUI/Js/moment.js") %>' type='text/javascript'></script>
+    <script src='<%# ResolveUrl("~/images/CalendarPopup.js") %>' type='text/javascript'></script>
+    <script src='<%# ResolveUrl("~/images/commonJs.js") %>' type='text/javascript'></script>
+  <script src='<%# ResolveUrl("~/GUI/Js/select2.full.min.js") %>' type='text/javascript'></script>
+    
+    <style type="text/css">
+        body {
+            font-family: verdana, arial, helvetica, sans-serif;
+            font-size: 12px;
+        }
+
+        h1 {
+            font-size: 16px;
+        }
+        /*a:link { color:#FFFFFF }	
+    a:visited { color:#FFFFFF }	*/ div#content {
+            margin-left: 0px;
+            height: 0px;
+        }
+        /* Style specs for layer that glides.
+       Generally, you don't set height, but since layer nearly empty in this example... */ #glideDiv {
+            position: absolute;
+            right: Auto;
+            top: Auto;
+            z-index: Auto;
+            width: 175px;
+            height: 16px;
+            padding: 1px;
+            background-color: #FFFFFF /*#dee7f7*/;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function initStatLyr() 
+        {
+            var statLyr = new Glider("glideDiv",768,45,null,null,500,-1);
+            statLyr.show();
+        }
+    </script>
+    <asp:ContentPlaceHolder ID="CPHHeader" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body leftmargin="0" topmargin="0">
+    <form id="form1" runat="server">
+        <%--<asp:SiteMapDataSource ID="SMDSMaster" runat="server" />--%>
+        <asp:XmlDataSource ID="xmlDataSource" EnableCaching="false" CacheExpirationPolicy="Absolute"
+            EnableViewState="false" TransformFile="~/TransformXSLT.xsl" XPath="MenuItems/MenuItem"
+            runat="server" />
+        <asp:ScriptManager ID="ScriptManager" runat="server" EnablePartialRendering="true">
+        </asp:ScriptManager>
+        <%--<atlas:ScriptManager ID="ScriptManager" runat="server" EnablePartialRendering="true">
+        </atlas:ScriptManager>--%>
+
+        <script language="JavaScript" type="text/javascript">
+
+            //Disable right mouse click Script
+
+            var message="Function Disabled!";
+
+            ///////////////////////////////////
+            function clickIE4()
+            {
+                //    if (event.button==2)
+                //    {
+                //        alert(message);
+                //        return false;
+                //    }
+            }
+
+            function clickNS4(e)
+            {
+                //    if (document.layers||document.getElementById&&!document.all)
+                //    {
+                //        if (e.which==2||e.which==3)
+                //        {
+                //            alert(message);
+                //            return false;
+                //        }
+                //    }
+            }
+
+            if (document.layers)
+            {
+                document.captureEvents(Event.MOUSEDOWN);
+                document.onmousedown=clickNS4;
+            }
+
+            else if (document.all&&!document.getElementById)
+            {
+                document.onmousedown=clickIE4;
+            }
+
+            //document.oncontextmenu=new Function("alert(message);return false")
+ 
+        </script>
+
+        <script language="javascript" type="text/javascript">
+            //Disable F5,BackSpace,Ctrl + R and Ctrl + N  Script
+            //function document.onkeydown()
+            //{
+            //    //    if ( event.keyCode == 116 )
+            //    //    {
+            //    //        event.keyCode = 0;
+            //    //        event.cancelBubble = true;
+            //    //        alert("Function Disabled!");
+            //    //        return false;
+            //    //    }
+
+            //    // 
+
+            //    //    else if (window.event.ctrlKey && (window.event.keyCode == 78 || window.event.keyCode == 82)) 
+            //    //    {
+            //    //        event.keyCode = 0;
+            //    //        event.cancelBubble = true;
+            //    //        alert("Function Disabled!");
+            //    //        return false;
+            //    //    }
+
+            //}
+
+        </script>
+
+        <table style="width: 100%" cellpadding="1" cellspacing="1" border="0">
+            <tr>
+                <td width="55%" align="left" valign="top">&nbsp;<asp:Image Height="50" ID="imgLogo" runat="server" />
+                </td>
+                <td width="45%" align="right" valign="top" rowspan="2">
+                    <asp:LinkButton ID="Label1" Text="Home" CssClass="blackfnt" Font-Underline="true"
+                        Font-Size="X-Small" runat="server" Font-Bold="false" PostBackUrl="~/GUI/WelCome.aspx" />
+                    <asp:Label ID="Label2" Text=" | " CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="true" />
+                    <asp:LinkButton ID="Label3" Text="Logout" CssClass="blackfnt" Font-Underline="true"
+                        Font-Size="X-Small" runat="server" Font-Bold="false" PostBackUrl="~/GUI/LogOut.aspx" />
+                    <asp:Label ID="Label4" Text=" | " CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="true" />
+                    <asp:LinkButton ID="Label5" Text="My Profile" PostBackUrl="~/GUI/MyProfile.aspx"
+                        CssClass="blackfnt" Font-Underline="true" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" />
+                    <asp:Label ID="Label6" Text=" | " CssClass="bluefnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" />
+                    <asp:LinkButton ID="Label7" Text="Virtual Login" CssClass="blackfnt" Font-Underline="true"
+                        Font-Size="X-Small" runat="server" Font-Bold="false" PostBackUrl="~/GUI/VirtualLogin.aspx" />
+                    <asp:Label ID="Label8" Text=" | " CssClass="bluefnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" />&nbsp;
+                <%-- <asp:UpdatePanel ID="UDI1" runat="server"  UpdateMode="Conditional" RenderMode="Inline">
+                            <ContentTemplate>--%>
+                    <asp:DropDownList ID="dlstFinYear" runat="server" OnSelectedIndexChanged="Fin_Year_Change"
+                        AutoPostBack="true">
+                    </asp:DropDownList>
+					<asp:LinkButton ID="lnkNewSite" Text="GO TO NEW SITE" CssClass="blackfnt" Font-Underline="true"
+                        Font-Size="X-Small" runat="server" Font-Bold="false" OnClick="lnkNewSite_Click" />
+                    <%--   </ContentTemplate>
+                        </asp:UpdatePanel>--%>
+                    <%--
+            Commented on 06 Nov 2007          
+             <asp:Label ID="lblChangeLoc" Text="Current Location: " CssClass="blackfnt" Font-Size="X-Small"
+                        runat="server" Font-Bold="true" />&nbsp;
+                    <asp:DropDownList ID="cboLoc" runat="server" AutoPostBack="true" EnableViewState="true"
+                        DataTextField="Location" DataValueField="LocCode" OnDataBound="onLocationDataBound"
+                        OnSelectedIndexChanged="onLocationChange" /><br />
+                    <asp:Label ID="lblFinYear" Text="Current Fin.Year: " CssClass="blackfnt" Font-Size="X-Small"
+                        runat="server" Font-Bold="true" />&nbsp;
+                    <asp:DropDownList ID="cboFinYear" runat="server" AutoPostBack="true" EnableViewState="true"
+                        DataTextField="FinYear" DataValueField="YearVal" OnDataBound="onFinYearDataBound"
+                        OnSelectedIndexChanged="onFinYearChange" />
+                    --%>
+                    <%--<asp:UpdateProgress ID="UpdateProgress1" runat="server">
+                        <ProgressTemplate>
+                            <asp:Image ID="img1" runat="server" ImageUrl="~/GUI/images/indicator.gif" />
+                            <asp:Label ID="Label1" runat="server" Text="Label">
+                                      <font class="blackfnt">Please wait...</font>
+                            </asp:Label>
+                        </ProgressTemplate>
+                    </asp:UpdateProgress>--%>
+                </td>
+            </tr>
+            <tr>
+                <td width="55%" align="left" valign="top">
+                    <%--                    <asp:Label ID="lblEmp" Text="User Id/Name/Branch: " CssClass="blackfnt" Font-Size="X-Small"
+                        runat="server" Font-Bold="true" />
+                    --%>
+                    <asp:Label ID="lblEmployee" CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" />
+                    <asp:Label ID="lbl1" Text=" | " CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="true" />
+                    <asp:Label ID="lblEmpNameVal" CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" />
+                    <asp:Label ID="lbl2" Text=" | " CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="true" />
+                    <asp:Label ID="lblEmpBranch" CssClass="blackfnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" />
+                    <asp:Label ID="lblCurrLoc" CssClass="bluefnt" Font-Size="X-Small" runat="server"
+                        Font-Bold="false" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <!--Font-Names="Verdana" Font-Size="Small"-->
+                    <%--<asp:Menu ID="Menu1" runat="server" Width="100px" Font-Names="Verdana" Font-Size="8pt"
+                        Style="text-align: center"
+                        BorderWidth="0" BorderStyle="None" BorderColor="#8ba0e5" BackColor="#FFFFFF"
+                        StaticMenuItemStyle-BackColor="#FFFFFF"
+                        StaticMenuItemStyle-Font-Size="8pt" StaticMenuItemStyle-Width="100px" StaticMenuItemStyle-Height="20"
+                        DynamicMenuItemStyle-Font-Size="8pt" DynamicMenuItemStyle-Width="100px" DynamicMenuItemStyle-Height="20"
+                        StaticMenuItemStyle-BorderWidth="1" StaticMenuItemStyle-BorderStyle="NotSet"
+                        StaticMenuItemStyle-BorderColor="#8ba0e5" StaticMenuItemStyle-ItemSpacing="0"
+                        StaticPopOutImageUrl="~/GUI/images/clear.gif" DynamicMenuItemStyle-BorderWidth="0"
+                        DynamicMenuItemStyle-BorderStyle="NotSet" DynamicMenuItemStyle-BorderColor="#8ba0e5"
+                        DynamicMenuItemStyle-BackColor="#F7F9FF" DataSourceID="xmlDataSource" DynamicHorizontalOffset="2"
+                        DynamicVerticalOffset="1" ForeColor="#000000" Orientation="Horizontal" StaticSubMenuIndent="0px">
+                        <DataBindings>
+                            <asp:MenuItemBinding DataMember="MenuItem" NavigateUrlField="NavigateUrl" TextField="Text"
+                                ToolTipField="ToolTip"/>
+                        </DataBindings>
+                        <StaticMenuItemStyle CssClass="alignCenter" Font-Names="Verdana" Font-Size="8pt" HorizontalPadding="15px"
+                            VerticalPadding="2px" Height="20px" BorderColor="#8BA0E5" BorderWidth="1px" ItemSpacing="0px"
+                            Width="100px" />
+                        <StaticSelectedStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="White" ForeColor="#8BA0E5" />
+                        <StaticHoverStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="White" ForeColor="#8BA0E5" />
+                        <DynamicHoverStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="#E5EBFF" ForeColor="#8BA0E5" />
+                        <DynamicMenuStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="#F7F9FF" ForeColor="Black" BorderColor="#8BA0E5" BorderWidth="1px" />
+                        <DynamicSelectedStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            BackColor="White" />
+                        <DynamicMenuItemStyle Width="100px" Height="20px" Font-Names="Verdana" Font-Size="8pt"
+                            HorizontalPadding="15px" VerticalPadding="2px" BackColor="#F7F9FF" BorderColor="#8BA0E5"
+                            BorderWidth="0px" />
+                    </asp:Menu>--%>
+                    <asp:Menu ID="Menu1" runat="server" DataSourceID="xmlDataSource" SkinID="MenuSkin">
+                        <DataBindings>
+                            <asp:MenuItemBinding DataMember="MenuItem" NavigateUrlField="NavigateUrl" TextField="Text"
+                                ToolTipField="ToolTip" />
+                        </DataBindings>
+                    </asp:Menu>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" colspan="2" style="width: 992px">
+                    <asp:Label ID="lblBlank" runat="server" Text="" CssClass="blackfnt"></asp:Label>
+                    <%--                    <asp:SiteMapPath ID="SiteMapPath1" runat="server" Font-Names="Verdana" Font-Size="X-Small"
+                        PathSeparator=" : ">
+                        <PathSeparatorStyle Font-Bold="True" ForeColor="#507CD1" />
+                        <CurrentNodeStyle ForeColor="#333333" />
+                        <NodeStyle Font-Bold="True" ForeColor="#284E98" />
+                        <RootNodeStyle Font-Bold="True" ForeColor="#507CD1" />
+                    </asp:SiteMapPath>
+                    --%>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <asp:ContentPlaceHolder ID="MyCPH1" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

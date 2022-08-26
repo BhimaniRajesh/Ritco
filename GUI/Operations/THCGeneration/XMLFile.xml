@@ -1,0 +1,75 @@
+﻿<root>
+  <DOCHDR>
+    <MANDOCNO>NA</MANDOCNO>
+    <DOCDT>28 December 2010</DOCDT>
+    <DOCDTTM>12:29</DOCDTTM>
+    <ACTDEPTTM>12:29</ACTDEPTTM>
+    <SCHDEPTTM></SCHDEPTTM>
+    <SCHDEPTDT></SCHDEPTDT>
+    <ToHubLast>SRTB</ToHubLast>
+    <ToHubNext>MUMB</ToHubNext>
+    <Loader></Loader>
+    <RouteMode>S</RouteMode>
+    <RouteCode>9888</RouteCode>
+    <RouteName>MUMB-SRTB</RouteName>
+    <Seal>Open Body</Seal>
+    <OutRemark></OutRemark>
+    <LateDeptReason></LateDeptReason>
+    <ROUTE_CAT>S</ROUTE_CAT>
+    <VendorCode>V0009</VendorCode>
+    <VendorName>SWASTIK ROAD LINES</VendorName>
+    <LateDeptReason></LateDeptReason>
+    <VehicleNo></VehicleNo>
+    <VehicleType>2</VehicleType>
+    <FTLType>12</FTLType>
+    <VehicleTons>0</VehicleTons>
+    <MarketVeh>N</MarketVeh>
+    <MarketVehImage>0</MarketVehImage>
+    <EngineNo>MH01B3232</EngineNo>
+    <ChasisNo>MH01B3232</ChasisNo>
+    <RCBookNo>MH01B3232</RCBookNo>
+    <VehicleRegDt>10 November 2010</VehicleRegDt>
+    <InsuranceDt>01 November 2011</InsuranceDt>
+    <FitnessCertDt>01 November 2011</FitnessCertDt>
+    <Driver1>fgd</Driver1>
+    <Licence1>fgdfg</Licence1>
+    <RTO1>dfgdfg</RTO1>
+    <ValidityDt1>01 January 1900</ValidityDt1>
+    <Driver1MOB>fgdfgd</Driver1MOB>
+    <Driver2></Driver2>
+    <Licence2></Licence2>
+    <RTO2></RTO2>
+    <ValidityDt2>01 January 1900</ValidityDt2>
+    <Driver2MOB></Driver2MOB>
+    <AirTrainName></AirTrainName>
+    <FlightTrainNo></FlightTrainNo>
+    <AirWayBillRRNo></AirWayBillRRNo>
+    <Airport></Airport>
+    <AIRSCH_TM></AIRSCH_TM>
+    <AWBNO></AWBNO>
+    <SPLRMOBNO></SPLRMOBNO>
+    <SPLRNM></SPLRNM>
+    <VHCAP>0.00</VHCAP>
+    <WTLOADED>0.00</WTLOADED>
+    <CAPUTI>0.00</CAPUTI>
+    <OVLED_YN>NO</OVLED_YN>
+    <OVLED_REASON></OVLED_REASON>
+    <FreeSpace>0</FreeSpace>
+    <STKM></STKM>
+    <ADVAMT></ADVAMT>
+    <ADVLOC></ADVLOC>
+    <CONTTYP>0</CONTTYP>
+    <CONTAMT></CONTAMT>
+    <WTADJ>0.00</WTADJ>
+    <WTADJ_PM>+</WTADJ_PM>
+    <TOTWT_ADJ>0</TOTWT_ADJ>
+    <ENTRYBY>10004</ENTRYBY>
+    <TCCount>2</TCCount>
+    <TOT_LOAD_PKGS>1010</TOT_LOAD_PKGS>
+    <TOT_ARRV_PKGS>1010</TOT_ARRV_PKGS>
+    <TOT_ARRV_ACTWT>194</TOT_ARRV_ACTWT>
+    <TOT_PEND_PKGS>1010</TOT_PEND_PKGS>
+    <TOT_CHARGE_WT>194</TOT_CHARGE_WT>
+    <TOT_LOAD_ACTWT>1010</TOT_LOAD_ACTWT>
+  </DOCHDR>
+</root>

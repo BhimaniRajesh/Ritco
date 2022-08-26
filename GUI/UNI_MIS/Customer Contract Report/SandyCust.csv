@@ -1,0 +1,5 @@
+contractid,custcode_name,custcode,contract_type,contract_stdate,contract_eddate,contract_effectdate,entrydt,single_slab_yn,multiple_slab_yn,contract_sign_loccode,road_yn,transport_mode,express_yn,air_yn,rail_yn,ftl_yn,sundry_yn,cod_dod_yn,oda_yn,vol_yn,dacc_yn,active
+CN01153,C0011608 : K. MOHAN & COMPANY (COK),C0011608,,02 Aug 2007,02 Oct 2007,02 Aug 2007,27 Feb 2007,MultiSlab,Y,COK : Cochin Branch,N, Express,    Rail,Y,N,Y,N,SUNDRY,     DACC,N,N,Y,Y
+CN01214,N00110004 : RELIANCE LOGISTICS,N00110004,,30 Jul 2007,30 Jul 2007,30 Jul 2007,30 Jul 2007,MultiSlab,,HQTR : HEAD OFFICE,Y,Road,     ,N,N,N,Y,FTL,     ,N,N,N,N
+CN01153,C0011608 : K. MOHAN & COMPANY (COK),C0011608, TBB,02 Aug 2007,02 Oct 2007,02 Aug 2007,27 Feb 2007,MultiSlab,Y,COK : Cochin Branch,N, Express,    Rail,Y,N,Y,N,SUNDRY,     DACC,N,N,Y,Y
+CN01214,N00110004 : RELIANCE LOGISTICS,N00110004,,30 Jul 2007,30 Jul 2007,30 Jul 2007,30 Jul 2007,MultiSlab,,HQTR : HEAD OFFICE,Y,Road,     ,N,N,N,Y,FTL,     ,N,N,N,N

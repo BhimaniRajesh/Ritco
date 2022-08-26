@@ -1,0 +1,110 @@
+BODY
+{
+}
+A
+{
+	FONT-SIZE: 11px; COLOR: #000000; FONT-FAMILY: verdana; TEXT-DECORATION: none
+}
+A:hover
+{
+    FONT-SIZE: 11px; COLOR: #0066cc; FONT-FAMILY: verdana; TEXT-DECORATION: none
+}
+.bandstrip
+{
+	FONT-WEIGHT: 500; FONT-SIZE: 12px; COLOR: #FFFFFF; FONT-FAMILY: verdana; TEXT-DECORATION: none
+}
+.whitefnt
+{
+	FONT-WEIGHT: 500; FONT-SIZE: 11px; COLOR: #FFFFFF; FONT-FAMILY: verdana
+}
+.blackfnt
+{
+	FONT-WEIGHT: 500; FONT-SIZE: 11px; LINE-HEIGHT: 16px; FONT-FAMILY: verdana
+}
+.bluefnt
+{
+	FONT-WEIGHT: 500; FONT-SIZE: 11px; LINE-HEIGHT: 16px; FONT-FAMILY: verdana
+}
+.blacklink
+{
+	FONT-WEIGHT: 500; FONT-SIZE: 11px; COLOR: #000000; LINE-HEIGHT: 14px; FONT-FAMILY: verdana; TEXT-DECORATION: none
+}
+.bluelink
+{
+	FONT-WEIGHT: 500; FONT-SIZE: 11px; COLOR: #000000; LINE-HEIGHT: 14px; FONT-FAMILY: verdana; TEXT-DECORATION: none
+}
+.blklnkund
+{
+	FONT-WEIGHT: 500; FONT-SIZE: 11px; COLOR: #000000; FONT-FAMILY: verdana; TEXT-DECORATION: none
+}
+.smlfnt
+{
+	FONT-WEIGHT: 500; FONT-SIZE: 11px; LINE-HEIGHT: 14px; FONT-FAMILY: verdana
+}
+.horzblue
+{
+	Background-Color: #FFFFFF
+}
+.bgbluegrey
+{
+	FONT-WEIGHT: 500;
+    FONT-SIZE: 11px;
+    LINE-HEIGHT: 16px;
+    FONT-FAMILY: verdana;
+	Background-Color: #FFFFFF
+}
+
+.bgwhite
+{
+	Background-Color: #ffffff
+}
+
+.bgblue
+{
+ Background-Color: #FFFFFF
+}
+.bglightblue
+{
+ Background-Color: #EFF3FF
+}
+
+.bullet
+{
+ Background-Color: #000000
+}
+.boxbg
+{
+ Background-Color: #000000
+}
+.logininp
+{
+	BORDER-RIGHT: #8BA0E5 1px solid; BORDER-TOP: #8BA0E5 1px solid; FONT-SIZE: 10px; BORDER-LEFT: #8BA0E5 1px solid; COLOR: #006699; BORDER-BOTTOM: #8BA0E5 1px solid; BACKGROUND-COLOR: #FFFFFF
+}
+.loginbut
+{
+	font-weight: normal; color: #FFFFFF; background-color: #57579F;	text-align: center;	vertical-align: middle;	font-family: Arial, Helvetica, sans-serif; font-size: 9pt; border: 1px solid #CCCCCC;
+}
+.input
+{
+    BACKGROUND-COLOR: #EFF3FF; FONT-SIZE: 11px; COLOR: #000000;
+}
+input
+{
+    BACKGROUND-COLOR: #ffffff; FONT-SIZE: 11px; COLOR: #000000;
+}
+SELECT {
+	BORDER-RIGHT: #999999 1px solid; BORDER-TOP: #999999 1px solid; FONT-SIZE: 10px; BORDER-LEFT: #999999 1px solid; COLOR: #000000; BORDER-BOTTOM: #999999 1px solid; BACKGROUND-COLOR: #EFF3FF
+
+}
+
+TEXTAREA {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana
+}
+SELECT {
+	FONT-SIZE: 11px
+}
+
+TABLE
+{
+border-collapse: collapse;
+}

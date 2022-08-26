@@ -1,0 +1,134 @@
+<%@ Page Language="C#" MasterPageFile="~/GUI/MasterPage.master" AutoEventWireup="true"
+    CodeFile="UpdateDeleteCrossingVendorContract.aspx.cs" Inherits="GUI_admin_CrossingVendorMaster_UpdateDeleteCrossingVendorContract" %>
+
+<asp:Content ContentPlaceHolderID="MyCPH1" runat="server" ID="cntone">
+
+    <script language="javascript" type="text/javascript" src="../../images/commonJs.js"></script>
+
+    <script type="text/javascript" language="javascript">
+    
+    </script>
+
+    <asp:Table ID="Table1" runat="server" CssClass="blackfnt">
+        <asp:TableRow BackColor="White">
+            <asp:TableCell>
+				       Vendor Type  
+            </asp:TableCell>
+            <asp:TableCell>
+                <asp:Label ID="lblVendorType" runat="server" CssClass="redfnt" Font-Bold="true"></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow BackColor="White">
+            <asp:TableCell>
+				       Vendor Name
+            </asp:TableCell>
+            <asp:TableCell>
+                <asp:HiddenField ID="hdnVendorCode" runat="server" />
+                <asp:Label ID="lblVendorName" runat="server" CssClass="blackfnt" Font-Bold="true"></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow>
+            <asp:TableCell>
+                <asp:GridView CssClass="boxbg" runat="server" ID="grvcity" CellSpacing="1" Width="99.8%"
+                    AllowSorting="true" PagerStyle-HorizontalAlign="left" BorderWidth="0" FooterStyle-CssClass="boxbg"
+                    PagerSettings-Mode="NumericFirstLast" AutoGenerateColumns="false" PagerSettings-FirstPageText="[First]"
+                    PagerSettings-LastPageText="[Last]" Style="margin: 1px 1px 1px 1px;" OnRowDataBound="grvcity_RowDataBound">
+                    <Columns>
+                        <asp:TemplateField>
+                            <HeaderStyle HorizontalAlign="Center" BackColor="White" Wrap="False" CssClass="blackfnt"
+                                Font-Bold="true" />
+                            <HeaderTemplate>
+                                Origin
+                            </HeaderTemplate>
+                            <ItemStyle CssClass="blackfnt" BackColor="White" HorizontalAlign="Left" />
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtlocation" Enabled="false" Visible="false" BorderStyle="groove"
+                                    Width="60px" runat="server"></asp:TextBox>
+                                <asp:Button ID="btnorigin" Text="...." runat="server" Visible="false" />
+                                <asp:DropDownList ID="ddlOrigin" runat="server">
+                                    <asp:ListItem Text="Select" Value=""></asp:ListItem>
+                                </asp:DropDownList>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <HeaderStyle HorizontalAlign="Center" BackColor="White" Wrap="False" CssClass="blackfnt"
+                                Font-Bold="true" />
+                            <HeaderTemplate>
+                                Dest.City
+                            </HeaderTemplate>
+                            <ItemStyle CssClass="blackfnt" BackColor="White" HorizontalAlign="Left" />
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtDestcity" Enabled="false" BorderStyle="groove" Width="80px" runat="server"></asp:TextBox>
+                                <asp:Button ID="btnDestination" Text="...." runat="server" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <HeaderStyle HorizontalAlign="Center" BackColor="White" Wrap="False" CssClass="blackfnt"
+                                Font-Bold="true" />
+                            <HeaderTemplate>
+                                Rate Type
+                            </HeaderTemplate>
+                            <ItemStyle CssClass="blackfnt" BackColor="White" HorizontalAlign="Center" />
+                            <ItemTemplate>
+                                <asp:DropDownList ID="cmbratetype" runat="server" BackColor="white" CssClass="blackfnt"
+                                    onchange="javascript:return checkExist(this.getAttribute('id'))">
+                                    <asp:ListItem Value="0">Select</asp:ListItem>
+                                    <asp:ListItem Value="K">Per Kg.</asp:ListItem>
+                                    <asp:ListItem Value="F">Flat RS</asp:ListItem>
+                                    <asp:ListItem Value="P">Per Pkgs</asp:ListItem>
+                                </asp:DropDownList>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <HeaderStyle HorizontalAlign="Center" BackColor="White" Wrap="False" CssClass="blackfnt"
+                                Font-Bold="true" />
+                            <HeaderTemplate>
+                                Rate
+                            </HeaderTemplate>
+                            <ItemStyle CssClass="blackfnt" BackColor="White" HorizontalAlign="Center" />
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtrate" BorderStyle="groove" Style="text-align: right;" onkeypress="javascript:return validFloat(event,this.getAttribute('id'))"
+                                    Width="60px" runat="server" MaxLength="12"></asp:TextBox>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <HeaderStyle HorizontalAlign="Center" BackColor="White" Wrap="False" CssClass="blackfnt"
+                                Font-Bold="true" />
+                            <HeaderTemplate>
+                                Door Dely. Charges
+                            </HeaderTemplate>
+                            <ItemStyle CssClass="blackfnt" BackColor="White" HorizontalAlign="Center" />
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtDoorDelyCharge" BorderStyle="groove" Style="text-align: right;"
+                                    onkeypress="javascript:return validFloat(event,this.getAttribute('id'))" Width="60px"
+                                    runat="server" MaxLength="12"></asp:TextBox>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <HeaderStyle HorizontalAlign="Center" BackColor="White" Wrap="False" CssClass="blackfnt"
+                                Font-Bold="true" />
+                            <HeaderTemplate>
+                                Edit
+                            </HeaderTemplate>
+                            <ItemStyle CssClass="blackfnt" BackColor="White" HorizontalAlign="Center" />
+                            <ItemTemplate>
+                              <asp:Button ID="btnEdit" runat="server" Text="EDIT" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <HeaderStyle HorizontalAlign="Center" BackColor="White" Wrap="False" CssClass="blackfnt"
+                                Font-Bold="true" />
+                            <HeaderTemplate>
+                                Delete
+                            </HeaderTemplate>
+                            <ItemStyle CssClass="blackfnt" BackColor="White" HorizontalAlign="Center" />
+                            <ItemTemplate>
+                                <asp:Button ID="btnDelete" runat="server" Text="DELETE" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </asp:TableCell>
+        </asp:TableRow>
+    </asp:Table>
+</asp:Content>

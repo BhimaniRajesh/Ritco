@@ -1,0 +1,1261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="RPTDS">
+      <rd:DataSourceID>915c465f-cd2a-49b2-935d-c93f42873476</rd:DataSourceID>
+      <DataSourceReference>RPTDS</DataSourceReference>
+    </DataSource>
+  </DataSources>
+  <InteractiveHeight>11in</InteractiveHeight>
+  <ReportParameters>
+    <ReportParameter Name="location">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>All</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>location</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="locLevel">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>locLevel</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="location_to">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>All</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>location_to</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="locLevel_to">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>locLevel_to</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="fromdt">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>24 sep 10</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>fromdt</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="todt">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>24 sep 10</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>todt</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="Suffix">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>N</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Suffix</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>Y</Value>
+            <Label>Yes</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>N</Value>
+            <Label>No</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="RPT">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Report Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Location Wise</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>Godown Wise</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="LOCTYP">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>orgncd</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Location Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>orgncd</Value>
+            <Label>Origin </Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>curr_loc</Value>
+            <Label>Current</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="STOCKTYP">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>STTYP</DataSetName>
+          <ValueField>STYP</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Stock Type</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>STTYP</DataSetName>
+          <ValueField>STYP</ValueField>
+          <LabelField>STYP</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="DTTYP">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>dockdt</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Date Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>dockdt</Value>
+            <Label>Booking Date</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>Arrived_DT</Value>
+            <Label>Arrived Date</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="RPT_FORTYP">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Report Format Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Register Report</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>Summary Report</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="GODOWN">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>All</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>GODOWN</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:DrawGrid>true</rd:DrawGrid>
+  <InteractiveWidth>8.5in</InteractiveWidth>
+  <rd:SnapToGrid>true</rd:SnapToGrid>
+  <RightMargin>1in</RightMargin>
+  <LeftMargin>1in</LeftMargin>
+  <BottomMargin>1in</BottomMargin>
+  <rd:ReportID>16daf0ef-54e2-42db-91e7-c78596497b8d</rd:ReportID>
+  <DataSets>
+    <DataSet Name="RPTDS">
+      <Fields>
+        <Field Name="RPTCD">
+          <DataField>RPTCD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RPTNM">
+          <DataField>RPTNM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RPTSUBCD">
+          <DataField>RPTSUBCD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RPTSUBNM">
+          <DataField>RPTSUBNM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CNT">
+          <DataField>CNT</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="dockno">
+          <DataField>dockno</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="docksf">
+          <DataField>docksf</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="dockdt">
+          <DataField>dockdt</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Arrived_dt">
+          <DataField>Arrived_dt</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="orgncd">
+          <DataField>orgncd</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="reassign_destcd">
+          <DataField>reassign_destcd</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="curr_loc">
+          <DataField>curr_loc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="THC_NEXT_LOC">
+          <DataField>THC_NEXT_LOC</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="actuwt">
+          <DataField>actuwt</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="pkgsno">
+          <DataField>pkgsno</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="chrgwt">
+          <DataField>chrgwt</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="StockType">
+          <DataField>StockType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DKT_STATUS">
+          <DataField>DKT_STATUS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="godown_srno">
+          <DataField>godown_srno</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Godown_desc">
+          <DataField>Godown_desc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Report_Level">
+          <DataField>Report_Level</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_level">
+          <DataField>Loc_level</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="t_Report_Level">
+          <DataField>t_Report_Level</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="t_Loc_level">
+          <DataField>t_Loc_level</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Freight">
+          <DataField>Freight</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Subtotal">
+          <DataField>Subtotal</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Dkttot">
+          <DataField>Dkttot</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PrivateMarka">
+          <DataField>PrivateMarka</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>WebXnet_StockReport</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@location">
+            <Value>=Parameters!location.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@locLevel">
+            <Value>=Parameters!locLevel.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@location_to">
+            <Value>=Parameters!location_to.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@locLevel_to">
+            <Value>=Parameters!locLevel_to.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@fromdt">
+            <Value>=Parameters!fromdt.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@todt">
+            <Value>=Parameters!todt.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@Suffix">
+            <Value>=Parameters!Suffix.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@RPT">
+            <Value>=Parameters!RPT.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@RPT_FORTYP">
+            <Value>=Parameters!RPT_FORTYP.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@LOCTYP">
+            <Value>=Parameters!LOCTYP.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@STOCKTYP">
+            <Value>=Parameters!STOCKTYP.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@DTTYP">
+            <Value>=Parameters!DTTYP.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@GODOWN">
+            <Value>=Parameters!GODOWN.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="DKTCALLEDAS">
+      <Fields>
+        <Field Name="codedesc">
+          <DataField>codedesc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandText>select codedesc from webx_master_general where codeid='DKT' and codetype='DOCS'</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="RPTSTYLE">
+      <Fields>
+        <Field Name="BGCOLOR">
+          <DataField>BGCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERCOLOR">
+          <DataField>BORDERCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERSTYLE">
+          <DataField>BORDERSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERWIDTH">
+          <DataField>BORDERWIDTH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR">
+          <DataField>FNTCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE">
+          <DataField>FNTSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY">
+          <DataField>FNTFAMILY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE">
+          <DataField>FNTSIZE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight">
+          <DataField>FNTWeight</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR_HD">
+          <DataField>FNTCOLOR_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE_HD">
+          <DataField>FNTSTYLE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY_HD">
+          <DataField>FNTFAMILY_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE_HD">
+          <DataField>FNTSIZE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight_HD">
+          <DataField>FNTWeight_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BlackFnt">
+          <DataField>BlackFnt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandText>select * from webx_report_style</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="STTYP">
+      <Fields>
+        <Field Name="STYP">
+          <DataField>STYP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandText>select STYP= 'Booking Stock'
+union
+select 'Delivery Stock'
+union
+select 'In Transit Stock'
+union
+select 'Transshipment Stock'
+union
+select 'Gone For Delivery'</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <Width>20.55in</Width>
+  <Body>
+    <ReportItems>
+      <Matrix Name="matrix1">
+        <MatrixColumns>
+          <MatrixColumn>
+            <Width>1.2in</Width>
+          </MatrixColumn>
+          <MatrixColumn>
+            <Width>1.2in</Width>
+          </MatrixColumn>
+          <MatrixColumn>
+            <Width>1.2in</Width>
+          </MatrixColumn>
+          <MatrixColumn>
+            <Width>1.2in</Width>
+          </MatrixColumn>
+          <MatrixColumn>
+            <Width>1.2in</Width>
+          </MatrixColumn>
+          <MatrixColumn>
+            <Width>1.2in</Width>
+          </MatrixColumn>
+          <MatrixColumn>
+            <Width>1.2in</Width>
+          </MatrixColumn>
+        </MatrixColumns>
+        <DataSetName>RPTDS</DataSetName>
+        <RowGroupings>
+          <RowGrouping>
+            <Width>1.5in</Width>
+            <DynamicRows>
+              <Grouping Name="matrix1_RPTNM">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!RPTNM.Value</GroupExpression>
+                </GroupExpressions>
+              </Grouping>
+              <Sorting>
+                <SortBy>
+                  <SortExpression>=Fields!RPTNM.Value</SortExpression>
+                  <Direction>Ascending</Direction>
+                </SortBy>
+              </Sorting>
+              <Subtotal>
+                <ReportItems>
+                  <Textbox Name="textbox3">
+                    <rd:DefaultName>textbox3</rd:DefaultName>
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <CanGrow>true</CanGrow>
+                    <Value>Total</Value>
+                  </Textbox>
+                </ReportItems>
+              </Subtotal>
+              <ReportItems>
+                <Textbox Name="RPTNM">
+                  <rd:DefaultName>RPTNM</rd:DefaultName>
+                  <Style>
+                    <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                    <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                    <BorderColor>
+                      <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                    </BorderColor>
+                    <BorderStyle>
+                      <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                    </BorderStyle>
+                    <BorderWidth>
+                      <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                    </BorderWidth>
+                    <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                    <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                    <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                    <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                  <ZIndex>9</ZIndex>
+                  <CanGrow>true</CanGrow>
+                  <Value>=Fields!RPTNM.Value</Value>
+                </Textbox>
+              </ReportItems>
+            </DynamicRows>
+            <FixedHeader>true</FixedHeader>
+          </RowGrouping>
+          <RowGrouping>
+            <Width>2.25in</Width>
+            <DynamicRows>
+              <Grouping Name="matrix1_RPTSUBNM">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!RPTSUBNM.Value</GroupExpression>
+                </GroupExpressions>
+              </Grouping>
+              <Sorting>
+                <SortBy>
+                  <SortExpression>=Fields!RPTSUBNM.Value</SortExpression>
+                  <Direction>Ascending</Direction>
+                </SortBy>
+              </Sorting>
+              <Visibility>
+                <Hidden>true</Hidden>
+                <ToggleItem>RPTNM</ToggleItem>
+              </Visibility>
+              <ReportItems>
+                <Textbox Name="RPTSUBNM">
+                  <rd:DefaultName>RPTSUBNM</rd:DefaultName>
+                  <Style>
+                    <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                    <BackgroundColor>White</BackgroundColor>
+                    <BorderColor>
+                      <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                    </BorderColor>
+                    <BorderStyle>
+                      <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                    </BorderStyle>
+                    <BorderWidth>
+                      <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                    </BorderWidth>
+                    <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                    <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                    <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                    <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                  <ZIndex>8</ZIndex>
+                  <CanGrow>true</CanGrow>
+                  <Value>=Fields!RPTSUBNM.Value</Value>
+                </Textbox>
+              </ReportItems>
+            </DynamicRows>
+            <FixedHeader>true</FixedHeader>
+          </RowGrouping>
+        </RowGroupings>
+        <Top>0.125in</Top>
+        <ColumnGroupings>
+          <ColumnGrouping>
+            <Height>0.21in</Height>
+            <DynamicColumns>
+              <Grouping Name="matrix1_StockType">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!StockType.Value</GroupExpression>
+                </GroupExpressions>
+              </Grouping>
+              <Sorting>
+                <SortBy>
+                  <SortExpression>=Fields!StockType.Value</SortExpression>
+                  <Direction>Ascending</Direction>
+                </SortBy>
+              </Sorting>
+              <Subtotal>
+                <ReportItems>
+                  <Textbox Name="textbox2">
+                    <rd:DefaultName>textbox2</rd:DefaultName>
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>17</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>Total</Value>
+                  </Textbox>
+                </ReportItems>
+              </Subtotal>
+              <ReportItems>
+                <Textbox Name="StockType">
+                  <rd:DefaultName>StockType</rd:DefaultName>
+                  <Style>
+                    <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                    <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                    <BorderColor>
+                      <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                    </BorderColor>
+                    <BorderStyle>
+                      <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                    </BorderStyle>
+                    <BorderWidth>
+                      <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                    </BorderWidth>
+                    <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                    <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                    <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                    <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                    <TextAlign>Center</TextAlign>
+                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingRight>2pt</PaddingRight>
+                    <PaddingTop>2pt</PaddingTop>
+                    <PaddingBottom>2pt</PaddingBottom>
+                  </Style>
+                  <ZIndex>18</ZIndex>
+                  <CanGrow>true</CanGrow>
+                  <Value>=Fields!StockType.Value</Value>
+                </Textbox>
+              </ReportItems>
+            </DynamicColumns>
+            <FixedHeader>true</FixedHeader>
+          </ColumnGrouping>
+          <ColumnGrouping>
+            <Height>0.21in</Height>
+            <StaticColumns>
+              <StaticColumn>
+                <ReportItems>
+                  <Textbox Name="textbox22">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>16</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>=" Total "+First(Fields!codedesc.Value, "DKTCALLEDAS")</Value>
+                  </Textbox>
+                </ReportItems>
+              </StaticColumn>
+              <StaticColumn>
+                <ReportItems>
+                  <Textbox Name="textbox23">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>15</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>Total Pkgs</Value>
+                  </Textbox>
+                </ReportItems>
+              </StaticColumn>
+              <StaticColumn>
+                <ReportItems>
+                  <Textbox Name="textbox24">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>14</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>Total Charge Wt.</Value>
+                  </Textbox>
+                </ReportItems>
+              </StaticColumn>
+              <StaticColumn>
+                <ReportItems>
+                  <Textbox Name="textbox25">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>13</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>Total Actual Wt.</Value>
+                  </Textbox>
+                </ReportItems>
+              </StaticColumn>
+              <StaticColumn>
+                <ReportItems>
+                  <Textbox Name="textbox43">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>12</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>Total Freight</Value>
+                  </Textbox>
+                </ReportItems>
+              </StaticColumn>
+              <StaticColumn>
+                <ReportItems>
+                  <Textbox Name="textbox37">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>11</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>Total SubTotal</Value>
+                  </Textbox>
+                </ReportItems>
+              </StaticColumn>
+              <StaticColumn>
+                <ReportItems>
+                  <Textbox Name="textbox38">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BackgroundColor>=First(Fields!BGCOLOR.Value, "RPTSTYLE")</BackgroundColor>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE_HD.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=First(Fields!FNTWeight_HD.Value, "RPTSTYLE")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>10</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>="Total "+First(Fields!codedesc.Value, "DKTCALLEDAS")+" Amount"</Value>
+                  </Textbox>
+                </ReportItems>
+              </StaticColumn>
+            </StaticColumns>
+          </ColumnGrouping>
+        </ColumnGroupings>
+        <Corner>
+          <ReportItems>
+            <Textbox Name="textbox9">
+              <rd:DefaultName>textbox9</rd:DefaultName>
+              <Style>
+                <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                <BorderColor>
+                  <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                </BorderColor>
+                <BorderStyle>
+                  <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                </BorderStyle>
+                <BorderWidth>
+                  <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                </BorderWidth>
+                <FontFamily>Tahoma</FontFamily>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+              <ZIndex>19</ZIndex>
+              <CanGrow>true</CanGrow>
+              <Value>
+              </Value>
+            </Textbox>
+          </ReportItems>
+        </Corner>
+        <MatrixRows>
+          <MatrixRow>
+            <Height>0.21in</Height>
+            <MatrixCells>
+              <MatrixCell>
+                <ReportItems>
+                  <Textbox Name="textbox1">
+                    <Action>
+                      <Drillthrough>
+                        <ReportName>Stock_Report_Register</ReportName>
+                        <Parameters>
+                          <Parameter Name="location">
+                            <Value>=iif(Parameters!RPT.Value="1",
+IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),Fields!RPTSUBCD.Value,Fields!RPTCD.Value),Parameters!location.Value),
+IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),Fields!RPTSUBCD.Value,Fields!RPTSUBCD.Value),Parameters!location.Value))</Value>
+                          </Parameter>
+                          <Parameter Name="locLevel">
+                            <Value>=iif(Parameters!RPT.Value="1",
+IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),Fields!Loc_level.Value,Fields!Report_Level.Value),Parameters!locLevel.Value),
+IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),Parameters!locLevel.Value,Fields!Loc_level.Value),Parameters!locLevel.Value))</Value>
+                          </Parameter>
+                          <Parameter Name="location_to">
+                            <Value>=IIF(Inscope("matrix1_RPTNM"),
+	IIF(Inscope("matrix1_RPTSUBNM"),
+iif(Fields!StockType.Value="In Transit Stock",Fields!THC_NEXT_LOC.Value,Parameters!location_to.Value)
+	,Parameters!location_to.Value)
+,Parameters!location_to.Value)</Value>
+                          </Parameter>
+                          <Parameter Name="locLevel_to">
+                            <Value>=Parameters!locLevel_to.Value</Value>
+                          </Parameter>
+                          <Parameter Name="fromdt">
+                            <Value>=Parameters!fromdt.Value</Value>
+                          </Parameter>
+                          <Parameter Name="todt">
+                            <Value>=Parameters!todt.Value</Value>
+                          </Parameter>
+                          <Parameter Name="Suffix">
+                            <Value>=Parameters!Suffix.Value</Value>
+                          </Parameter>
+                          <Parameter Name="RPT">
+                            <Value>=Parameters!RPT.Value</Value>
+                          </Parameter>
+                          <Parameter Name="LOCTYP">
+                            <Value>=Parameters!LOCTYP.Value</Value>
+                          </Parameter>
+                          <Parameter Name="STOCKTYP">
+                            <Value>=iif(Inscope("matrix1_StockType"),Fields!StockType.Value,Parameters!STOCKTYP.Value)</Value>
+                          </Parameter>
+                          <Parameter Name="DTTYP">
+                            <Value>=Parameters!DTTYP.Value</Value>
+                          </Parameter>
+                          <Parameter Name="RPT_FORTYP">
+                            <Value>1</Value>
+                          </Parameter>
+                          <Parameter Name="GODOWN">
+                            <Value>=iif(Parameters!RPT.Value="1",
+IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),"All","All"),"All"),
+IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),Fields!godown_srno.Value,"All"),"All"))</Value>
+                          </Parameter>
+                        </Parameters>
+                      </Drillthrough>
+                    </Action>
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),First(Fields!FNTWeight.Value, "RPTSTYLE"),"Bold"),"Bold")</FontWeight>
+                      <TextDecoration>=iif(ReportItems!textbox1.Value="0","None","Underline")</TextDecoration>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>7</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>=Val(Sum(Fields!CNT.Value))</Value>
+                  </Textbox>
+                </ReportItems>
+              </MatrixCell>
+              <MatrixCell>
+                <ReportItems>
+                  <Textbox Name="textbox28">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),First(Fields!FNTWeight.Value, "RPTSTYLE"),"Bold"),"Bold")</FontWeight>
+                      <TextAlign>Center</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>6</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>=Val(Sum(Fields!pkgsno.Value))</Value>
+                  </Textbox>
+                </ReportItems>
+              </MatrixCell>
+              <MatrixCell>
+                <ReportItems>
+                  <Textbox Name="textbox29">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),First(Fields!FNTWeight.Value, "RPTSTYLE"),"Bold"),"Bold")</FontWeight>
+                      <TextAlign>Right</TextAlign>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>5</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>=CDec(Sum(Fields!chrgwt.Value))</Value>
+                  </Textbox>
+                </ReportItems>
+              </MatrixCell>
+              <MatrixCell>
+                <ReportItems>
+                  <Textbox Name="textbox30">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),First(Fields!FNTWeight.Value, "RPTSTYLE"),"Bold"),"Bold")</FontWeight>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>4</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>=CDec(Sum(Fields!actuwt.Value))</Value>
+                  </Textbox>
+                </ReportItems>
+              </MatrixCell>
+              <MatrixCell>
+                <ReportItems>
+                  <Textbox Name="textbox40">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),First(Fields!FNTWeight.Value, "RPTSTYLE"),"Bold"),"Bold")</FontWeight>
+                      <Format>N</Format>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>3</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>=CDec(Sum(Fields!Freight.Value))</Value>
+                  </Textbox>
+                </ReportItems>
+              </MatrixCell>
+              <MatrixCell>
+                <ReportItems>
+                  <Textbox Name="textbox41">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),First(Fields!FNTWeight.Value, "RPTSTYLE"),"Bold"),"Bold")</FontWeight>
+                      <Format>N</Format>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>2</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>=CDec(Sum(Fields!Subtotal.Value))</Value>
+                  </Textbox>
+                </ReportItems>
+              </MatrixCell>
+              <MatrixCell>
+                <ReportItems>
+                  <Textbox Name="textbox42">
+                    <Style>
+                      <Color>=First(Fields!FNTCOLOR.Value, "RPTSTYLE")</Color>
+                      <BorderColor>
+                        <Default>=First(Fields!BORDERCOLOR.Value, "RPTSTYLE")</Default>
+                      </BorderColor>
+                      <BorderStyle>
+                        <Default>=First(Fields!BORDERSTYLE.Value, "RPTSTYLE")</Default>
+                      </BorderStyle>
+                      <BorderWidth>
+                        <Default>=First(Fields!BORDERWIDTH.Value, "RPTSTYLE")</Default>
+                      </BorderWidth>
+                      <FontStyle>=First(Fields!FNTSTYLE.Value, "RPTSTYLE")</FontStyle>
+                      <FontFamily>=First(Fields!FNTFAMILY.Value, "RPTSTYLE")</FontFamily>
+                      <FontSize>=First(Fields!FNTSIZE.Value, "RPTSTYLE")</FontSize>
+                      <FontWeight>=IIF(Inscope("matrix1_RPTNM"),IIF(Inscope("matrix1_RPTSUBNM"),First(Fields!FNTWeight.Value, "RPTSTYLE"),"Bold"),"Bold")</FontWeight>
+                      <Format>N</Format>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <ZIndex>1</ZIndex>
+                    <CanGrow>true</CanGrow>
+                    <Value>=CDec(Sum(Fields!Dkttot.Value))</Value>
+                  </Textbox>
+                </ReportItems>
+              </MatrixCell>
+            </MatrixCells>
+          </MatrixRow>
+        </MatrixRows>
+      </Matrix>
+    </ReportItems>
+    <Height>0.965in</Height>
+  </Body>
+  <Language>en-US</Language>
+  <TopMargin>1in</TopMargin>
+</Report>

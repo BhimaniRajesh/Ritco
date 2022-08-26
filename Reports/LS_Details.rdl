@@ -1,0 +1,1035 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="RPTDS">
+      <rd:DataSourceID>8c47bfd7-0531-45e2-8c8b-ffd943c49577</rd:DataSourceID>
+      <DataSourceReference>RPTDS</DataSourceReference>
+    </DataSource>
+  </DataSources>
+  <InteractiveHeight>11in</InteractiveHeight>
+  <ReportParameters>
+    <ReportParameter Name="Fromdt">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>From Date :-</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Todt">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>To Date :-</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="LOCATION">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>LOCATION</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="DtType">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>DtType</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ReportType">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportType</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Employee">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Employee</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:DrawGrid>true</rd:DrawGrid>
+  <InteractiveWidth>8.5in</InteractiveWidth>
+  <rd:SnapToGrid>true</rd:SnapToGrid>
+  <RightMargin>1in</RightMargin>
+  <LeftMargin>1in</LeftMargin>
+  <BottomMargin>1in</BottomMargin>
+  <rd:ReportID>690adf03-e37b-4821-9ec2-7652d88d6f3f</rd:ReportID>
+  <DataSets>
+    <DataSet Name="RPTDS">
+      <Fields>
+        <Field Name="TCDT">
+          <DataField>TCDT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Entryby">
+          <DataField>Entryby</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TCNO">
+          <DataField>TCNO</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TCSF">
+          <DataField>TCSF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TCDT_1">
+          <DataField>TCDT</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TCBR">
+          <DataField>TCBR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ROUTE_CODE">
+          <DataField>ROUTE_CODE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ToBH_CODE">
+          <DataField>ToBH_CODE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="THCBR">
+          <DataField>THCBR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="THCNO">
+          <DataField>THCNO</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="THCSF">
+          <DataField>THCSF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="THCDT">
+          <DataField>THCDT</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="LOADING_STATUS">
+          <DataField>LOADING_STATUS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TOT_DKT">
+          <DataField>TOT_DKT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_PKGS">
+          <DataField>TOT_PKGS</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_ACTUWT">
+          <DataField>TOT_ACTUWT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_CFTWT">
+          <DataField>TOT_CFTWT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_FRTAMT">
+          <DataField>TOT_FRTAMT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_LOAD_PKGS">
+          <DataField>TOT_LOAD_PKGS</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_LOAD_ACTWT">
+          <DataField>TOT_LOAD_ACTWT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_LOAD_CFTWT">
+          <DataField>TOT_LOAD_CFTWT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ModvatCover">
+          <DataField>ModvatCover</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="IntCover">
+          <DataField>IntCover</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_REMNQTY">
+          <DataField>TOT_REMNQTY</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_REMNWT">
+          <DataField>TOT_REMNWT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TFLAG_YN">
+          <DataField>TFLAG_YN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Final_TC">
+          <DataField>Final_TC</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TCOUTREM">
+          <DataField>TCOUTREM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CFT_Ctr">
+          <DataField>CFT_Ctr</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PartCsgn_Ctr">
+          <DataField>PartCsgn_Ctr</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MISROUTE_YN">
+          <DataField>MISROUTE_YN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="airbilltotamt">
+          <DataField>airbilltotamt</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TOT_ACLSDOCK">
+          <DataField>TOT_ACLSDOCK</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="vehno">
+          <DataField>vehno</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="OLD_ENTRYBY">
+          <DataField>OLD_ENTRYBY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ManualLSNo">
+          <DataField>ManualLSNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PreparedBy">
+          <DataField>PreparedBy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FromCity">
+          <DataField>FromCity</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ToCity">
+          <DataField>ToCity</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>LS_DETAILS_SSRS</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@FROMDT">
+            <Value>=Parameters!Fromdt.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@TODT">
+            <Value>=Parameters!Todt.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@DtType">
+            <Value>=Parameters!DtType.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@LOCATION">
+            <Value>=Parameters!LOCATION.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ReportType">
+            <Value>=Parameters!ReportType.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@Employee">
+            <Value>=Parameters!Employee.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="Style">
+      <Fields>
+        <Field Name="BGCOLOR">
+          <DataField>BGCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERCOLOR">
+          <DataField>BORDERCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERSTYLE">
+          <DataField>BORDERSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BORDERWIDTH">
+          <DataField>BORDERWIDTH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR">
+          <DataField>FNTCOLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE">
+          <DataField>FNTSTYLE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY">
+          <DataField>FNTFAMILY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE">
+          <DataField>FNTSIZE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight">
+          <DataField>FNTWeight</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTCOLOR_HD">
+          <DataField>FNTCOLOR_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSTYLE_HD">
+          <DataField>FNTSTYLE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTFAMILY_HD">
+          <DataField>FNTFAMILY_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTSIZE_HD">
+          <DataField>FNTSIZE_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FNTWeight_HD">
+          <DataField>FNTWeight_HD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BlackFnt">
+          <DataField>BlackFnt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>RPTDS</DataSourceName>
+        <CommandText>SELECT * FROM webx_Report_Style</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <Width>8.375in</Width>
+  <Body>
+    <ReportItems>
+      <Textbox Name="textbox11">
+        <Top>0.875in</Top>
+        <Width>2.375in</Width>
+        <Style>
+          <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+          <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+          <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+          <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+          <FontWeight>700</FontWeight>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+        <ZIndex>2</ZIndex>
+        <CanGrow>true</CanGrow>
+        <Left>0.125in</Left>
+        <Height>0.25in</Height>
+        <Value>LS Information</Value>
+      </Textbox>
+      <Table Name="table2">
+        <ZIndex>1</ZIndex>
+        <DataSetName>RPTDS</DataSetName>
+        <Top>0.125in</Top>
+        <Width>3.875in</Width>
+        <Header>
+          <TableRows>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox60">
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>3</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Date</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox61">
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>2</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Parameters!Fromdt.Value + " - " + Parameters!Todt.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.25in</Height>
+            </TableRow>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox22">
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>1</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Location</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox23">
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Parameters!LOCATION.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.25in</Height>
+            </TableRow>
+          </TableRows>
+        </Header>
+        <TableColumns>
+          <TableColumn>
+            <Width>1.5in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.375in</Width>
+          </TableColumn>
+        </TableColumns>
+        <Height>0.5in</Height>
+        <Left>0.125in</Left>
+      </Table>
+      <Table Name="table1">
+        <NoRows>No Records Found...</NoRows>
+        <DataSetName>RPTDS</DataSetName>
+        <Top>1.25in</Top>
+        <Width>8.125in</Width>
+        <Details>
+          <TableRows>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox10">
+                      <rd:DefaultName>textbox10</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>7</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=RowNumber(nothing)</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="TCNO">
+                      <rd:DefaultName>TCNO</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>6</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!TCNO.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="TCDT">
+                      <rd:DefaultName>TCDT</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>5</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!TCDT.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="TCBR">
+                      <rd:DefaultName>TCBR</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>4</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!TCBR.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="ToBH_CODE">
+                      <rd:DefaultName>ToBH_CODE</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>3</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!ToBH_CODE.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="TOT_DKT">
+                      <rd:DefaultName>TOT_DKT</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>2</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!TOT_DKT.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="TOT_PKGS">
+                      <rd:DefaultName>TOT_PKGS</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>1</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!TOT_PKGS.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="TOT_ACTUWT">
+                      <rd:DefaultName>TOT_ACTUWT</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR.Value, "Style")</Color>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!TOT_ACTUWT.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.21in</Height>
+            </TableRow>
+          </TableRows>
+        </Details>
+        <Header>
+          <TableRows>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox9">
+                      <rd:DefaultName>textbox9</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "Style")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "Style")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>15</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Sr No</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox2">
+                      <rd:DefaultName>textbox2</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "Style")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "Style")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>14</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Loading Sheet No</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox3">
+                      <rd:DefaultName>textbox3</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "Style")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "Style")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>13</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Loading Sheet Date</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox4">
+                      <rd:DefaultName>textbox4</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "Style")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "Style")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>12</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Origin</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox5">
+                      <rd:DefaultName>textbox5</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "Style")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "Style")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>11</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Destination</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox6">
+                      <rd:DefaultName>textbox6</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "Style")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "Style")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>10</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Total Docket</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox7">
+                      <rd:DefaultName>textbox7</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "Style")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "Style")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>9</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Total Packages</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox8">
+                      <rd:DefaultName>textbox8</rd:DefaultName>
+                      <Style>
+                        <Color>=First(Fields!FNTCOLOR_HD.Value, "Style")</Color>
+                        <BackgroundColor>=First(Fields!BGCOLOR.Value, "Style")</BackgroundColor>
+                        <BorderColor>
+                          <Default>=First(Fields!BORDERCOLOR.Value, "Style")</Default>
+                        </BorderColor>
+                        <BorderStyle>
+                          <Default>=First(Fields!BORDERSTYLE.Value, "Style")</Default>
+                        </BorderStyle>
+                        <BorderWidth>
+                          <Default>=First(Fields!BORDERWIDTH.Value, "Style")</Default>
+                        </BorderWidth>
+                        <FontStyle>=First(Fields!FNTSTYLE_HD.Value, "Style")</FontStyle>
+                        <FontFamily>=First(Fields!FNTFAMILY_HD.Value, "Style")</FontFamily>
+                        <FontSize>=First(Fields!FNTSIZE_HD.Value, "Style")</FontSize>
+                        <FontWeight>=First(Fields!FNTWeight_HD.Value, "Style")</FontWeight>
+                        <TextAlign>Center</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                      <ZIndex>8</ZIndex>
+                      <CanGrow>true</CanGrow>
+                      <Value>Total Actual Weight</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.22in</Height>
+            </TableRow>
+          </TableRows>
+          <RepeatOnNewPage>true</RepeatOnNewPage>
+        </Header>
+        <TableColumns>
+          <TableColumn>
+            <Width>0.625in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1.5in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1in</Width>
+          </TableColumn>
+        </TableColumns>
+        <Height>0.43in</Height>
+        <Left>0.125in</Left>
+      </Table>
+    </ReportItems>
+    <Height>1.75in</Height>
+  </Body>
+  <Language>en-US</Language>
+  <TopMargin>1in</TopMargin>
+</Report>

@@ -1,0 +1,315 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Globalization;
+using System.Data.SqlClient;
+using System.IO;
+using RKLib.ExportData;
+public partial class GUI_UNI_MIS_OPN_DOC_Register_Result : System.Web.UI.Page
+{
+    SqlConnection Conn;
+    public static string RO, LO,DWN_XLS,BUSTYP, RO_TO, LO_TO,View_Sales, DateType, st_paybasis,st_status, st_custcd,st_type, st_trnmod, fromdt, todt, st_Docnolist, select_list, select_Text, st_doctyp;
+    DataSet ds = new DataSet();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            DWN_XLS = Request.QueryString["DWN_XLS"].ToString();
+            if (DWN_XLS == "0")
+            {
+                BindGrid();
+            }
+            else if (DWN_XLS == "1")
+            {
+                XLS_BindGrid();
+            }
+            else if (DWN_XLS == "2")
+            {
+                CSV_BindGrid();
+
+            }
+        }
+    }
+
+    protected void dgDocket_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        //try
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                GridView oGridView = (GridView)sender;
+                // Label billamt = (Label)oGridView.FindControl("billamt");
+
+                GridViewRow tr1 = new GridViewRow(2, 2, DataControlRowType.Header, DataControlRowState.Insert);
+                //TableCell oTableCell = new TableCell();
+                //TableCell oTableCell1 = new TableCell();
+                TableCell tr1tc1 = new TableCell();
+                tr1tc1.Text = "Sr No.";
+                tr1tc1.CssClass = "blackfnt";
+                tr1tc1.Wrap = false;
+                tr1.CssClass = "bgbluegrey";
+                tr1.Cells.Add(tr1tc1);
+                string[] select_Text_Arr = select_Text.Split(',');
+
+                for (int ic = 0; ic < select_Text_Arr.Length; ic++)
+                {
+                    TableCell tr1tc2 = new TableCell();
+                    tr1tc2.Text = select_Text_Arr[ic].ToString();
+                    tr1tc2.CssClass = "blackfnt";
+                    tr1tc2.Wrap = false;
+                    tr1.CssClass = "bgbluegrey";
+                    tr1.Cells.Add(tr1tc2);
+                }
+
+                oGridView.Controls[0].Controls.AddAt(0, tr1);
+                oGridView.Controls[0].Controls.RemoveAt(1);
+
+           
+            }
+        }
+    }
+
+   
+    protected void pgChange(object sender, GridViewPageEventArgs e)
+    {
+
+        dgDocket.PageIndex = e.NewPageIndex;
+
+
+        BindGrid();
+
+    }
+
+
+
+    public void BindGrid()
+    {
+        Conn = new SqlConnection(Session["SqlProvider"].ToString().Trim());
+        Conn.Open();
+        // TBL_OPNDOC_Register.Visible = true;
+
+        RO_TO = Request.QueryString["RO_TO"].ToString();
+        LO_TO = Request.QueryString["LO_TO"].ToString();
+        RO = Request.QueryString["RO"].ToString();
+        LO = Request.QueryString["LO"].ToString();
+        BUSTYP = Request.QueryString["BUSTYP"].ToString();
+        select_Text = Request.QueryString["select_Text"].ToString();
+        select_list = Request.QueryString["select_list"].ToString();
+        st_doctyp = Request.QueryString["st_doctyp"].ToString();
+        DateType = Request.QueryString["DateType"].ToString();
+        fromdt = Request.QueryString["fromdt"].ToString();
+        todt = Request.QueryString["todt"].ToString();
+        st_Docnolist = Request.QueryString["st_Docnolist"].ToString();
+        View_Sales = Request.QueryString["View_Sales"].ToString();
+        st_paybasis = Request.QueryString["st_paybasis"].ToString();
+        st_trnmod = Request.QueryString["st_trnmod"].ToString();
+        st_type = Request.QueryString["st_type"].ToString();
+        st_custcd = Request.QueryString["st_custcd"].ToString();
+        st_status = Request.QueryString["st_status"].ToString();
+        string st_status_str = Request.QueryString["st_status_str"].ToString();
+        string st_paybasis_str = Request.QueryString["st_paybasis_str"].ToString();
+        string st_trnmod_str = Request.QueryString["st_trnmod_str"].ToString();
+        string st_type_str = Request.QueryString["st_type_str"].ToString();
+        string BUSTYP_str = Request.QueryString["BUSTYP_str"].ToString();
+        //TableRow tr1 = new TableRow();
+        //TableCell tr1tc1 = new TableCell();
+
+        LBLDATE.Text = fromdt + " - " + todt;
+        LBLBRANCH.Text = RO + " - " + RO_TO;
+        LBLRPT.Text = LO + " - " + LO_TO;
+        lblcust.Text = st_custcd;
+        lblBM_STAuTS_str.Text = st_status_str;
+        if (st_doctyp == "DKT")
+        {
+            lblcust_vend.Text = "Customer";
+            lblPaybasis.Text = st_paybasis_str;
+            lblBusiness.Text = BUSTYP_str;
+          //  lblBM_TYp.Text = st_type_str;
+            lblmod.Text = st_type_str;
+        }
+        else
+        {
+            lblcust_vend.Text = "Vendor";
+            TRS2.Visible = false;
+            TRS3.Visible = false;
+            TRS4.Visible = false;
+            //TRS5.Visible = false;
+        }
+        
+
+
+        //tr1tc1.Text = "Sr No.";
+        //tr1tc1.CssClass = "blackfnt";
+        //tr1tc1.Wrap = false;
+        //tr1.CssClass = "bgbluegrey";
+        //tr1.Cells.Add(tr1tc1);
+
+        //string[] select_Text_Arr = select_Text.Split(',');
+
+        //for (int ic = 0; ic < select_Text_Arr.Length; ic++)
+        //{
+        //    TableCell tr1tc2 = new TableCell();
+        //    tr1tc2.Text = select_Text_Arr[ic].ToString();
+        //    tr1tc2.CssClass = "blackfnt";
+        //    tr1tc2.Wrap = false;
+        //    tr1.CssClass = "bgbluegrey";
+        //    tr1.Cells.Add(tr1tc2);
+        //}
+
+        //tr1.HorizontalAlign = HorizontalAlign.Center;
+
+        //TBL_OPNDOC_Register.Rows.Add(tr1);
+
+       
+        int isn = 1;
+        if (st_doctyp == "DKT")
+        {
+
+            string STR_SEL_LIST = select_list.Replace("Dely_Date", "Convert(varchar,Dely_Date,6)").Replace("mrsdt", "Convert(varchar,mrsdt,6)").Replace("cdeldt", "Convert(varchar,cdeldt,6)").Replace("bgndt", "Convert(varchar,bgndt,6)").ToString();
+            STR_SEL_LIST = STR_SEL_LIST.Replace("Paybas_st", "(select top 1  codedesc from webx_master_general where codetype='PAYTYP' and codeid=d.paybas)");
+            STR_SEL_LIST = STR_SEL_LIST.Replace("trn_mod_st", "(select top 1  codedesc from webx_master_general where codetype='TRN' and codeid=trn_mod)");
+            STR_SEL_LIST = STR_SEL_LIST.Replace("Service_class_st", "(select top 1  codedesc from webx_master_general where codetype='SVCTYP' and codeid=service_class)");
+            STR_SEL_LIST = STR_SEL_LIST.Replace("loadtype", "(select top 1  codedesc from webx_master_general where codetype='LUT' and codeid=loadtype)");
+            STR_SEL_LIST = STR_SEL_LIST.Replace("businesstype", "(select top 1  codedesc from webx_master_general where codetype='BUT' and codeid=businesstype)");
+            //STR_SEL_LIST = STR_SEL_LIST.Replace("Cnor", "CSGNCD+':' +(case  when CSGNCD='8888' then CSGNNM else (select top 1 custnm from webx_custhdr  with(NOLOCK) where custcd=d.csgncd) end )");
+           // STR_SEL_LIST = STR_SEL_LIST.Replace("Cnee", "CSGeCD+':' +(case  when CSGeCD='8888' then CSGeNM else (select top 1 custnm from webx_custhdr  with(NOLOCK) where custcd=d.csgecd) end )");
+            STR_SEL_LIST = STR_SEL_LIST.Replace("Yield", "(case when (chrgwt=0 or chrgwt is  null ) then 0 else (cast((dkttot-(cess+svctax+hedu_cess))/chrgwt as decimal(9,2) ))  end) ");
+            STR_SEL_LIST = STR_SEL_LIST.Replace("PFMno", "(select top 1 FMNO from VW_SALES_PFM where dkt=d.dockno order by FM_date desc) as PFMno ");
+            STR_SEL_LIST = STR_SEL_LIST.Replace("VEHNO", "(select top 1 VEHNO from VW_THC_TC_Dockets_Veh where dockno=d.dockno)");
+
+            
+            string deleteDATA = "delete from webx_SALES_REGISTER_RPT";
+            SqlCommand CMD_DEL = new SqlCommand(deleteDATA, Conn);
+            CMD_DEL.ExecuteNonQuery();
+
+            string INSERTDATA = "insert into webx_SALES_REGISTER_RPT(" + select_list.Replace("d.", "").ToString() + ",paybas,trn_mod,Service_class,Docket_mode,Pickup_Dely,OCTROIMR,billed,f_locname,t_locname,from_loccode,from_report_loc,to_loccode,to_report_loc,csgncd,csgecd) select distinct " + STR_SEL_LIST + ",d.paybas,trn_mod,Service_class,Docket_mode,Pickup_Dely,OCTROIMR,billed ,l_f.locname as f_locname,l_f.locname as t_locname,l_f.loccode as from_loccode, l_f.report_loc as from_report_loc,l_t.loccode as to_loccode,l_t.report_loc as to_report_loc ,csgncd,csgecd from webx_master_docket d with(NOLOCK) inner join webx_master_docket_charges C with(NOLOCK)  on d.dockno=c.dockno inner join webx_trans_docket_status s with(NOLOCK)  on d.dockno=s.dockno and d.docksf=s.docksf Inner Join Webx_location l_f With(NOLOCK) On D.orgncd=l_f.loccode    Inner Join Webx_location l_t With(NOLOCK) On D.reassign_destcd=l_t.loccode    ";
+            if (View_Sales != "vw_Docket_Sales_register_MR" || View_Sales != "vw_Docket_Sales_register")
+            {
+                INSERTDATA = INSERTDATA + " Left Outer Join Vw_Bill_details_net VBD with(NOLOCK) On D.dockno = VBD.dockno and VBD.BILL_CANCEL='N' and vbd.paybas<>'6'    ";
+            }
+
+            if (View_Sales != "vw_Docket_Sales_register_BIll" || View_Sales != "vw_Docket_Sales_register")
+            {
+                INSERTDATA = INSERTDATA + " Left Outer Join Vw_MR_details_net VMD with(NOLOCK) On D.dockno = VMD.dockno and  VMD.MR_CANCEL='N'  and mrstype in ('1','3')   ";
+            }
+
+            if (st_Docnolist == "") 
+                INSERTDATA = INSERTDATA + " where s.docksf='.' and  Convert(varchar,d.dockdt,106) between Convert(datetime,'" + fromdt + "',106) and Convert(datetime,'" + todt + "',106)  ";
+            else
+                INSERTDATA = INSERTDATA + " where dbo.SplitWithSearch('" + st_Docnolist + "',',',d.dockno)=1";
+            //Response.Write("<br>INSERTDATA : " + INSERTDATA);
+
+            //SqlCommand CMD_INS = new SqlCommand(INSERTDATA, Conn);
+            //CMD_INS.ExecuteNonQuery();
+        }
+
+        select_list = select_list.Replace("Dely_Date", "Convert(varchar,Dely_Date,6)").Replace("mrsdt", "Convert(varchar,mrsdt,6)").Replace("bgndt", "Convert(varchar,bgndt,6)").ToString();
+        select_list = select_list.Replace("Paybas_st", "paybasstr");
+        select_list = select_list.Replace("trn_mod_st", "trnmodstr");
+        select_list = select_list.Replace("Service_class_st", "BookingType");
+        select_list = select_list.Replace("loadtype", "loadtype");
+        select_list = select_list.Replace("businesstype", "businesstype");
+        ////STR_SEL_LIST = STR_SEL_LIST.Replace("Cnor", "CSGNCD+':' +(case  when CSGNCD='8888' then CSGNNM else (select top 1 custnm from webx_custhdr  with(NOLOCK) where custcd=d.csgncd) end )");
+        //// STR_SEL_LIST = STR_SEL_LIST.Replace("Cnee", "CSGeCD+':' +(case  when CSGeCD='8888' then CSGeNM else (select top 1 custnm from webx_custhdr  with(NOLOCK) where custcd=d.csgecd) end )");
+        //select_list = select_list.Replace("Yield", "(case when (chrgwt=0 or chrgwt is  null ) then 0 else (cast((dkttot-(cess+svctax+hedu_cess))/chrgwt as decimal(9,2) ))  end) ");
+       select_list = select_list.Replace("PFMno", "(select top 1 FMNO from VW_SALES_PFM where dkt=d.dockno order by FM_date desc) as PFMno ");
+        select_list = select_list.Replace("VEHNO", "(select top 1 VEHNO from VW_THC_TC_Dockets_Veh where dockno=d.dockno)");
+
+
+
+        string sql_st = "exec webx_OPN_DOC_Register_ver1 '" + fromdt + "','" + todt + "','" + RO + "','" + LO + "','" + RO_TO + "','" + LO_TO + "','" + select_list.Replace("dockdt", "Convert(varchar,dockdt,6)") + "','" + st_paybasis + "','" + st_trnmod + "','" + st_type + "','" + st_status + "','" + BUSTYP + "','" + st_custcd + "','" + st_Docnolist + "','" + View_Sales + "','" + st_doctyp + "'";
+      // Response.Write("<br><br><br>sql_st : " + sql_st);
+//Response.End();
+        //Response.Write("<br>RPT_SUBTY : " + RPT_SUBTY);
+        SqlCommand sqlcmd12 = new SqlCommand(sql_st, Conn);
+	sqlcmd12.CommandTimeout = 300;
+        //SqlDataReader dr = sqlcmd12.ExecuteReader();
+        SqlDataAdapter da = new SqlDataAdapter(sqlcmd12);
+
+        
+
+        da.Fill(ds);
+        da.Fill(ds, "RDATA");
+        Session["DATA"] = ds;
+        dgDocket.DataSource = ds.Tables["RDATA"];
+        dgDocket.DataBind();
+        // lblflow.Text = dkt_call;
+        dgDocket.Visible = true;
+
+
+
+        Conn.Close();
+    }
+
+    protected void btn_csv_Click(object sender, EventArgs e)
+    {
+
+        XLS_BindGrid();
+    }
+    public void XLS_BindGrid()
+    {
+        dgDocket.AllowPaging = false;
+        dgDocket.BorderWidth = 1;
+        dgDocket.CssClass = "blackfnt";
+        dgDocket.Font.Size = 10;
+
+
+
+        BindGrid();
+        StringWriter stringWrite;
+        HtmlTextWriter htmlWrite;
+        HtmlForm frm = new HtmlForm();
+        Response.Clear();
+        Response.AddHeader("content-disposition", "attachment;filename=Register_Report.xls");
+        Response.Charset = "";
+        Response.ContentType = "application/vnd.ms-xls";
+        stringWrite = new System.IO.StringWriter();
+        htmlWrite = new HtmlTextWriter(stringWrite);
+        Controls.Add(frm);
+
+        frm.Controls.Add(dgDocket);
+
+
+        //frm.Controls.Add(dgDocket);
+        frm.RenderControl(htmlWrite);
+        Response.Write(stringWrite.ToString());
+        Response.End();
+
+    }
+    public void CSV_BindGrid()
+    {
+        BindGrid();
+        DataTable dtEmployee = ((DataSet)Session["DATA"]).Tables["RDATA"].Copy();
+        select_Text = Request.QueryString["select_Text"].ToString();
+        // Export all the details to CSV
+        int[] iColumns = new int[select_Text.Split(',').Length];
+        string[] sHeaders = new string[select_Text.Split(',').Length];
+        string[] STRHeaders = select_Text.Split(',');
+        for (int i = 1; i < select_Text.Split(',').Length; i++)
+        {
+            iColumns[i] = i;
+            sHeaders[i] = STRHeaders[i].ToString();
+        }
+        //int[] iColumns =  //{ 1, 2, 3, 5, 6 };
+        //string[] sHeaders = select_Text.Split(','); //{ "LastName", "FirstName", "DOB", "Address", "ZipCode" };
+
+        // Export the details of specified columns with specified headers to CSV
+        RKLib.ExportData.Export objExport = new RKLib.ExportData.Export();
+        objExport.ExportDetails(dtEmployee, iColumns, sHeaders, Export.ExportFormat.CSV, "Register.csv");
+    }
+
+    protected void btn_csv1_Click(object sender, EventArgs e)
+    {
+
+
+        CSV_BindGrid();
+
+    }
+}

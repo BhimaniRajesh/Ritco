@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemlist>
+	<item id="item1" text="Cinema">
+		<itemlist>
+			<item id="Cinema 1" />
+			<item id="Cinema 2" />
+			<item id="Cinema 3" />
+		</itemlist>
+	</item>
+	<item id="item2" text="TV">
+		<itemlist>
+			<item id="TV 1" />
+			<item id="TV 2" />
+			<item id="TV 3" />
+		</itemlist>
+	</item>
+	<item id="item3" text="Theater" >
+		<itemlist>
+			<item id="Theater 1" />
+			<item id="Theater 2" />
+			<item id="Theater 3" enabled="false" />
+			<item id="Theater 4" />
+		</itemlist>
+	</item>
+	<item id="item5" text="Restaurants" enabled="false"/>
+	<item id="item4" text="Help" />
+</itemlist>

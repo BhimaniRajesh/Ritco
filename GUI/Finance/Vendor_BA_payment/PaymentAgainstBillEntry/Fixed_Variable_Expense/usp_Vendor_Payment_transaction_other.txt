@@ -1,0 +1,228 @@
+
+ CREATE Proc usp_Vendor_Payment_transaction_other            
+@transNo int,            
+@docNo varchar(25),            
+@loccode varchar(25),            
+@finYear varchar(4),            
+@entryBy1 varchar(40),            
+@NextVoucherno varchar(40)            
+As            
+Set NoCount On            
+            
+Declare @BBRCD varchar(4),@Finyear1 float            
+            
+declare @VoucherNo varchar(20),@yearSuffix varchar(10),@entryBy varchar (10) ,@fromAcccode varchar(7),@Toacccode varchar(7),@raiseAcccode varchar(7),@Narration varchar(200)            
+DECLARE @finclosedt datetime, @brcd varchar(10),@raiseaccdesc varchar(50),@fromaccdesc varchar(50),@Sql varchar(8000),@Transdate datetime,@NETAMT float            
+declare @paymode varchar(20),@transtype varchar(30),@TDSDED float,@chqno varchar(20),@chqamt float,@chqdt datetime,@tdsacccode varchar(30),@tdsaccdesc varchar(100)            
+declare @Pcamt decimal,@OTHERCHRG decimal,@SVCTAX decimal ,@cessamt decimal,@discount decimal, @PBOV_code varchar(70),@PBOV_Name varchar(200),@HEDU_cess decimal,@Total_Diff decimal,@netbalamt decimal            
+declare @SVCTAXDED decimal,@OTHERDED decimal,@TDS decimal,@credit_amt decimal            
+set @yearSuffix= @finYear + '_' + replace(space(2-len(convert(numeric,@finYear)+1)),' ','0') + convert(varchar,convert(numeric,@finYear)+1)            
+            
+set @Finyear1=convert(numeric, '20' + @finYear)            
+            
+            
+            
+--transaction 1 starts here            
+if @transNo=1            
+begin            
+             
+             
+             
+ --select @BGNDT=BGNDT,@BCANDT=BCANDT,@billamt=billamt,@BBRCD=BBRCD,@netsvrcamt=isnull(svrcamt,0)+isnull(cessamt,0),@subtotal=isnull(billamt,0)-isnull(svrcamt,0)-isnull(cessamt,0),@PBOV_code=ptmscd,@PBOV_Name=ptmsNM,@entryBy=bgenempcd from webx_billmst where billno=@docno            
+ select @Transdate=billdt,@pcamt=Pcamt,@OTHERCHRG=OTHERCHRG,@SVCTAX=SVCTAX,@cessamt=cessamt,@discount=discount,@PBOV_code =VENDORCODE,@PBOV_Name=VENDORname,@Hedu_cess=isnull(Hedu_cess,0)  from WEBX_VENDORBILL_HDR where BILLNO=@docno            
+ Select @brcd=@loccode            
+ select @Narration='WHEN VENDOR BILL IS GENERATED '+ @docNo            
+ Select @entryBy=@entryBy1            
+ ---select @netamt=@pcamt+@OTHERCHRG  changed on 25 Jan 08           
+ select @netamt=@OTHERCHRG            
+ select @transtype='Journal'            
+ select @fromAcccode='LCL0002'            
+ select @fromaccdesc=accdesc from webx_acctinfo where acccode=@fromAcccode            
+ select @raiseAcccode='VOC0001'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+ exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ if @netamt > 0 ----            
+ begin            
+  --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+              
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@raiseAcccode,NULL,NULL,@netamt,0,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@fromAccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@fromAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+  --cash/bank credit            
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@fromAcccode,NULL,NULL,0,@netamt,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@raiseaccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@raiseAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+              
+  --select (@VoucherNo)            
+ end            
+ --select @advamt_lastpaid            
+ select @raiseAcccode='ALS0009'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+ exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ if @SVCTAX > 0 ----            
+ begin            
+  --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+              
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@raiseAcccode,NULL,NULL,@SVCTAX,0,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@fromAccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@fromAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+  --cash/bank credit            
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@fromAcccode,NULL,NULL,0,@SVCTAX,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@raiseaccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@raiseAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+              
+  --select (@VoucherNo)            
+ end            
+ --select @advamt_lastpaid            
+ select @raiseAcccode='ALS0010'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+ exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ if @cessamt > 0 ----            
+ begin            
+  --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+              
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@raiseAcccode,NULL,NULL,@cessamt,0,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@fromAccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@fromAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+  --cash/bank credit            
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@fromAcccode,NULL,NULL,0,@cessamt,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@raiseaccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@raiseAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+              
+  --select (@VoucherNo)            
+ end            
+ --select @advamt_lastpaid            
+ select @raiseAcccode='ALS0011'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+ exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ if @Hedu_cess > 0 ----            
+ begin            
+  --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+              
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@raiseAcccode,NULL,NULL,@Hedu_cess,0,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@fromAccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@fromAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+  --cash/bank credit            
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@fromAcccode,NULL,NULL,0,@Hedu_cess,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@raiseaccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@raiseAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+              
+  --select (@VoucherNo)            
+ end            
+ --select @advamt_lastpaid            
+ select @raiseAcccode='LCL0002'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+            
+ select @fromAcccode='IOT0001'            
+ select @fromaccdesc=accdesc from webx_acctinfo where acccode=@fromAcccode            
+            
+ exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ if @discount > 0 ----            
+ begin            
+  --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+              
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@raiseAcccode,NULL,NULL,@discount,0,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@fromAccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@fromAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+  --cash/bank credit            
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@fromAcccode,NULL,NULL,0,@discount,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@raiseaccdesc,@entryBy,'Y','VENDOR PAYMENT',1,@PBOV_code,@PBOV_Name,'V',@raiseAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+              
+  --select (@VoucherNo)            
+ end            
+ --select @advamt_lastpaid            
+end            
+--transaction 1 ends here            
+--transaction 2 starts here            
+if @transNo=2            
+begin            
+ select @raiseAcccode='ALS0009'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+ --select @BGNDT=BGNDT,@BCANDT=BCANDT,@billamt=billamt,@BBRCD=BBRCD,@netsvrcamt=isnull(svrcamt,0)+isnull(cessamt,0),@subtotal=isnull(billamt,0)-isnull(svrcamt,0)-isnull(cessamt,0),@PBOV_code=ptmscd,@PBOV_Name=ptmsNM,@entryBy=bgenempcd from webx_billmst where billno=@docno            
+             
+ select @Transdate=billdt,@SVCTAXDED=SVCTAXDED,@OTHERDED=OTHERDED,@pcamt=Pcamt,@OTHERCHRG=OTHERCHRG,@SVCTAX=SVCTAX,@cessamt=cessamt,@discount=discount,@PBOV_code =VENDORCODE,@PBOV_Name=VENDORname,@Hedu_cess=isnull(Hedu_cess,0)  from WEBX_VENDORBILL_HDR where BILLNO=@docno            
+ Select @brcd=@loccode            
+ select @Narration='VENDORA PAYMENT,DEDUCTION MADE AT BILL NO  '+ @docNo            
+ Select @entryBy=@entryBy1            
+             
+ select @transtype='Journal'            
+ select @fromAcccode='LCL0002'            
+ select @fromaccdesc=accdesc from webx_acctinfo where acccode=@fromAcccode            
+ exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ if @SVCTAXDED > 0 ----            
+ begin            
+  --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+              
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@raiseAcccode,NULL,NULL,@SVCTAXDED,0,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@fromAccdesc,@entryBy,'Y','VENDOR PAYMENT',2,@PBOV_code,@PBOV_Name,'V',@fromAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+  --cash/bank credit            
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@fromAcccode,NULL,NULL,0,@SVCTAXDED,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@raiseaccdesc,@entryBy,'Y','VENDOR PAYMENT',2,@PBOV_code,@PBOV_Name,'V',@raiseAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+              
+  --select (@VoucherNo)            
+ end            
+ --select @advamt_lastpaid            
+             
+ select @raiseAcccode='IOT0007'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+ --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ if @OTHERDED > 0 ----            
+ begin            
+  --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+              
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@raiseAcccode,NULL,NULL,@OTHERDED,0,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@fromAccdesc,@entryBy,'Y','VENDOR PAYMENT',2,@PBOV_code,@PBOV_Name,'V',@fromAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+  --cash/bank credit            
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@fromAcccode,NULL,NULL,0,@OTHERDED,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@raiseaccdesc,@entryBy,'Y','VENDOR PAYMENT',2,@PBOV_code,@PBOV_Name,'V',@raiseAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+              
+  --select (@VoucherNo)            
+ end            
+             
+            
+             
+end            
+--transaction 2 ends here             
+--transaction 3 starts here            
+if @transNo=3            
+begin            
+ select @raiseAcccode='LCL0002'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+ --select @BGNDT=BGNDT,@BCANDT=BCANDT,@billamt=billamt,@BBRCD=BBRCD,@netsvrcamt=isnull(svrcamt,0)+isnull(cessamt,0),@subtotal=isnull(billamt,0)-isnull(svrcamt,0)-isnull(cessamt,0),@PBOV_code=ptmscd,@PBOV_Name=ptmsNM,@entryBy=bgenempcd from webx_billmst where billno=@docno            
+   
+ select @Transdate=billdt,@tdsacccode=tdsacccode,@TDS=TDS,@SVCTAXDED=SVCTAXDED,@OTHERDED=OTHERDED,@pcamt=Pcamt,@OTHERCHRG=OTHERCHRG,@SVCTAX=SVCTAX,@cessamt=cessamt,@discount=discount,@PBOV_code =VENDORCODE,@PBOV_Name=VENDORname,@Hedu_cess=isnull(Hedu_cess,0)  from WEBX_VENDORBILL_HDR where BILLNO=@docno            
+ Select @brcd=@loccode            
+ select @Narration='TDS BOOKED AGAINST BILL NO  '+ @docNo            
+ Select @entryBy=@entryBy1            
+             
+ select @transtype='Journal'            
+ select @fromAcccode=@tdsacccode            
+ select @fromaccdesc=accdesc from webx_acctinfo where acccode=@fromAcccode            
+ --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ if @TDS > 0 ----            
+ begin            
+  exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+              
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@raiseAcccode,NULL,NULL,@TDS,0,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@fromAccdesc,@entryBy,'Y','VENDOR PAYMENT',3,@PBOV_code,@PBOV_Name,'V',@fromAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+  --cash/bank credit            
+  exec usp_acctrans_insertData @Finyear1,@Transdate,@VoucherNo,@fromAcccode,NULL,NULL,0,@TDS,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@raiseaccdesc,@entryBy,'Y','VENDOR PAYMENT',3,@PBOV_code,@PBOV_Name,'V',@raiseAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix            
+             
+  --select (@VoucherNo)            
+ end            
+ --select @advamt_lastpaid            
+             
+end            
+--transaction 3 ends here             
+--transaction 4 starts here            
+if @transNo=4            
+begin            
+ select @raiseAcccode='LCL0002'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+ --select @BGNDT=BGNDT,@BCANDT=BCANDT,@billamt=billamt,@BBRCD=BBRCD,@netsvrcamt=isnull(svrcamt,0)+isnull(cessamt,0),@subtotal=isnull(billamt,0)-isnull(svrcamt,0)-isnull(cessamt,0),@PBOV_code=ptmscd,@PBOV_Name=ptmsNM,@entryBy=bgenempcd from webx_billmst where billno=@docno            
+         
+ select @raiseAcccode=acccode,@chqno=chqno,@chqdt=chqdate,@Transdate=Transdate,@credit_amt=credit,@transtype=transtype,@fromAcccode=oppacccode,@PBOV_code =PBOV_code,@PBOV_Name=PBOV_Name from  webx_vouchertrans_arch where voucherno=@docno            
+ Select @brcd=@loccode            
+ select @Narration= @docNo + ' VOUCHER GENERATED FOR VENDOR BILL PAYMENT'            
+ Select @entryBy=@entryBy1            
+             
+ --select @transtype='Journal'            
+ --select @raiseAcccode='LCL0002'            
+ select @raiseaccdesc=accdesc from webx_acctinfo where acccode=@raiseAcccode            
+          
+ select @fromaccdesc=accdesc from webx_acctinfo where acccode=@fromAcccode            
+ --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+ if @credit_amt > 0 ----            
+ begin            
+  --exec usp_next_VoucherNo @brcd,@finYear,@VoucherNo output            
+              
+  exec usp_acctrans_insertData_Voucher_closed @Finyear1,@Transdate,@NextVoucherno,@raiseAcccode,@chqno,@chqdt,@credit_amt,0,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@fromAccdesc,@entryBy,'N','FROM VENDOR BIll PAYMENT',4,@PBOV_code,@PBOV_Name,'V',@fromAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix,'CLOSED',@entryBy,@brcd,@Transdate,@Transdate            
+  --cash/bank credit            
+  exec usp_acctrans_insertData_Voucher_closed @Finyear1,@Transdate,@NextVoucherno,@fromAcccode,@chqno,@chqdt,0,@credit_amt,@Narration,NULL,NULL,@transtype,@docNo,'.',@brcd,@raiseaccdesc,@entryBy,'N','FROM VENDOR BIll PAYMENT',4,@PBOV_code,@PBOV_Name,'V',@raiseAcccode,NULL,NULL,NULL,NULL,NULL,NULL,NULL,@entryBy,NULL,NULL,@yearSuffix,'CLOSED',@entryBy,@brcd,@Transdate,@Transdate            
+              
+              
+ end            
+ --select @advamt_lastpaid            
+ --select (@credit_amt)            
+end      
+--transaction 4 ends here             
+            
+    
+  

@@ -1,0 +1,5 @@
+locname,loccode,orgncd,dockno,dockdt,reassign_destcd,diplomat,arrv_dt,arrived,booked,iomno,paybas,actuwt,dkttot,csgnnm,csgenm,Normdays,delays,dkt_detain,freight
+DELHI,DEL,DEL : DELHI,3690011,31 Jul 2007,DEL : DELHI,N,31 Jul 2007,10,,IOM,-,100.0,,-,-,0,1,N,
+DELHI,DEL,DEL : DELHI,3690012,31 Jul 2007,DEL : DELHI,N,31 Jul 2007,20,,IOM,-,200.0,,-,-,0,1,N,
+DELHI,DEL,DEL : DELHI,3690011,31 Jul 2007,DEL : DELHI,N,31 Jul 2007,10,,IOM,-,100.0,,-,-,0,1,N,
+DELHI,DEL,DEL : DELHI,3690012,31 Jul 2007,DEL : DELHI,N,31 Jul 2007,20,,IOM,-,200.0,,-,-,0,1,N,

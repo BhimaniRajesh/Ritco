@@ -1,0 +1,53 @@
+INSERT INTO webx_modules_rules (Module_Name,RULEID,RULE_DESC,RULE_VALUE,RULE_Y_N)
+VALUES('Account Master','RULE30','Set Manual Account Code As System Generated Account Code','','Y')
+
+GO
+
+INSERT INTO webx_modules_rules (Module_Name,RULEID,RULE_DESC,RULE_VALUE,RULE_Y_N)
+VALUES('Account Master','RULE31','Set Branch Code For Account Head','','Y')
+
+GO
+
+ALTER TABLE WEBX_ACCTINFO ALTER COLUMN bkloccode VARCHAR(2000)
+ALTER TABLE WEBX_ACCTINFO ALTER COLUMN Brcd VARCHAR(2000)
+
+GO
+
+ALTER Procedure usp_Account_Master      
+@Acccode varchar (7),      
+@Accdesc varchar (100),      
+@Groupcode varchar (6),      
+@Acccategory varchar (25),      
+@Brcd varchar (2000),      
+@Entryby varchar(5),      
+@ACTIVEFLAG char (1),      
+@bkAcctNo varchar (25),      
+@bkloccode varchar (2000),      
+@Company_Acccode varchar (100)  
+as      
+      
+Insert into webx_acctInfo       
+(Acccode,Accdesc,Groupcode,Acccategory,Brcd,Entryby,Entrydt,ACTIVEFLAG,bkAcctNo,bkloccode,Company_Acccode)       
+Values      
+(@Acccode,@Accdesc,@Groupcode,@Acccategory,@Brcd,@Entryby,getdate(),@ACTIVEFLAG,@bkAcctNo,@bkloccode,@Company_Acccode) 
+
+GO
+
+ALTER Procedure usp_Update_Account_Master        
+@Acccode varchar (7),        
+@Accdesc varchar (100),        
+@Groupcode varchar (6),        
+@Acccategory varchar (25),        
+@Brcd varchar (2000),        
+@Entryby varchar(5),        
+@ACTIVEFLAG char (1),        
+@bkAcctNo varchar (25),        
+@bkloccode varchar (2000),        
+@Company_Acccode varchar (100)        
+as        
+        
+update webx_acctInfo set        
+Accdesc=@Accdesc,Groupcode=@Groupcode,Acccategory=@Acccategory,Brcd=@Brcd,        
+Entryby=@Entryby,Entrydt=getdate(),ACTIVEFLAG=@ACTIVEFLAG,bkAcctNo=@bkAcctNo,bkloccode=@bkloccode,Company_Acccode=@Company_Acccode        
+where Acccode=@Acccode      
+      

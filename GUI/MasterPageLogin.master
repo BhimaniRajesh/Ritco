@@ -1,0 +1,32 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPageLogin.master.cs"
+    Inherits="MasterPage2" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link id="Link1" href="~/GUI/images/style.css" rel="Stylesheet" type="text/css" runat="server" />
+</head>
+<body>
+    <form id="form1" enctype="multipart/form-data" runat="server">
+        <table style="width: 100%">
+            <tr>
+                <td colspan="1">
+                    <!--<img src="images/webxpress_logo.gif" />-->
+                    <asp:Image ID="imgWebx" Height="50" ImageUrl="~/GUI/images/webxpress_logo.gif" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right" colspan="1">
+                    <asp:Label ID="lblDateTime" Font-Names="Verdana" Font-Size="X-Small" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:ContentPlaceHolder ID="MyCPHLogin" runat="server">
+                    </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

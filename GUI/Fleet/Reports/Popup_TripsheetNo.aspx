@@ -1,0 +1,77 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Popup_TripsheetNo.aspx.cs" Inherits="GUI_Fleet_Reports_Popup_TripsheetNo" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<link href="../../images/style.css" rel="stylesheet"
+    type="text/css" />
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head1" runat="server">
+    <title>Untitled Page</title>
+    <script language="javascript" type="text/javascript">
+        
+        function SelectLocation(objLocation)
+        {
+            
+               var mNo = "1"
+            {
+                window.opener.document.forms[0].ctl00$MyCPH1$txtTripsheetNo.value = objLocation.value;
+                window.close();
+            }
+            
+        }
+        
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+    <center>
+ 
+<br />
+<table border="1" cellspacing="1" cellpadding="2" style="width: 41%">
+  <tr class="bgbluegrey">
+     <td colspan="2" align="center"><font class="blackfnt">Search by parameter</font></td>
+  </tr>
+ 
+  <tr>
+   <td style="width: 172px"><font class="blackfnt">Tripsheet No.</font></td>
+   <td><font class="blackfnt">
+        <asp:TextBox ID="txtTripsheetNo" runat="server"></asp:TextBox></font></td>
+  </tr>
+<tr>
+   <td colspan="2" align="center">
+        <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+            <asp:Label ID="Label1" runat="server" ForeColor="#FF8080"></asp:Label></td>
+  </tr>
+</table>
+<br />
+                         <asp:GridView ID="GridView1" runat="server" AllowPaging="false" AllowSorting="true"
+                            AutoGenerateColumns="false" BorderWidth="1" CellPadding="7" CellSpacing="1" EmptyDataText="No Records Found..." 
+                            HeaderStyle-CssClass="dgHeaderStyle" PagerSettings-Mode="Numeric" PagerStyle-HorizontalAlign="left"
+                            Width="395px" class="boxbg">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Select" >
+                                    <ItemTemplate>
+                                        <input name="MyRadioButton" type="radio" value='<%# Eval("VslipNo") %>' onclick="SelectLocation(this)"/>
+                                    </ItemTemplate>
+                                    <ItemStyle BackColor="White" Width="40px" />
+                                </asp:TemplateField>
+ 
+                                <asp:BoundField DataField="VslipNo" HeaderText="Tripsheet No.">
+                                    <ItemStyle CssClass="blackfnt" HorizontalAlign="Left" BackColor="White"/>
+                                    <HeaderStyle CssClass="bgpink" HorizontalAlign="Left" Wrap="False" />
+                                </asp:BoundField>
+                              </Columns>
+                            <PagerStyle HorizontalAlign="Left" />
+                            <HeaderStyle CssClass="dgHeaderStyle" />
+                        </asp:GridView>
+ 
+</center>
+
+ 
+
+    
+    </div>
+    </form>
+</body>
+</html>

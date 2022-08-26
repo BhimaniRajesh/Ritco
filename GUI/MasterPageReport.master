@@ -1,0 +1,17 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPageReport.master.cs"
+    Inherits="MasterPageReport" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link id="Link1" href="~/GUI/images/style.css" rel="Stylesheet" type="text/css" runat="server" />
+</head>
+<body>
+    <form id="form1" enctype="multipart/form-data" runat="server">
+        <asp:ScriptManager ID="ScriptManager" runat="server" EnablePartialRendering="true"></asp:ScriptManager>
+        <asp:ContentPlaceHolder ID="MyCPH1" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>
